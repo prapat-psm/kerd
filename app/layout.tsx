@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { IBM_Plex_Sans_Thai } from "next/font/google";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { THEME_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
 const plexThai = IBM_Plex_Sans_Thai({
@@ -16,13 +18,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="th" className={`${plexThai.variable} h-full antialiased`}>
+    // suppressHydrationWarning: THEME_SCRIPT ตั้ง data-theme ก่อน React hydrate
+    <html lang="th" className={`${plexThai.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="flex min-h-full flex-col font-sans">
-        <header className="mx-auto flex w-full max-w-3xl items-baseline gap-2 px-4 py-5">
-          <Link href="/" className="text-2xl font-semibold text-primary">
-            kerd
+        <header className="mx-auto flex w-full max-w-3xl items-center justify-between px-4 py-5">
+          <Link href="/" className="flex items-baseline gap-2" aria-label="Kerd เกิด หน้าแรก">
+            <span className="text-2xl font-semibold text-primary">kerd</span>
+            <span className="text-sm text-muted-foreground">เกิด</span>
           </Link>
-          <span className="text-sm text-muted-foreground">เกิด</span>
+          <ThemeToggle />
         </header>
         <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16">{children}</main>
         <footer className="mx-auto w-full max-w-3xl px-4 py-8 text-xs text-muted-foreground">

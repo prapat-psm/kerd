@@ -16,8 +16,10 @@ function block(source: string, start: number): string {
 }
 
 const lightBlock = block(css, css.indexOf(":root"));
+// โหมดมืดมี 2 ทาง: ระบบเป็น dark (ถ้าไม่ได้เลือก light) และผู้ใช้เลือก dark เอง ค่าต้องเหมือนกัน
 const darkStart = css.indexOf("@media (prefers-color-scheme: dark)");
-const darkBlock = block(css, css.indexOf(":root", darkStart));
+const darkBlock = block(css, css.indexOf(':root:not([data-theme="light"])', darkStart));
+const chosenDarkBlock = block(css, css.indexOf(':root[data-theme="dark"]'));
 
 function valueOf(cssBlock: string, name: string): string | undefined {
   return cssBlock.match(new RegExp(`(?:^|[\\s;])${name}:\\s*([^;]+);`))?.[1].trim().toLowerCase();
@@ -35,6 +37,11 @@ describe("design tokens", () => {
   it.each(rows)("$token ($cssVar) ตรงกับ branding.md ในโหมดมืด", ({ cssVar, dark }) => {
     expect(darkStart).toBeGreaterThan(-1);
     expect(valueOf(darkBlock, cssVar)).toBe(dark);
+  });
+
+  it.each(rows)("$token ($cssVar) ตรงกับ branding.md เมื่อผู้ใช้เลือกธีมมืด", ({ cssVar, dark }) => {
+    expect(css.indexOf(':root[data-theme="dark"]')).toBeGreaterThan(-1);
+    expect(valueOf(chosenDarkBlock, cssVar)).toBe(dark);
   });
 
   it("ข้อความบนปุ่ม coral ใช้สี ink ไม่ใช่สีขาว", () => {

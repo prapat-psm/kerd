@@ -6,6 +6,7 @@
  * surface → --card, bg → --background; ตัวแปรอื่นผสมจากสีเหล่านี้ด้วย color-mix
  */
 :root {
+  color-scheme: light;
   --radius: 0.75rem;
   --primary: #ff6b5b;
   --primary-foreground: #1f2a44;
@@ -18,8 +19,10 @@
   --warn: #d64545;
 }
 
+/* โหมดมืด: ตามระบบ (ถ้าผู้ใช้ไม่ได้เลือกสว่าง) หรือผู้ใช้เลือกมืดเอง ค่าต้องเหมือนกันทั้งสองที่ */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --primary: #ff8273;
     --primary-foreground: #0e1320;
     --foreground: #e8ecf4;
@@ -30,6 +33,19 @@
     --due: #f2b530;
     --warn: #f07070;
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --primary: #ff8273;
+  --primary-foreground: #0e1320;
+  --foreground: #e8ecf4;
+  --muted-foreground: #a3abbd;
+  --card: #141a2a;
+  --background: #0e1320;
+  --fresh: #3cc484;
+  --due: #f2b530;
+  --warn: #f07070;
 }
 
 /* ตัวแปรที่ได้จากสีหลัก ใช้ได้ทั้งสองโหมด */
