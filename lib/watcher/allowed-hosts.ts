@@ -13,4 +13,7 @@ export const ALLOWED_HOSTS: readonly string[] = [
   "www.pizzahut.co.th",
   "www.snp1344.com",
   "www.bangchakgreenmiles.com",
+  "www.cutepress.com",
+  "www.aeon.co.th",
+  "www.dreamworld.co.th",
 ];

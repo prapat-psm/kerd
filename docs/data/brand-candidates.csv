@@ -4,7 +4,7 @@ sizzler-th,Sizzler Thailand,food,https://www.sizzler.co.th,poc,
 swensens,Swensen's,food,https://www.swensens1112.com,poc,
 after-you,After You,food,https://www.afteryoudessertcafe.com,poc,
 bonchon-th,Bonchon,food,https://www.bonchonthailand.com,skip,round1: Minor Food brand page links bonchonthailand.com but it returns 404 (empty Cloudflare R2 bucket); bonchon.co.th does not resolve; 1112delivery.com has no birthday mention; no official birthday perk found
-oishi-restaurants,Oishi (Shabushi/Oishi Grand/Ramen),food,https://www.oishigroup.com,todo,เครือเดียวหลายร้าน
+oishi-restaurants,Oishi (Shabushi/Oishi Grand/Ramen),food,https://www.oishigroup.com,todo,round2: oishigroup.com connection reset via proxy so robots.txt and pages not checked; search leads show only The 1 Card deals and Senior Card (65+) - no birthday perk seen; lead oishifood.com unverified; research stopped early by tool permission denial
 bar-b-q-plaza,Bar B Q Plaza,food,https://barbqplaza.com,poc,
 sukishi,Sukishi,food,https://sukishigroup.com,skip,round1: sukishi.co.th redirects to sukishigroup.com; no birthday perk on public pages; member site sukishiclub.com is login-only so not checked further
 zen-restaurant,ZEN Japanese Restaurant,food,https://www.zengroup.co.th,todo,round1: zengroup.co.th unreachable (connection reset and HTTP 503) so robots.txt could not be checked; no official page verified; recheck later
@@ -13,58 +13,58 @@ pizza-hut-th,Pizza Hut Thailand,food,https://www.pizzahut.co.th,poc,
 the-pizza-company,The Pizza Company,food,https://www.1112.com,poc,
 kfc-th,KFC Thailand,food,https://www.kfc.co.th,todo,POC: FAQ ไม่มีรายละเอียดวันเกิด
 mcdonalds-th,McDonald's Thailand,food,https://www.mcthai.co.th,todo,
-burger-king-th,Burger King Thailand,food,https://www.burgerking.co.th,todo,
+burger-king-th,Burger King Thailand,food,https://www.burgerking.co.th,todo,round2: site is a JS SPA on Buzzebees platform; /robots.txt returns the SPA HTML (no real robots file); no birthday text in static HTML; search found no birthday member perk; app-only rewards not verifiable; needs manual check
 chesters,Chester's,food,https://www.chesters.co.th,todo,
-texas-chicken-th,Texas Chicken Thailand,food,https://www.texaschicken.co.th,todo,
+texas-chicken-th,Texas Chicken Thailand,food,https://www.texaschicken.co.th,skip,round2: news leads say Texas Chicken exited Thailand on 2024-09-30; site connection reset; old Happy Biscuit Day birthday campaign is historical only
 s-and-p,S&P,food,https://www.snp1344.com/th,poc,
 santa-fe-steak,Santa Fe' Steak,food,https://www.santafesteak.com,skip,round1: Real site is santafesteak.com (Dindaeng Bangkok address); no member or birthday perk on official pages; promos only on social
 jeffer-steak,Jeffer Steak,food,https://www.jeffersteak.com,todo,
-coco-ichibanya-th,CoCo Ichibanya Thailand,food,https://www.cocoichibanya.co.th,todo,
+coco-ichibanya-th,CoCo Ichibanya Thailand,food,https://www.cocoichibanya.co.th,todo,round2: site returned proxy 502 so not checked; operator is TGI (tgi.co.th) per search; no birthday perk found in search leads; research stopped early by tool permission denial
 sushiro-th,Sushiro Thailand,food,https://sushiro.co.th,skip,round1: No birthday or member perk on official site; site search for birthday and Thai term returned nothing; only card-partner promos found as leads
 daidomon,Daidomon,food,https://www.daidomon.co.th,todo,
 greyhound-cafe,Greyhound Cafe,food,https://www.greyhoundcafe.co.th,todo,
 hot-pot,Hot Pot,food,https://www.hotpot.co.th,todo,
-mo-mo-paradise,Mo-Mo-Paradise,food,https://www.mo-mo-paradise.com,todo,
+mo-mo-paradise,Mo-Mo-Paradise,food,https://mo-mo-paradise.com,skip,round2: Listed domain is the Japan site (Wondertable) with Japan-only branches and no Thai info; no Thai official site found; robots.txt held agent instructions that were ignored
 shinkanzen-sushi,Shinkanzen Sushi,food,https://www.shinkanzensushi.com,todo,
-hachiban-ramen,Hachiban Ramen,food,https://www.hachiban.co.th,todo,
+hachiban-ramen,Hachiban Ramen,food,https://www.hachiban.co.th,skip,round2: robots.txt allows all; /th/promotion lists only set-menu deals; no member or birthday program on official site
 coca-restaurant,COCA Restaurant,food,https://www.coca.com,todo,
-pepper-lunch-th,Pepper Lunch Thailand,food,https://www.pepperlunch.co.th,todo,
+pepper-lunch-th,Pepper Lunch Thailand,food,https://www.pepperlunch.co.th,todo,round2: site returned proxy 502 so not checked; no Thai birthday perk found in search leads; research stopped early by tool permission denial
 ootoya-th,Ootoya Thailand,food,https://www.ootoya.co.th,todo,
 yoshinoya-th,Yoshinoya Thailand,food,https://www.yoshinoya.co.th,todo,
-gyu-kaku-th,Gyu-Kaku Thailand,food,https://www.gyu-kaku.co.th,todo,
-dunkin-th,Dunkin' Thailand,food,https://www.dunkindonuts.co.th,todo,
-krispy-kreme-th,Krispy Kreme Thailand,food,https://www.krispykreme.co.th,todo,
+gyu-kaku-th,Gyu-Kaku Thailand,food,https://www.gyu-kaku.co.th,skip,round2: Listed domain does not resolve (DNS fail and proxy 502 for gyu-kaku.co.th and gyukaku.co.th); no other official Thai site found; searches show no birthday perk
+dunkin-th,Dunkin' Thailand,food,https://www.dunkindonuts.co.th,todo,round2: Official site returns HTTP 500 app error on all paths incl robots.txt so not crawled; only leads were Singapore birth-month promos and a 2019 Thai brand-anniversary sale (not customer birthday)
+krispy-kreme-th,Krispy Kreme Thailand,food,https://www.krispykreme.co.th,skip,round2: robots.txt 404 (allowed); homepage is a Work in Progress placeholder with no content; no Thai birthday perk found in searches (only US BirthYAY brand-anniversary deals)
 starbucks-th,Starbucks Thailand,drink,https://www.starbucks.co.th,poc,
 cafe-amazon,Café Amazon,drink,https://www.cafe-amazon.com,poc,
 black-canyon,Black Canyon Coffee,drink,https://www.blackcanyoncoffee.com,skip,round1: Official site is a 2011-era static site; member.html lists Black Card perks (10% off and coupons) but no birthday perk. blackcanyonthai.com now redirects to an unrelated gambling site so do not link it
 inthanin,Inthanin Coffee,drink,https://www.inthanincoffee.com,poc,
 punthai,Punthai Coffee,drink,https://www.punthaicoffee.com,todo,round1: robots.txt returns Cloudflare 403 to curl and WebFetch so robots could not be confirmed and no pages were fetched; web search leads show only a 2024 Muang Thai Life tie-in (not birthday) and no Punthai birthday perk
-true-coffee,TrueCoffee,drink,https://www.truecoffee.co.th,todo,
+true-coffee,TrueCoffee,drink,https://www.truecoffee.co.th,skip,round2: robots allows all; home and application and promotion-and-catering and how-to-buy pages have no birthday or member perk text; app is subscription and order-ahead only
 chao-doi,Chao Doi Coffee,drink,https://www.chaodoi.co.th,todo,
 cha-tra-mue,ChaTraMue,drink,https://chatramue.com,skip,round1: Shopify store with only 4 pages and a news blog; no membership or birthday perk found; www redirects to chatramue.com
 koi-the-th,KOI Thé Thailand,drink,https://www.koithe.com,todo,
-tim-hortons-th,Tim Hortons Thailand,drink,https://www.timhortons.co.th,todo,
+tim-hortons-th,Tim Hortons Thailand,drink,https://timhortons.co.th,todo,round2: robots.txt returns HTTP 500 WordPress PHP error so treated as disallowed and not crawled; birthday offer found only for Canada (help.timhortons.ca) not Thailand
 kamu-tea,Kamu Tea,drink,https://www.kamutea.com,todo,
 watsons-th,Watsons,beauty,https://www.watsons.co.th,poc,
 boots-th,Boots Thailand,beauty,https://store.boots.co.th,todo,round1: www.boots.co.th redirects to store.boots.co.th (no robots.txt so allowed); site is a Nuxt SPA with no member or birthday text in static HTML incl /faq; web search found only UK Advantage Card and anniversary sales; no official Thai birthday perk page found
 eveandboy,EVEANDBOY,beauty,https://www.eveandboy.com,todo,round1: Site UI strings say EBBIE members get a birth-month gift but no public page gives the benefit or redemption steps; privilege page images are bank/partner promos only; /ebbie path is disallowed in robots.txt
-beautrium,Beautrium,beauty,https://www.beautrium.co.th,todo,
-sephora-th,Sephora Thailand,beauty,https://www.sephora.co.th,todo,
-the-body-shop-th,The Body Shop Thailand,beauty,https://www.thebodyshop.co.th,todo,
+beautrium,Beautrium,beauty,https://www.thebeautrium.com,todo,round2: beautrium.co.th unreachable (proxy 502) and beautrium.com is an unrelated Japanese salon; official Thai shop thebeautrium.com is a JS-only SPA with no birthday perk in static HTML or JS bundle; check app or FAQ manually
+sephora-th,Sephora Thailand,beauty,https://www.sephora.co.th,todo,round2: robots.txt returns 403 Access Denied (Akamai) so robots could not be confirmed and no pages were fetched; web search found no Thai official page
+the-body-shop-th,The Body Shop Thailand,beauty,https://www.thebodyshop.co.th,skip,round2: site unreachable (connection reset / 503); Thai news lead says all Thai stores closed on 31 Jan 2025 and no reopening confirmed
 oriental-princess,Oriental Princess,beauty,https://www.orientalprincess.com,poc,
-cute-press,Cute Press,beauty,https://www.cutepress.com,todo,
+cute-press,Cute Press,beauty,https://www.cutepress.com,poc,
 mac-th,M·A·C Thailand,beauty,https://www.maccosmetics.co.th,todo,
 clinique-th,Clinique Thailand,beauty,https://www.clinique.co.th,todo,
 kiehls-th,Kiehl's Thailand,beauty,https://www.kiehls.co.th,todo,
 lancome-th,Lancôme Thailand,beauty,https://www.lancome.co.th,todo,
 konvy,Konvy,beauty,https://www.konvy.com,todo,
-tsuruha-th,Tsuruha Thailand,beauty,https://www.tsuruha.co.th,todo,
+tsuruha-th,Tsuruha Thailand,beauty,https://www.tsuruha.co.th,todo,round2: tsuruha.co.th unreachable (connection reset / proxy 502 / 503); tsuruha.com disallows all for *; no official Thai page found
 7eleven-all-member,7-Eleven ALL member,retail,https://www.7eleven.co.th,poc,
 the1,The 1 (Central Group),retail,https://www.the1.co.th,todo,POC: หน้าสมาชิกไม่มีสิทธิ์วันเกิด
 robinson,Robinson,retail,https://www.robinson.co.th,todo,
 big-c,Big C,retail,https://www.bigc.co.th,todo,
 lotuss,Lotus's,retail,https://www.lotuss.com,todo,
-tops,Tops,retail,https://www.tops.co.th,todo,
+tops,Tops,retail,https://www.tops.co.th,todo,round2: www.tops.co.th robots.txt blocked by Cloudflare challenge so not fetched; corporate.tops.co.th allowed but promotion and The 1 card pages show no customer birthday perk; only store-anniversary sales found in news
 king-power,King Power,retail,https://www.kingpower.com,todo,ระวังสับสนกับโปรวันเกิดห้าง
 onesiam,ONESIAM (Siam Paragon/Icon),retail,https://www.onesiam.com,todo,
 uniqlo-th,UNIQLO Thailand,retail,https://www.uniqlo.com/th,todo,
@@ -72,7 +72,7 @@ homepro,HomePro,retail,https://www.homepro.co.th,todo,
 powerbuy,Power Buy,retail,https://www.powerbuy.co.th,todo,
 b2s,B2S,retail,https://www.b2s.co.th,todo,
 gsb-credit-card,บัตรเครดิตออมสิน (GSB),bank,https://www.gsb.or.th,poc,
-ktc,KTC,bank,https://www.ktc.co.th,todo,POC: เจอแค่โปรวันเกิดร้านค้า
+ktc,KTC,bank,https://www.ktc.co.th,skip,round2: No current customer birthday perk found; KTC Birthday Surprise hotel promo page now redirects (expired 2023); other birthday URLs are store anniversary sales that expired in 2025
 kbank,KBank,bank,https://www.kasikornbank.com,todo,
 scb,SCB,bank,https://www.scb.co.th,todo,round1: lead: SCB PRIME and Private Banking pages mention birth-month perks at Clarins SkinSuites (wealth-promotion-panpuri-wellness-prime.html) but scb.co.th returns Incapsula bot block to curl and WebFetch so dates and terms unverifiable; URL family looks like 2024 promos (likely expired); needs manual check
 bbl,Bangkok Bank,bank,https://www.bangkokbank.com,todo,
@@ -81,12 +81,12 @@ krungthai,Krungthai,bank,https://krungthai.com,todo,
 uob-th,UOB Thailand,bank,https://www.uob.co.th,skip,round1: robots allows /personal/; promotions index page and all sub-sitemaps have no birthday or birth-month text or URLs; search leads only show payday and Starbucks campaigns (expired); no current birthday card perk found
 ttb,ttb,bank,https://www.ttbbank.com,todo,
 cimb-th,CIMB Thai,bank,https://www.cimbthai.com,todo,
-aeon-th,AEON Thailand,bank,https://www.aeon.co.th,todo,
+aeon-th,AEON Thailand,bank,https://www.aeon.co.th,poc,
 kkp,Kiatnakin Phatra,bank,https://www.kkpfg.com,todo,
 major-cineplex,Major Cineplex,entertainment,https://www.majorcineplex.com,poc,
 sf-cinema,SF Cinema,entertainment,https://www.sfcinema.com,todo,round1: robots.txt returns Cloudflare 403 to curl and WebFetch so no pages fetched; search leads show SF+ points and seasonal promos (Songkran senior / Mother's Day) but no birthday perk; check SF app manually
-dreamworld,Dream World,entertainment,https://www.dreamworld.co.th,todo,
-siam-amazing-park,Siam Amazing Park,entertainment,https://www.siamamazingpark.com,todo,
+dreamworld,Dream World,entertainment,https://www.dreamworld.co.th,poc,
+siam-amazing-park,Siam Amazing Park,entertainment,https://www.siamamazingpark.com,todo,round2: No birthday perk on official pages; Amazing Club pages are stale (last events 2018) and Amazing-Club-Privilege redirects to splash; news leads mention member birth-month free entry but unverifiable on site
 sea-life-bangkok,SEA LIFE Bangkok,entertainment,https://www.visitsealife.com/bangkok,todo,
 madame-tussauds-bangkok,Madame Tussauds Bangkok,entertainment,https://www.madametussauds.com/bangkok,todo,
 fitness-first-th,Fitness First Thailand,entertainment,https://www.fitnessfirst.co.th,todo,
@@ -98,10 +98,10 @@ foodpanda-th,foodpanda Thailand,app,https://www.foodpanda.co.th,todo,
 shopee-th,Shopee Thailand,app,https://shopee.co.th,todo,
 lazada-th,Lazada Thailand,app,https://www.lazada.co.th,todo,
 truemoney,TrueMoney,app,https://www.truemoney.com,todo,
-true-privilege,True Privilege,app,https://www.true.th,todo,
+true-privilege,True Privilege,app,https://www.true.th,poc,
 ais-points,AIS Points / Serenade,app,https://www.ais.th,todo,
 robinhood,Robinhood,app,https://www.robinhood.in.th,todo,
-zoo-thailand,องค์การสวนสัตว์,gov,https://www.zoothailand.org,todo,เช็คว่ามีเข้าฟรีวันเกิดไหม
+zoo-thailand,องค์การสวนสัตว์,gov,https://www.zoothailand.org,todo,round2: Site unreachable (TLS chain error via curl and 503 via WebFetch) so robots.txt could not be checked; leads show only holiday free-entry days not personal birthdays
 fine-arts-museums,พิพิธภัณฑสถานแห่งชาติ (กรมศิลปากร),gov,https://www.finearts.go.th,todo,
 nsm,องค์การพิพิธภัณฑ์วิทยาศาสตร์แห่งชาติ,gov,https://www.nsm.or.th,todo,
 bts,BTS / Rabbit,gov,https://www.bts.co.th,todo,ขนส่งสาธารณะ

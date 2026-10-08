@@ -41,3 +41,19 @@ Not found (skip): Bonchon (bonchonthailand.com 404), Sukishi (member site needs 
 Could not check (still todo): ZEN (site down), Punthai and SF Cinema (robots.txt behind Cloudflare 403), SCB (bot block; a PRIME lead may be expired), Boots (JS-only site), EVEANDBOY (perk exists but details are behind a robots-disallowed path).
 
 Do not use blackcanyonthai.com: it now redirects to a gambling site.
+
+# Research round 2 (checked 2026-10-08, 24 brands)
+
+Found 4 of 24. 3 go into the seed as draft; True is low confidence so the seed skips it.
+
+| brand | source | verify_method | confidence | issue |
+|---|---|---|---|---|
+| Cute Press | cutepress.com/member-benefits.html | auto | medium | 30–50% by tier (spend in the 12 months before birth month); no end date; channels not stated |
+| Dream World | dreamworld.co.th/promotion/25 | auto | medium | free ticket only on the exact birthday, birth-month price otherwise; register 1 day ahead; full terms load via JS |
+| AEON (M GEN VISA) | aeon.co.th card page | auto | high | birth week (Sun–Sat) only, not the month |
+| True Card | privilege.trueid.net | manual | low | no dates or redeem steps on the page; not seeded |
+
+Skip (checked, no perk or brand gone): Hachiban, Texas Chicken (left Thailand 2024), The Body Shop (Thai stores closed Jan 2025), Krispy Kreme TH (placeholder site), Mo-Mo-Paradise (no Thai site), Gyu-Kaku (domain dead), True Coffee, KTC (only store-anniversary sales).
+Still todo (site down, bot-blocked, JS-only, or research cut short): Oishi, CoCo Ichibanya, Pepper Lunch, Burger King, Dunkin', Tim Hortons, Sephora, Tsuruha, Tops, Zoo Thailand, Beautrium, Siam Amazing Park (news says members get birth-month entry, not confirmed on the official site).
+
+Round 1 + 2 hit rate is about 23% (10 of 44). Brands with a clear member program on a static page do best; JS apps and bot walls are the main blockers.
