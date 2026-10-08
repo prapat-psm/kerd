@@ -15,6 +15,7 @@ npm run lint
 npm run typecheck    # next typegen + tsc
 npx prisma validate
 npm run db:migrate   # ต้องมี DIRECT_URL ใน .env (ดู .env.example)
+npm run db:seed      # นำเข้า docs/data/poc-brands.json เป็นโปร draft (รันซ้ำได้)
 ```
 Prisma client ถูก generate ไปที่ `generated/prisma` (ไม่ commit) ผ่าน `postinstall`
 
