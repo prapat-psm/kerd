@@ -33,4 +33,8 @@ jobs:
       - run: npm run test:run
       - run: npx prisma migrate deploy
       - run: npm run db:seed
+      # publish โปรตัวอย่างใน DB ทดสอบ ให้ e2e ตรวจการ์ดจริง (ต้องก่อน build เพราะหน้าเป็น static)
+      - run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f scripts/e2e-fixture.sql
       - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e

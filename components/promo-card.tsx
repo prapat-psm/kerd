@@ -11,10 +11,13 @@ const BADGE_LABEL: Record<Freshness, string> = {
   warn: "มีคนแจ้งปัญหา",
 };
 
+const DOT: Record<Freshness, string> = { fresh: "bg-fresh", due: "bg-due", warn: "bg-warn" };
+
 export function FreshnessBadge({ freshness }: { freshness: Freshness }) {
   return (
     <Badge variant={freshness}>
-      {freshness === "warn" && <span aria-hidden>⚠️</span>}
+      {/* จุดสีใช้สีสถานะตาม branding; ตัวอักษรใช้สีหลักเพื่อให้ contrast ผ่าน AA */}
+      {freshness === "warn" ? <span aria-hidden>⚠️</span> : <span aria-hidden className={`size-1.5 rounded-full ${DOT[freshness]}`} />}
       {BADGE_LABEL[freshness]}
     </Badge>
   );
@@ -35,7 +38,7 @@ export function PromoCard({ promo, linkBrand = false }: { promo: PromoCardData; 
     <Card className="gap-4 transition-[translate,box-shadow] duration-200 ease-(--ease-out-quart) hover:shadow-md motion-safe:hover:-translate-y-0.5">
       <CardHeader>
         <CardTitle>
-          <h3 className="text-lg">
+          <h2 className="text-lg">
             {linkBrand ? (
               <Link href={`/brand/${promo.brand.slug}`} className="hover:underline">
                 {promo.brand.name}
@@ -43,7 +46,7 @@ export function PromoCard({ promo, linkBrand = false }: { promo: PromoCardData; 
             ) : (
               promo.brand.name
             )}
-          </h3>
+          </h2>
         </CardTitle>
         <CardDescription>{promo.windowLabel}</CardDescription>
         <CardAction>
@@ -69,9 +72,9 @@ export function PromoCard({ promo, linkBrand = false }: { promo: PromoCardData; 
         )}
 
         <section>
-          <h4 id={stepsId} className="mb-1 text-sm font-semibold">
+          <h3 id={stepsId} className="mb-1 text-sm font-semibold">
             วิธีใช้สิทธิ์
-          </h4>
+          </h3>
           <ol aria-labelledby={stepsId} className="list-decimal space-y-1 pl-5 text-sm">
             {promo.howToRedeem.map((step) => (
               <li key={step}>{step}</li>

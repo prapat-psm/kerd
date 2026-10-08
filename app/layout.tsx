@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { IBM_Plex_Sans_Thai } from "next/font/google";
+import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { THEME_SCRIPT } from "@/lib/theme";
 import "./globals.css";
@@ -24,14 +25,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
       <body className="flex min-h-full flex-col font-sans">
+        <a
+          href="#main"
+          className="sr-only rounded-md bg-card px-4 py-2 font-medium shadow-md focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
+        >
+          ข้ามไปเนื้อหาหลัก
+        </a>
         <header className="mx-auto flex w-full max-w-3xl items-center justify-between px-4 py-5">
-          <Link href="/" className="flex items-baseline gap-2" aria-label="Kerd เกิด หน้าแรก">
-            <span className="text-2xl font-semibold text-primary">kerd</span>
+          <Link href="/" className="flex items-baseline gap-2 rounded-md" aria-label="Kerd เกิด หน้าแรก">
+            <Logo className="size-7 self-center" />
+            <span className="text-2xl font-semibold">kerd</span>
             <span className="text-sm text-muted-foreground">เกิด</span>
           </Link>
           <ThemeToggle />
         </header>
-        <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16">{children}</main>
+        <main id="main" tabIndex={-1} className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 outline-none">{children}</main>
         <footer className="mx-auto w-full max-w-3xl px-4 py-8 text-xs text-muted-foreground">
           ข้อมูลรวบรวมจากหน้าเว็บทางการของแต่ละแบรนด์ เงื่อนไขอาจเปลี่ยนได้ กรุณาตรวจสิทธิ์ที่ต้นทางก่อนใช้ทุกครั้ง
         </footer>

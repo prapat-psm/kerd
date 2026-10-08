@@ -117,6 +117,10 @@
   * {
     @apply border-border outline-ring/50;
   }
+  /* วงโฟกัสชัดเจนเมื่อใช้คีย์บอร์ด */
+  a:focus-visible {
+    @apply rounded-sm outline-2 outline-offset-2 outline-ring;
+  }
   body {
     @apply bg-background text-foreground;
     transition: background-color 200ms ease, color 200ms ease;

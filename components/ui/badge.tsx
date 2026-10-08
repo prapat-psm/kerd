@@ -14,9 +14,9 @@ const badgeVariants = cva(
         destructive: "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90",
         outline: "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         // Kerd: สถานะความสดของข้อมูล (docs/branding.md)
-        fresh: "border-transparent bg-fresh/10 text-fresh",
-        due: "border-transparent bg-due/10 text-due",
-        warn: "border-transparent bg-warn/10 text-warn",
+        fresh: "border-fresh/30 bg-fresh/10 text-foreground",
+        due: "border-due/30 bg-due/10 text-foreground",
+        warn: "border-warn/30 bg-warn/10 text-foreground",
       },
     },
     defaultVariants: {
