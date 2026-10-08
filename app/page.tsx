@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { MONTHS } from "@/lib/months";
+import { stagger } from "@/lib/motion";
 
 export default function Home() {
   return (
@@ -12,9 +13,9 @@ export default function Home() {
 
       <nav aria-label="เลือกเดือนเกิด">
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {MONTHS.map((m) => (
-            <li key={m.slug}>
-              <Button asChild variant="outline" size="lg" className="w-full bg-card text-base">
+          {MONTHS.map((m, i) => (
+            <li key={m.slug} className="animate-fade-up stagger" style={stagger(i)}>
+              <Button asChild variant="outline" size="lg" className="w-full bg-card text-base hover:border-primary motion-safe:hover:-translate-y-0.5">
                 <Link href={`/birthday/${m.slug}`} prefetch={true}>
                   {m.th}
                 </Link>

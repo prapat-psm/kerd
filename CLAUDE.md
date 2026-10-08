@@ -11,6 +11,7 @@ Next.js App Router + TypeScript · Tailwind + shadcn/ui · Prisma v7 (`@prisma/a
 npm run dev          # dev server
 npm test             # vitest watch (TDD)
 npm run test:run     # vitest ครั้งเดียว (CI)
+npm run test:e2e     # Playwright + axe (WCAG 2.1 AA) หลัง build กับ DB ทดสอบ
 npm run lint
 npm run typecheck    # next typegen + tsc
 npx prisma validate

@@ -6,6 +6,7 @@
  * surface → --card, bg → --background; ตัวแปรอื่นผสมจากสีเหล่านี้ด้วย color-mix
  */
 :root {
+  color-scheme: light;
   --radius: 0.75rem;
   --primary: #ff6b5b;
   --primary-foreground: #1f2a44;
@@ -18,8 +19,10 @@
   --warn: #d64545;
 }
 
+/* โหมดมืด: ตามระบบ (ถ้าผู้ใช้ไม่ได้เลือกสว่าง) หรือผู้ใช้เลือกมืดเอง ค่าต้องเหมือนกันทั้งสองที่ */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --primary: #ff8273;
     --primary-foreground: #0e1320;
     --foreground: #e8ecf4;
@@ -30,6 +33,19 @@
     --due: #f2b530;
     --warn: #f07070;
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --primary: #ff8273;
+  --primary-foreground: #0e1320;
+  --foreground: #e8ecf4;
+  --muted-foreground: #a3abbd;
+  --card: #141a2a;
+  --background: #0e1320;
+  --fresh: #3cc484;
+  --due: #f2b530;
+  --warn: #f07070;
 }
 
 /* ตัวแปรที่ได้จากสีหลัก ใช้ได้ทั้งสองโหมด */
@@ -75,13 +91,51 @@
   --color-due: var(--due);
   --color-warn: var(--warn);
   --font-sans: var(--font-plex-thai);
+
+  /* motion: สั้นและนุ่ม ไม่แย่งความสนใจจากเนื้อหา */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --animate-fade-up: fade-up 320ms var(--ease-out-quart) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* หน่วงทีละชิ้นด้วย --i จาก lib/motion.ts */
+@utility stagger {
+  animation-delay: calc(var(--i, 0) * 50ms);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  /* วงโฟกัสชัดเจนเมื่อใช้คีย์บอร์ด */
+  a:focus-visible {
+    @apply rounded-sm outline-2 outline-offset-2 outline-ring;
+  }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+}
+
+/* เคารพการตั้งค่า "ลดการเคลื่อนไหว" ของระบบ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
