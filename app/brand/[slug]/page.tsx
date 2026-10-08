@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { PromoCard } from "@/components/promo-card";
 import { HeadingSkeleton, PromoListSkeleton } from "@/components/promo-card-skeleton";
+import { stagger } from "@/lib/motion";
 import { getBrandSlugs, getBrandWithPromos } from "@/lib/promos/queries";
 
 export async function generateStaticParams() {
@@ -30,8 +31,10 @@ async function BrandPromos({ params }: Pick<PageProps<"/brand/[slug]">, "params"
         <p className="mt-6 text-muted-foreground">ยังไม่มีโปรที่ตรวจแล้วของแบรนด์นี้</p>
       ) : (
         <div className="mt-6 flex flex-col gap-4">
-          {brand.promos.map((p) => (
-            <PromoCard key={p.id} promo={p} />
+          {brand.promos.map((p, i) => (
+            <div key={p.id} className="animate-fade-up stagger" style={stagger(i)}>
+              <PromoCard promo={p} />
+            </div>
           ))}
         </div>
       )}

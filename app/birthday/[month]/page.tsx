@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { PromoCard } from "@/components/promo-card";
 import { HeadingSkeleton, PromoListSkeleton } from "@/components/promo-card-skeleton";
 import { MONTHS, monthFromSlug } from "@/lib/months";
+import { stagger } from "@/lib/motion";
 import { getPromosForMonth } from "@/lib/promos/queries";
 
 export function generateStaticParams() {
@@ -34,8 +35,10 @@ async function MonthPromos({ params }: Pick<PageProps<"/birthday/[month]">, "par
         <p className="mt-6 text-muted-foreground">ยังไม่มีโปรที่ตรวจแล้วสำหรับเดือนนี้</p>
       ) : (
         <div className="mt-6 flex flex-col gap-4">
-          {promos.map((p) => (
-            <PromoCard key={p.id} promo={p} linkBrand />
+          {promos.map((p, i) => (
+            <div key={p.id} className="animate-fade-up stagger" style={stagger(i)}>
+              <PromoCard promo={p} linkBrand />
+            </div>
           ))}
         </div>
       )}

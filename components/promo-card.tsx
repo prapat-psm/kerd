@@ -32,7 +32,7 @@ export function PromoCard({ promo, linkBrand = false }: { promo: PromoCardData; 
   const stepsId = `steps-${promo.id}`;
 
   return (
-    <Card className="gap-4">
+    <Card className="gap-4 transition-[translate,box-shadow] duration-200 ease-(--ease-out-quart) hover:shadow-md motion-safe:hover:-translate-y-0.5">
       <CardHeader>
         <CardTitle>
           <h3 className="text-lg">
@@ -94,8 +94,11 @@ export function PromoCard({ promo, linkBrand = false }: { promo: PromoCardData; 
             {promo.lastVerifiedAt ? `ตรวจล่าสุดเมื่อ ${formatThaiDate(promo.lastVerifiedAt)}` : "ยังไม่ได้ตรวจ"}
           </p>
           <Button asChild variant="outline" size="sm">
-            <a href={promo.sourceUrl} target="_blank" rel="noopener noreferrer">
-              ตรวจสิทธิ์ที่หน้าเว็บทางการ ↗
+            <a href={promo.sourceUrl} target="_blank" rel="noopener noreferrer" className="group/link">
+              ตรวจสิทธิ์ที่หน้าเว็บทางการ{" "}
+              <span aria-hidden className="inline-block transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
+                ↗
+              </span>
             </a>
           </Button>
         </div>
