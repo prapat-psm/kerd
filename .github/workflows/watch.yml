@@ -1,0 +1,40 @@
+name: Watch promo sources
+
+on:
+  schedule:
+    # วันละ 3 รอบ เวลาไทย 06:00 / 12:00 / 18:00 (cron เป็น UTC) นาทีที่ 17 เลี่ยงช่วงคิวแน่นต้นชั่วโมง
+    - cron: "17 23,5,11 * * *"
+  workflow_dispatch:
+
+# สิทธิ์ต่ำสุด: อ่าน repo อย่างเดียว
+permissions:
+  contents: read
+
+# ห้ามรันซ้อนกัน
+concurrency:
+  group: watch-sources
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # secret อยู่ใน environment "watcher" (ตั้ง required reviewers / branch = main ได้)
+    environment: watcher
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      # ไม่รัน install script ของ package (กัน supply-chain) แล้ว generate Prisma เอง
+      - run: npm ci --ignore-scripts
+      - run: npx prisma generate
+      - run: npx tsx scripts/watch.ts
+        env:
+          DATABASE_URL: ${{ secrets.WATCHER_DATABASE_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO }}
+          DIGEST_FROM: ${{ secrets.DIGEST_FROM }}
