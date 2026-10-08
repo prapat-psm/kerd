@@ -6,17 +6,38 @@ import { parsePocBrands } from "./poc";
 const raw = JSON.parse(readFileSync(join(process.cwd(), "docs/data/poc-brands.json"), "utf8"));
 
 describe("parsePocBrands", () => {
-  it("ข้าม record ที่ยังไม่พร้อมเผยแพร่ (Starbucks, After You)", () => {
+  it("ข้าม record ที่ยังไม่พร้อมเผยแพร่: confidence ต่ำ หรือไม่รู้ว่าได้อะไร", () => {
     const { skipped } = parsePocBrands(raw);
-    expect(skipped.map((s) => s.slug).sort()).toEqual(["after-you", "starbucks-th"]);
+    // Starbucks, After You = confidence ต่ำ; Swensen's = รายละเอียดสิทธิ์อยู่ในแอปเท่านั้น (benefit เป็น null)
+    expect(skipped.map((s) => s.slug).sort()).toEqual(["after-you", "starbucks-th", "swensens"]);
   });
 
   it("แปลง record ที่ใช้ได้เป็น PromotionInput", () => {
     const { valid } = parsePocBrands(raw);
-    expect(valid).toHaveLength(8);
+    expect(valid).toHaveLength(7);
     const mk = valid.find((p) => p.brandSlug === "mk-restaurants");
     expect(mk?.howToRedeem.length).toBeGreaterThan(0);
     expect(mk?.sourceUrl).toMatch(/^https:\/\//);
+  });
+
+  it("ตัด tier ที่ยังไม่รู้ว่าได้อะไรออก แทนที่จะทิ้งทั้งโปร", () => {
+    const { valid } = parsePocBrands([
+      {
+        slug: "x",
+        title: "X",
+        benefit: "ส่วนลด",
+        benefit_type: "other",
+        window: "month",
+        source_url: "https://x.com",
+        how_to_redeem: ["แสดงบัตร"],
+        verify_method: "auto",
+        tiers: [
+          { tier: "Gold", benefit: "ลด 20%", conditions: [] },
+          { tier: "Classic", benefit: null, conditions: [] },
+        ],
+      },
+    ]);
+    expect(valid[0].tiers).toEqual([{ tier: "Gold", benefit: "ลด 20%", conditions: [] }]);
   });
 
   it("บอกเหตุผลที่ข้าม", () => {

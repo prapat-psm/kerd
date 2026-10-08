@@ -17,14 +17,14 @@ describe("freshnessStatus", () => {
     expect(freshnessStatus({ lastVerifiedAt: null, downvoteDates: [] }, now)).toBe("due");
   });
 
-  it("👎 ครบ 7 ครั้งภายใน 7 วัน = warn แม้เพิ่งตรวจ", () => {
+  it("👎 ครบ 7 ครั้งภายใน 7 วัน = warn แม้ยังอยู่ในรอบตรวจ", () => {
     const votes = Array.from({ length: 7 }, (_, i) => daysAgo(i));
-    expect(freshnessStatus({ lastVerifiedAt: daysAgo(1), downvoteDates: votes }, now)).toBe("warn");
+    expect(freshnessStatus({ lastVerifiedAt: daysAgo(10), downvoteDates: votes }, now)).toBe("warn");
   });
 
   it("👎 ที่เก่ากว่า 7 วันไม่นับ", () => {
     const votes = [...Array.from({ length: 6 }, (_, i) => daysAgo(i)), daysAgo(8)];
-    expect(freshnessStatus({ lastVerifiedAt: daysAgo(1), downvoteDates: votes }, now)).toBe("fresh");
+    expect(freshnessStatus({ lastVerifiedAt: daysAgo(10), downvoteDates: votes }, now)).toBe("fresh");
   });
 
   it("👎 ก่อนการตรวจล่าสุดไม่นับ (ตรวจแล้วถือว่าแก้แล้ว)", () => {
