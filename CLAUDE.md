@@ -10,7 +10,8 @@ Next.js App Router + TypeScript · Tailwind + shadcn/ui · Prisma v7 (`@prisma/a
 ```bash
 npm run dev          # dev server
 npm test             # vitest watch (TDD)
-npm run test:run     # vitest ครั้งเดียว (CI)
+npm run test:run     # vitest ครั้งเดียว
+npm run test:coverage # vitest + coverage gate (CI ใช้ตัวนี้, เกณฑ์ใน vitest.config.mts)
 npm run test:e2e     # Playwright + axe (WCAG 2.1 AA) หลัง build กับ DB ทดสอบ
 npm run lint
 npm run typecheck    # next typegen + tsc
@@ -25,6 +26,7 @@ Prisma client ถูก generate ไปที่ `generated/prisma` (ไม่ c
 - Logic ล้วนอยู่ใน `lib/` และมี unit test; integration test ใช้ Supabase local หรือ branch แยก ห้ามยิง DB จริง
 - Zod ตรวจข้อมูลทุกจุดที่เข้ามาจากภายนอก (form, Server Action, seed JSON, หน้าเว็บที่ watcher ดึง)
 - Prisma: runtime ใช้ `DATABASE_URL` (pooler 6543), migration ใช้ `DIRECT_URL` (5432) ผ่าน `prisma migrate` เท่านั้น
+- Deploy: merge เข้า main → CI ผ่าน → `.github/workflows/deploy.yml` deploy Vercel production (Vercel ไม่ deploy main เอง) ดู `docs/deploy.md`
 - ห้าม commit secret (`.env*` ต้องอยู่ใน `.gitignore`)
 
 ## กติกาข้อมูล (ห้ามละเมิด)

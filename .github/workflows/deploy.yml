@@ -1,0 +1,84 @@
+name: Deploy
+
+# CD: deploy production ขึ้น Vercel เมื่อ CI บน main ผ่านเท่านั้น (merge PR → CI → Deploy)
+# Vercel จะไม่ deploy main เอง (vercel.json git.deploymentEnabled.main = false)
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  # deploy main ซ้ำด้วยมือ เช่นหลังแก้ env ใน Vercel
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# deploy ทีละรอบ ไม่ยกเลิกรอบที่กำลังรัน
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  production:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # secret อยู่ใน GitHub Environment "production" (ตั้ง required reviewers ได้ถ้าอยากกดอนุมัติก่อน deploy)
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # deploy commit เดียวกับที่ CI ตรวจผ่าน
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm i -g vercel@59.23.2
+      # ดึง env ของ production จาก Vercel (DATABASE_URL ฯลฯ) มาใช้ตอน build
+      - run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+      # migration ก่อน deploy ใช้ DIRECT_URL (session pooler 5432); ข้ามถ้ายังไม่ได้ตั้ง secret
+      - name: Migrate database
+        env:
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+        run: |
+          if [ -z "$DIRECT_URL" ]; then
+            echo "::notice::ไม่มี secret DIRECT_URL ข้าม prisma migrate deploy"
+          else
+            npx prisma migrate deploy
+          fi
+      - run: vercel build --prod --token="$VERCEL_TOKEN"
+      - id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+      # smoke test ที่โดเมน production (ตั้ง variable PRODUCTION_URL เช่น https://kerd.app)
+      # ไม่ยิงที่ URL ของ deployment เพราะ Vercel Deployment Protection อาจตอบ 401
+      - name: Smoke test
+        env:
+          URL: ${{ vars.PRODUCTION_URL }}
+        run: |
+          if [ -z "$URL" ]; then
+            echo "::notice::ไม่มี variable PRODUCTION_URL ข้าม smoke test"
+            exit 0
+          fi
+          for path in / /birthday/october; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --retry 3 --retry-all-errors "$URL$path")
+            echo "$path -> $code"
+            [ "$code" = "200" ] || exit 1
+          done
+      - name: Summary
+        run: |
+          echo "### Deployed to production" >> "$GITHUB_STEP_SUMMARY"
+          echo "- URL: ${{ steps.deploy.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Commit: ${{ github.event.workflow_run.head_sha || github.sha }}" >> "$GITHUB_STEP_SUMMARY"

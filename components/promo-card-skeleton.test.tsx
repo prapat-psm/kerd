@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
-import { PromoListSkeleton } from "./promo-card-skeleton";
+import { HeadingSkeleton, PromoListSkeleton } from "./promo-card-skeleton";
 
 afterEach(cleanup);
 
@@ -25,5 +25,13 @@ describe("PromoListSkeleton", () => {
     const blocks = container.querySelectorAll('[data-slot="skeleton"]');
     expect(blocks.length).toBeGreaterThan(0);
     expect(container.querySelector('[data-slot="card"]')?.getAttribute("aria-hidden")).toBe("true");
+  });
+});
+
+describe("HeadingSkeleton", () => {
+  it("แสดงโครงร่างหัวข้อ และซ่อนจาก screen reader", () => {
+    const { container } = render(<HeadingSkeleton />);
+    expect(container.firstElementChild?.getAttribute("aria-hidden")).toBe("true");
+    expect(container.querySelectorAll('[data-slot="skeleton"]').length).toBeGreaterThan(0);
   });
 });
