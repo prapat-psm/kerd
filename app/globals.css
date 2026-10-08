@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
+/*
+ * shadcn/ui tokens ผูกกับสีใน docs/branding.md (ตรวจด้วย app/tokens.test.ts)
+ * brand → --primary, ink → --foreground, muted → --muted-foreground,
+ * surface → --card, bg → --background; ตัวแปรอื่นผสมจากสีเหล่านี้ด้วย color-mix
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --radius: 0.75rem;
+  --primary: #ff6b5b;
+  --primary-foreground: #1f2a44;
+  --foreground: #1f2a44;
+  --muted-foreground: #5b6478;
+  --card: #ffffff;
+  --background: #fff8f5;
+  --fresh: #1e9e62;
+  --due: #c98a00;
+  --warn: #d64545;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --primary: #ff8273;
+    --primary-foreground: #0e1320;
+    --foreground: #e8ecf4;
+    --muted-foreground: #a3abbd;
+    --card: #141a2a;
+    --background: #0e1320;
+    --fresh: #3cc484;
+    --due: #f2b530;
+    --warn: #f07070;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ตัวแปรที่ได้จากสีหลัก ใช้ได้ทั้งสองโหมด */
+:root {
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --secondary: color-mix(in oklab, var(--primary) 12%, var(--card));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in oklab, var(--foreground) 6%, var(--card));
+  --accent: color-mix(in oklab, var(--primary) 10%, var(--card));
+  --accent-foreground: var(--foreground);
+  --destructive: var(--warn);
+  --border: color-mix(in oklab, var(--foreground) 12%, transparent);
+  --input: color-mix(in oklab, var(--foreground) 18%, transparent);
+  --ring: var(--primary);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-fresh: var(--fresh);
+  --color-due: var(--due);
+  --color-warn: var(--warn);
+  --font-sans: var(--font-plex-thai);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

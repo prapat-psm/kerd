@@ -8,7 +8,7 @@ export type PromoWindow = {
 
 export type Birth = { month: number; day?: number };
 
-const WEEK_SPAN = 3;
+export const WEEK_SPAN = 3;
 
 export function isEligible(promo: PromoWindow, birth: Birth, today = new Date()): boolean {
   if (promo.window === "month") return today.getMonth() + 1 === birth.month;

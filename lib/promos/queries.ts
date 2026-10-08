@@ -1,0 +1,71 @@
+"use cache";
+
+import { cacheLife, cacheTag } from "next/cache";
+import { prisma } from "@/lib/db";
+import { DOWNVOTE_WINDOW_DAYS } from "@/lib/freshness";
+import { activeInMonth, toCardData, type PromoCardData } from "./view";
+
+// ข้อมูลเปลี่ยนวันละไม่กี่ครั้ง: cache ไว้ระดับชั่วโมง และล้างได้ทันทีด้วย revalidateTag("promos", "max")
+const TAG = "promos";
+
+const promoSelect = {
+  id: true,
+  title: true,
+  benefit: true,
+  window: true,
+  windowDaysBefore: true,
+  windowDaysAfter: true,
+  tiers: true,
+  requiresMembership: true,
+  membershipName: true,
+  requiredTier: true,
+  conditions: true,
+  howToRedeem: true,
+  sourceUrl: true,
+  validFrom: true,
+  validUntil: true,
+  lastVerifiedAt: true,
+  brand: { select: { name: true, slug: true, category: true } },
+} as const;
+
+function recentFeedback(now: Date) {
+  const since = new Date(now.getTime() - DOWNVOTE_WINDOW_DAYS * 86_400_000);
+  return { where: { createdAt: { gte: since } }, select: { stillValid: true, createdAt: true } };
+}
+
+export async function getPromosForMonth(month: number): Promise<PromoCardData[]> {
+  cacheTag(TAG);
+  cacheLife("hours");
+  const now = new Date();
+  const rows = await prisma.promotion.findMany({
+    where: { status: "published" },
+    select: { ...promoSelect, feedback: recentFeedback(now) },
+    orderBy: { brand: { name: "asc" } },
+  });
+  return rows.filter((r) => activeInMonth(r, month, now)).map((r) => toCardData(r, now));
+}
+
+export async function getBrandWithPromos(slug: string) {
+  cacheTag(TAG);
+  cacheLife("hours");
+  const now = new Date();
+  const brand = await prisma.brand.findUnique({
+    where: { slug },
+    select: {
+      name: true,
+      slug: true,
+      category: true,
+      promotions: { where: { status: "published" }, select: { ...promoSelect, feedback: recentFeedback(now) } },
+    },
+  });
+  if (!brand) return null;
+  const { promotions, ...info } = brand;
+  return { ...info, promos: promotions.map((r) => toCardData(r, now)) };
+}
+
+export async function getBrandSlugs(): Promise<string[]> {
+  cacheTag(TAG);
+  cacheLife("hours");
+  const brands = await prisma.brand.findMany({ select: { slug: true }, orderBy: { slug: "asc" } });
+  return brands.map((b) => b.slug);
+}
