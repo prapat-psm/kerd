@@ -9,4 +9,8 @@ export const ALLOWED_HOSTS: readonly string[] = [
   "www.sizzler.co.th",
   "www.gsb.or.th",
   "www.watsons.co.th",
+  "barbqplaza.com",
+  "www.pizzahut.co.th",
+  "www.snp1344.com",
+  "www.bangchakgreenmiles.com",
 ];

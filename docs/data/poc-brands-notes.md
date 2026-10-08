@@ -23,3 +23,21 @@ Effort: about 75 tool calls for 14 brands checked, or roughly 5 per brand (easy:
 - URLs are unstable. MK moved /card/ to /mkone/, several Major and 7-Eleven pages return 404/500, and GSB uses a new slug every month. A weekly link checker is needed.
 - Perks are usually tier-gated (Swensen's Silver+, Sizzler Gold/Diamond, Watsons elite, Major FIRST CLASS). New members often get nothing at first, so the real "signup lead time" is time to earn the tier, not days. No source stated signup_lead_days.
 - Brand pages almost never give a days-before/after window; "birth month" is the norm. Several sites block crawlers (Starbucks 403) or render only with JS (After You, Major M GEN, Starbucks Rewards).
+
+# Research round 1 (checked 2026-10-08, 20 brands)
+
+Found 6 of 20 on official pages. All are seeded as draft and need a human check in Studio.
+
+| brand | source | verify_method | confidence | issue |
+|---|---|---|---|---|
+| Bar B Q Plaza | barbqplaza.com/gonmemberbirthday | auto | high | special-price set (799 THB), not free; ends 31 Dec 2569; window_days_after=30 is an estimate for "the following month" |
+| The Pizza Company | 1112.com homepage (tier config) | manual | medium | perk text only in embedded config; homepage changes often so not auto |
+| Pizza Hut TH | pizzahut.co.th article | auto | high | Diamond tier only (6,000 THB spend) |
+| S&P | snp1344.com/th/card | auto | medium | page is on S&P Delivery, not snpfood.com |
+| Inthanin | bangchakgreenmiles.com (parent Bangchak) | auto | medium | source is the parent company's domain; confirm it counts as official; ends 31 Dec 2026 |
+| Oriental Princess | orientalprincess.com blog | manual | medium | details only in images; URL still says 2022 but page is the 2026 package |
+
+Not found (skip): Bonchon (bonchonthailand.com 404), Sukishi (member site needs login), Fuji, Santa Fe' (real site santafesteak.com), Sushiro, Black Canyon, ChaTraMue, UOB.
+Could not check (still todo): ZEN (site down), Punthai and SF Cinema (robots.txt behind Cloudflare 403), SCB (bot block; a PRIME lead may be expired), Boots (JS-only site), EVEANDBOY (perk exists but details are behind a robots-disallowed path).
+
+Do not use blackcanyonthai.com: it now redirects to a gambling site.
