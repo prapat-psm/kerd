@@ -45,8 +45,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm i -g vercel@59.23.2
-      # ดึง env ของ production จาก Vercel (DATABASE_URL ฯลฯ) มาใช้ตอน build
-      - run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
       # migration ก่อน deploy ใช้ DIRECT_URL (session pooler 5432); ข้ามถ้ายังไม่ได้ตั้ง secret
       - name: Migrate database
         env:
@@ -57,10 +55,11 @@ jobs:
           else
             npx prisma migrate deploy
           fi
-      - run: vercel build --prod --token="$VERCEL_TOKEN"
+      # ให้ Vercel build เอง: env ของ production (เช่น DATABASE_URL แบบ Sensitive) ใช้ได้เฉพาะตอน build บน Vercel
+      # ถ้าดึง env ลงมา build บน runner ค่า Sensitive จะว่าง ทำให้ build บน runner ต่อ DB ไม่ได้
       - id: deploy
         run: |
-          url=$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN")
+          url=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN")
           echo "url=$url" >> "$GITHUB_OUTPUT"
       # smoke test ที่โดเมน production (ตั้ง variable PRODUCTION_URL เช่น https://kerd.app)
       # ไม่ยิงที่ URL ของ deployment เพราะ Vercel Deployment Protection อาจตอบ 401

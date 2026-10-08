@@ -20,4 +20,10 @@ describe("การตั้งค่า deploy", () => {
     expect(workflow).toContain("github.event.workflow_run.conclusion == 'success'");
     expect(workflow).toContain("ref: ${{ github.event.workflow_run.head_sha || github.sha }}");
   });
+
+  it("ให้ Vercel build เอง เพราะ env แบบ Sensitive (DATABASE_URL) ดึงลงมา build บน runner ไม่ได้", () => {
+    expect(workflow).not.toContain("vercel pull");
+    expect(workflow).not.toContain("--prebuilt");
+    expect(workflow).toMatch(/vercel deploy --prod/);
+  });
 });
