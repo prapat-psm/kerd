@@ -1,26 +1,43 @@
 @import "tailwindcss";
 
+/* สีตาม docs/branding.md */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --brand: #ff6b5b;
+  --ink: #1f2a44;
+  --muted: #5b6478;
+  --surface: #ffffff;
+  --bg: #fff8f5;
+  --fresh: #1e9e62;
+  --due: #c98a00;
+  --warn: #d64545;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --brand: #ff8273;
+    --ink: #e8ecf4;
+    --muted: #a3abbd;
+    --surface: #141a2a;
+    --bg: #0e1320;
+    --fresh: #3cc484;
+    --due: #f2b530;
+    --warn: #f07070;
   }
 }
 
+@theme inline {
+  --color-brand: var(--brand);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-bg: var(--bg);
+  --color-fresh: var(--fresh);
+  --color-due: var(--due);
+  --color-warn: var(--warn);
+  --font-sans: var(--font-plex-thai);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
 }
