@@ -19,13 +19,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="th" className={`${plexThai.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         <header className="mx-auto flex w-full max-w-3xl items-baseline gap-2 px-4 py-5">
-          <Link href="/" className="text-2xl font-semibold text-brand">
+          <Link href="/" className="text-2xl font-semibold text-primary">
             kerd
           </Link>
-          <span className="text-sm text-muted">เกิด</span>
+          <span className="text-sm text-muted-foreground">เกิด</span>
         </header>
         <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16">{children}</main>
-        <footer className="mx-auto w-full max-w-3xl px-4 py-8 text-xs text-muted">
+        <footer className="mx-auto w-full max-w-3xl px-4 py-8 text-xs text-muted-foreground">
           ข้อมูลรวบรวมจากหน้าเว็บทางการของแต่ละแบรนด์ เงื่อนไขอาจเปลี่ยนได้ กรุณาตรวจสิทธิ์ที่ต้นทางก่อนใช้ทุกครั้ง
         </footer>
       </body>

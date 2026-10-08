@@ -27,10 +27,10 @@ async function MonthPromos({ params }: Pick<PageProps<"/birthday/[month]">, "par
 
   return (
     <>
-      <h1 className="text-2xl font-semibold text-ink">โปรวันเกิดเดือน{MONTHS[n - 1].th}</h1>
-      <p className="mt-1 text-sm text-muted">{promos.length} โปรที่ตรวจแล้ว</p>
+      <h1 className="text-2xl font-semibold text-foreground">โปรวันเกิดเดือน{MONTHS[n - 1].th}</h1>
+      <p className="mt-1 text-sm text-muted-foreground">{promos.length} โปรที่ตรวจแล้ว</p>
       {promos.length === 0 ? (
-        <p className="mt-6 text-muted">ยังไม่มีโปรที่ตรวจแล้วสำหรับเดือนนี้</p>
+        <p className="mt-6 text-muted-foreground">ยังไม่มีโปรที่ตรวจแล้วสำหรับเดือนนี้</p>
       ) : (
         <div className="mt-6 flex flex-col gap-4">
           {promos.map((p) => (
@@ -45,11 +45,11 @@ async function MonthPromos({ params }: Pick<PageProps<"/birthday/[month]">, "par
 export default function MonthPage({ params }: PageProps<"/birthday/[month]">) {
   return (
     <div className="pt-4">
-      <Link href="/" className="text-sm text-muted hover:underline">
+      <Link href="/" className="text-sm text-muted-foreground hover:underline">
         ← เลือกเดือนอื่น
       </Link>
       <div className="mt-3">
-        <Suspense fallback={<p className="text-muted">กำลังโหลด…</p>}>
+        <Suspense fallback={<p className="text-muted-foreground">กำลังโหลด…</p>}>
           <MonthPromos params={params} />
         </Suspense>
       </div>

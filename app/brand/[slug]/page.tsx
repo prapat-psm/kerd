@@ -24,9 +24,9 @@ async function BrandPromos({ params }: Pick<PageProps<"/brand/[slug]">, "params"
 
   return (
     <>
-      <h1 className="text-2xl font-semibold text-ink">โปรวันเกิด {brand.name}</h1>
+      <h1 className="text-2xl font-semibold text-foreground">โปรวันเกิด {brand.name}</h1>
       {brand.promos.length === 0 ? (
-        <p className="mt-6 text-muted">ยังไม่มีโปรที่ตรวจแล้วของแบรนด์นี้</p>
+        <p className="mt-6 text-muted-foreground">ยังไม่มีโปรที่ตรวจแล้วของแบรนด์นี้</p>
       ) : (
         <div className="mt-6 flex flex-col gap-4">
           {brand.promos.map((p) => (
@@ -41,11 +41,11 @@ async function BrandPromos({ params }: Pick<PageProps<"/brand/[slug]">, "params"
 export default function BrandPage({ params }: PageProps<"/brand/[slug]">) {
   return (
     <div className="pt-4">
-      <Link href="/" className="text-sm text-muted hover:underline">
+      <Link href="/" className="text-sm text-muted-foreground hover:underline">
         ← หน้าแรก
       </Link>
       <div className="mt-3">
-        <Suspense fallback={<p className="text-muted">กำลังโหลด…</p>}>
+        <Suspense fallback={<p className="text-muted-foreground">กำลังโหลด…</p>}>
           <BrandPromos params={params} />
         </Suspense>
       </div>
