@@ -193,5 +193,309 @@
     "robots_txt": "not_found",
     "verify_method": "manual", "confidence": "medium", "difficulty": "hard",
     "notes": "หน้าเฉพาะของสิทธิ์นี้ใช้ไม่ได้: 7eleven.co.th/promotion/allmember/144-birthday ตอบ 500 และหน้า allonline /c/special-privileges-for-all-members-born-in-this-month/ ตอบ 404 รายการสินค้าเปลี่ยนทุกเดือนและน่าจะดูได้แค่ในแอป 7-Eleven ส่วนหน้า allonline /c/happy-birthday/cake/ เป็นแค่รายการขายเค้ก ไม่ใช่สิทธิ์สมาชิก robots.txt ของ 7eleven.co.th ตอบ 404 ส่วนของ allonline อนุญาต /c/"
+  },
+  {
+    "brand": "Bar B Q Plaza",
+    "slug": "bar-b-q-plaza",
+    "category": "food",
+    "title": "GON member: ชุด Birthday เลือกได้ 799 บาท + คะแนนคูณในเดือนเกิด",
+    "benefit": "สมาชิก GON member ซื้อชุด Birthday เลือกได้ราคา 799 บาท (เลือกปิ้งย่าง จานเสริม ของทานเล่น ข้าว เครื่องดื่ม ของหวาน) ได้ในเดือนเกิดและเดือนถัดไป และรับคะแนนสะสม x2 ถึง x5 ตามระดับบัตรเมื่อใช้จ่ายในเดือนเกิด",
+    "benefit_type": "other",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 30,
+    "tiers": [
+      {
+        "tier": "Friend",
+        "benefit": "ชุด Birthday 799 บาท + คะแนน x2 ในเดือนเกิด",
+        "conditions": [
+          "มียอดใช้จ่ายในเดือนเกิด"
+        ]
+      },
+      {
+        "tier": "Buddy",
+        "benefit": "ชุด Birthday 799 บาท + คะแนน x3 ในเดือนเกิด",
+        "conditions": [
+          "มียอดใช้จ่ายในเดือนเกิด"
+        ]
+      },
+      {
+        "tier": "Soulmate",
+        "benefit": "ชุด Birthday 799 บาท + คะแนน x4 ในเดือนเกิด",
+        "conditions": [
+          "มียอดใช้จ่ายในเดือนเกิด"
+        ]
+      },
+      {
+        "tier": "Family",
+        "benefit": "ชุด Birthday 799 บาท + คะแนน x5 ในเดือนเกิด",
+        "conditions": [
+          "มียอดใช้จ่ายในเดือนเกิด"
+        ]
+      }
+    ],
+    "requires_membership": true,
+    "membership_name": "GON member (LINE@GONmember)",
+    "signup_lead_days": null,
+    "conditions": [
+      "ซื้อชุด Birthday ได้ไม่จำกัดครั้งในเดือนเกิดและเดือนถัดไป",
+      "วันเกิดต้องตรงกับข้อมูลใน LINE@GONmember",
+      "ทานที่ร้านหรือซื้อกลับบ้านเท่านั้น",
+      "ใช้ร่วมกับส่วนลดสมาชิกไม่ได้ แต่ยังได้คะแนนสะสม",
+      "เปลี่ยนเป็นเงินสดหรือส่วนลดไม่ได้",
+      "จำหน่ายถึง 31 ธ.ค. 2569"
+    ],
+    "channels": [
+      "in_store",
+      "app"
+    ],
+    "how_to_redeem": [
+      "สมัคร GON member ผ่าน LINE@GONmember และกรอกวันเกิดให้ถูกต้อง",
+      "ในเดือนเกิดหรือเดือนถัดไป ไปที่ร้าน Bar B Q Plaza แล้วสั่งชุด Birthday เลือกได้",
+      "แสดงข้อมูลวันเกิดใน LINE@GONmember พร้อมบัตรประชาชนก่อนชำระเงิน"
+    ],
+    "required_docs": [
+      "บัตรประจำตัวประชาชน",
+      "บัตรสมาชิกใน LINE@GONmember"
+    ],
+    "source_url": "https://barbqplaza.com/gonmemberbirthday/",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "high",
+    "difficulty": "easy",
+    "notes": "ไม่ใช่ของฟรี แต่เป็นชุดราคาพิเศษ 799 บาท สิทธิ์ซื้อชุดใช้ได้ถึงสิ้นเดือนถัดจากเดือนเกิด (window_days_after=30 เป็นค่าประมาณ) ส่วนคะแนนคูณใช้เฉพาะเดือนเกิด แคมเปญระบุสิ้นสุด 31 ธ.ค. 2569 ต้องตรวจซ้ำต้นปี 2570 หน้า /hbd-gon-member/ อีกหน้าระบุบางสาขาเริ่มขายช้ากว่าและยกเว้นสาขาเซ็นทรัลพาร์ค โดเมนจริงคือ barbqplaza.com (www redirect)"
+  },
+  {
+    "brand": "The Pizza Company",
+    "slug": "the-pizza-company",
+    "category": "food",
+    "title": "The Pizza Company สมาชิก: ส่วนลดเดือนเกิด 100 บาท",
+    "benefit": "สมาชิกทุกระดับได้ส่วนลดเดือนเกิด 100 บาท ระดับ Gold ได้ Bite Banoffee ฟรีเพิ่มอีก 1 ชิ้น",
+    "benefit_type": "discount_amount",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": [
+      {
+        "tier": "Green",
+        "benefit": "ส่วนลดเดือนเกิด 100 บาท",
+        "conditions": []
+      },
+      {
+        "tier": "Silver",
+        "benefit": "ส่วนลดเดือนเกิด 100 บาท",
+        "conditions": []
+      },
+      {
+        "tier": "Gold",
+        "benefit": "ส่วนลดเดือนเกิด 100 บาท + Bite Banoffee ฟรี",
+        "conditions": []
+      }
+    ],
+    "requires_membership": true,
+    "membership_name": "The Pizza Company Member (Green/Silver/Gold)",
+    "signup_lead_days": null,
+    "conditions": [
+      "ต้องเป็นสมาชิกและระบุวันเกิดในบัญชี",
+      "ใช้ได้ในเดือนเกิด",
+      "ยอดขั้นต่ำและเงื่อนไขอื่นไม่ได้ระบุบนหน้าเว็บ"
+    ],
+    "channels": [
+      "online",
+      "app"
+    ],
+    "how_to_redeem": [
+      "สมัครสมาชิกที่ 1112.com หรือแอป The Pizza Company และกรอกวันเกิด",
+      "ในเดือนเกิด เปิดคูปองวันเกิดในบัญชีแล้วใช้ตอนสั่งซื้อ"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.1112.com/",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "manual",
+    "confidence": "medium",
+    "difficulty": "easy",
+    "notes": "ข้อความสิทธิวันเกิดอยู่ในข้อมูลตั้งค่าที่ฝังในหน้าแรก (GREEN/SILVER/GOLD_TIER_BENEFIT) ไม่ใช่หน้าโปรแยก robots.txt ห้าม /rewards /coupons /profile จึงไม่ได้เปิดดู ไม่พบเกณฑ์ยอดเลื่อนระดับและยอดขั้นต่ำ ช่องทางหน้าร้านยังไม่ยืนยัน ตั้งเป็น manual เพราะหน้าแรกเปลี่ยนบ่อย watcher จะเตือนผิดบ่อย"
+  },
+  {
+    "brand": "Pizza Hut Thailand",
+    "slug": "pizza-hut-th",
+    "category": "food",
+    "title": "Hut Rewards Diamond: พิซซ่าถาดกลาง + ปีกไก่ฟรีในเดือนเกิด",
+    "benefit": "สมาชิก Hut Rewards ระดับ Diamond รับคูปองฟรีพิซซ่า Lover ถาดกลาง (Pan หรือ Thin) 1 ถาด พร้อมปีกไก่ New Orleans 6 ชิ้น ในเดือนเกิด",
+    "benefit_type": "free_item",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": [
+      {
+        "tier": "Diamond",
+        "benefit": "พิซซ่า Lover ถาดกลาง + ปีกไก่ New Orleans 6 ชิ้น ฟรี",
+        "conditions": [
+          "ยอดใช้จ่ายสะสม 6,000 บาทขึ้นไป",
+          "ทบทวนระดับทุก 1 ธ.ค. จากยอด 6 เดือนย้อนหลัง"
+        ]
+      }
+    ],
+    "requires_membership": true,
+    "membership_name": "Hut Rewards (Diamond)",
+    "signup_lead_days": null,
+    "conditions": [
+      "เฉพาะระดับ Diamond",
+      "คูปองเข้าบัญชีวันที่ 1 ของเดือนเกิด ใช้ได้ 30 วันนับจากวันที่ได้รับ",
+      "1 คูปองต่อสมาชิก และ 1 คูปองต่อใบเสร็จ",
+      "เปลี่ยนหน้า/ขอบ/อัปเกรดไม่ได้ ใช้ร่วมโปรอื่นไม่ได้",
+      "ไม่ร่วมบางสาขา เช่น สาขาท่องเที่ยวในภูเก็ต พัทยา เชียงใหม่ สมุย และ MBK"
+    ],
+    "channels": [
+      "in_store",
+      "app"
+    ],
+    "how_to_redeem": [
+      "สมัคร Hut Rewards ผ่านแอป เว็บไซต์ หรือ LINE OA และกรอกวันเกิด",
+      "เมื่อเป็นระดับ Diamond คูปองจะเข้าบัญชีวันที่ 1 ของเดือนเกิด",
+      "แสดงคูปองที่ร้าน Pizza Hut สาขาที่ร่วมรายการภายใน 30 วัน"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.pizzahut.co.th/articles/view/Diamond%20Birthday%20Privilege",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "high",
+    "difficulty": "hard",
+    "notes": "เฉพาะ Diamond (ยอดสะสม 6,000 บาท) ระดับ Red/Gold ไม่มีสิทธิวันเกิดบนหน้าเว็บ บทความลงวันที่ 30 ก.ย. 2026 ไม่มีวันสิ้นสุด /robots.txt ของโดเมนคืนหน้า HTML (ไม่มีไฟล์จริง) จึงถือว่าไม่มีข้อห้าม URL มีช่องว่าง (%20)"
+  },
+  {
+    "brand": "S&P",
+    "slug": "s-and-p",
+    "category": "food",
+    "title": "S&P Card: ส่วนลด 20% 1 ครั้งในเดือนเกิด",
+    "benefit": "สมาชิก S&P Card ได้ส่วนลด 20% หนึ่งครั้งในเดือนเกิด",
+    "benefit_type": "discount_percent",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": null,
+    "requires_membership": true,
+    "membership_name": "S&P Card",
+    "signup_lead_days": null,
+    "conditions": [
+      "ใช้ได้ 1 ครั้งในเดือนเกิด",
+      "ไม่ร่วมกับ Snack Box, Meal Box, ปิ่นโต, สินค้าโปรโมชั่น และรายการส่งเสริมการขาย"
+    ],
+    "channels": [
+      "in_store",
+      "online"
+    ],
+    "how_to_redeem": [
+      "สมัคร S&P Card ผ่าน LINE @snpfood หรือที่ร้าน S&P ทุกสาขา",
+      "ในเดือนเกิด แจ้งใช้สิทธิส่วนลดเดือนเกิดพร้อมแสดงบัตรสมาชิกตอนชำระเงิน"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.snp1344.com/th/card",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "medium",
+    "difficulty": "easy",
+    "notes": "หน้าทางการอยู่บนเว็บ S&P Delivery (snp1344.com) ไม่ใช่ snpfood.com (เว็บองค์กร ไม่มีข้อมูลสมาชิก) หน้าไม่ระบุค่าสมัคร วันหมดอายุ หรือว่าใช้กับเดลิเวอรีได้หรือไม่ snp1344.com ไม่มี robots.txt (404)"
+  },
+  {
+    "brand": "Inthanin Coffee",
+    "slug": "inthanin",
+    "category": "drink",
+    "title": "Bangchak Green Miles: ส่วนลดเครื่องดื่มอินทนิล 20 บาท ในเดือนเกิด",
+    "benefit": "สมาชิกบางจากกรีนไมลส์เลือกรับสิทธิ์วันเกิด 1 อย่างผ่านแอปบางจาก หนึ่งในตัวเลือกคือคูปองส่วนลดเครื่องดื่มอินทนิล 20 บาท (ตัวเลือกอื่นคือ 100 คะแนน หรือส่วนลดเติมน้ำมัน 20 บาท)",
+    "benefit_type": "discount_amount",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 30,
+    "tiers": null,
+    "requires_membership": true,
+    "membership_name": "Bangchak Green Miles",
+    "signup_lead_days": null,
+    "conditions": [
+      "ต้องกดรับสิทธิ์ในแอปภายในเดือนเกิด และใช้ได้ถึงสิ้นเดือนถัดไป",
+      "เลือกได้เพียง 1 สิทธิ์ ระหว่างคะแนน ส่วนลดน้ำมัน หรือส่วนลดอินทนิล",
+      "ส่วนลดอินทนิลจำกัด 1,200 สิทธิ์ต่อเดือน",
+      "ต้องลงทะเบียนข้อมูลวันเกิดครบถ้วน",
+      "แคมเปญปี 2569 สิ้นสุด 31 ธ.ค. 2569",
+      "ใช้รหัสจากภาพหน้าจอไม่ได้"
+    ],
+    "channels": [
+      "in_store",
+      "app"
+    ],
+    "how_to_redeem": [
+      "ในเดือนเกิด เข้าสู่ระบบแอปบางจาก ไปที่โปรโมชันของฉัน แล้วเลือกสิทธิ์วันเกิดแบบส่วนลดอินทนิล",
+      "กดรับสิทธิ์แล้วแสดงรหัสโปรโมชันกับพนักงานที่ร้านอินทนิล"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.bangchakgreenmiles.com/th/promotions/223/EnjoyYourBirthday2026",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "medium",
+    "difficulty": "medium",
+    "notes": "หน้าแหล่งที่มาอยู่บนโดเมน bangchakgreenmiles.com ของบางจาก (บริษัทแม่ของอินทนิล และเว็บอินทนิลลิงก์ไปเอง) ไม่ใช่ inthanincoffee.com ซึ่งไม่มีโปรวันเกิด สิทธิ์มีจำนวนจำกัดต่อเดือน และแคมเปญหมดอายุ 31 ธ.ค. 2569 ต้องให้คนตรวจว่ายอมรับโดเมนบริษัทแม่เป็นแหล่งทางการ"
+  },
+  {
+    "brand": "Oriental Princess",
+    "slug": "oriental-princess",
+    "category": "beauty",
+    "title": "Oriental Princess: ของขวัญวันเกิดฟรีและส่วนลด 35% สำหรับสมาชิก",
+    "benefit": "สมาชิกเลือกรับของขวัญวันเกิดฟรีตามระดับสมาชิก (White 1 ชิ้น, Gold/Platinum 2 ชิ้น) และได้สิทธิ์ส่วนลด 35% ในวงเงินที่กำหนด พร้อมของแถมเพิ่มเมื่อซื้อครบ 1,500 / 2,500 / 3,500 บาท",
+    "benefit_type": "free_item",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 30,
+    "tiers": [
+      {
+        "tier": "White Member",
+        "benefit": "ของขวัญฟรี 1 ชิ้น และส่วนลด 35% วงเงินไม่เกิน 8,000 บาท",
+        "conditions": [
+          "ส่วนที่เกินวงเงินชำระเต็มราคา"
+        ]
+      },
+      {
+        "tier": "Gold Member",
+        "benefit": "ของขวัญฟรี 2 ชิ้น และส่วนลด 35% วงเงินไม่เกิน 12,000 บาท",
+        "conditions": [
+          "ส่วนที่เกินวงเงินชำระเต็มราคา"
+        ]
+      },
+      {
+        "tier": "Platinum Member",
+        "benefit": "ของขวัญฟรี 2 ชิ้น และส่วนลด 35% วงเงินไม่เกิน 12,000 บาท",
+        "conditions": [
+          "ส่วนที่เกินวงเงินชำระเต็มราคา"
+        ]
+      }
+    ],
+    "requires_membership": true,
+    "membership_name": "Oriental Princess Member (White/Gold/Platinum)",
+    "signup_lead_days": null,
+    "conditions": [
+      "ใช้สิทธิ์ได้ในเดือนเกิดหรือภายใน 1 เดือนหลังเดือนเกิด",
+      "ของขวัญฟรีระบุช่วง 1 ก.ค. - 31 ธ.ค. 2569",
+      "ของรางวัลบางรายการมีจำนวนจำกัด และบริษัทอาจเปลี่ยนรายการได้",
+      "ของแถมตามยอดซื้อคิดจากยอดสุทธิ"
+    ],
+    "channels": [
+      "in_store"
+    ],
+    "how_to_redeem": [
+      "ในเดือนเกิดหรือเดือนถัดไป ไปที่ร้าน Oriental Princess และแจ้งพนักงานว่าเป็นสมาชิก",
+      "เลือกของขวัญวันเกิดตามระดับสมาชิก และใช้ส่วนลดวันเกิดเมื่อซื้อสินค้า"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.orientalprincess.com/blog/post/birthday-package-2022/",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "manual",
+    "confidence": "medium",
+    "difficulty": "easy",
+    "notes": "เนื้อหาเป็นรูปภาพ 2 รูป (BDPackage69.jpg และ Bdfreegift.jpg) ไม่มีข้อความใน HTML URL ยังเป็น birthday-package-2022 แต่หัวข้อหน้าเป็น Birthday Package 2026 และรูประบุปี 2569 หน้า FAQ ยืนยันว่า Birthday Gift ใช้ได้ที่ร้านเท่านั้น ไม่ใช่ชุดของขวัญที่ขาย"
   }
 ]
