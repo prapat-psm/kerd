@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum BenefitType {
+  free_item
+  discount_percent
+  discount_amount
+  points
+  free_entry
+  other
+}
+
+enum PromoWindow {
+  day
+  week
+  month
+}
+
+enum VerifyMethod {
+  auto
+  manual
+}
+
+enum PromoStatus {
+  draft
+  published
+  hidden
+  expired
+}
+
+enum FeedbackReason {
+  wrong_info
+  store_refused
+  expired
+  other
+}
+
+model Brand {
+  id         String      @id @default(uuid()) @db.Uuid
+  name       String
+  slug       String      @unique
+  category   String
+  websiteUrl String?
+  createdAt  DateTime    @default(now())
+  promotions Promotion[]
+}
+
+model Promotion {
+  id                 String         @id @default(uuid()) @db.Uuid
+  brandId            String         @db.Uuid
+  brand              Brand          @relation(fields: [brandId], references: [id])
+  title              String
+  benefit            String
+  benefitType        BenefitType
+  window             PromoWindow
+  windowDaysBefore   Int            @default(0)
+  windowDaysAfter    Int            @default(0)
+  /// [{ tier, benefit, conditions }] แสดงในการ์ดเดียว
+  tiers              Json?
+  requiresMembership Boolean        @default(false)
+  membershipName     String?
+  /// ระดับสมาชิกขั้นต่ำที่ต้องมี (จาก POC: สิทธิ์ส่วนใหญ่ต้องเป็นระดับสูง)
+  requiredTier       String?
+  signupLeadDays     Int            @default(0)
+  minSpend           Decimal?
+  conditions         String[]
+  channels           String[]
+  excludedBranches   String?
+  sourceUrl          String
+  sourceSnapshotUrl  String?
+  howToRedeem        String[]
+  requiredDocs       String[]
+  verifyMethod       VerifyMethod
+  brandVerified      Boolean        @default(false)
+  status             PromoStatus    @default(draft)
+  validFrom          DateTime?
+  validUntil         DateTime?
+  lastVerifiedAt     DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  revisions          PromotionRevision[]
+  snapshots          SourceSnapshot[]
+  feedback           PromoFeedback[]
+
+  @@index([brandId])
+  @@index([status, window])
+}
+
+model PromotionRevision {
+  id          String    @id @default(uuid()) @db.Uuid
+  promotionId String    @db.Uuid
+  promotion   Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  snapshot    Json
+  changedBy   String
+  createdAt   DateTime  @default(now())
+
+  @@index([promotionId, createdAt])
+}
+
+model SourceSnapshot {
+  id           String    @id @default(uuid()) @db.Uuid
+  promotionId  String    @db.Uuid
+  promotion    Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  contentHash  String
+  httpStatus   Int?
+  diffDetected Boolean   @default(false)
+  fetchedAt    DateTime  @default(now())
+
+  @@index([promotionId, fetchedAt])
+}
+
+model PromoFeedback {
+  id          String          @id @default(uuid()) @db.Uuid
+  promotionId String          @db.Uuid
+  promotion   Promotion       @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  userId      String?         @db.Uuid
+  stillValid  Boolean
+  reason      FeedbackReason?
+  note        String?
+  branch      String?
+  createdAt   DateTime        @default(now())
+
+  @@index([promotionId, createdAt])
+}
+
+model Submission {
+  id        String   @id @default(uuid()) @db.Uuid
+  payload   Json
+  sourceUrl String
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+}
+
+/// PDPA: เก็บขั้นต่ำ ไม่เก็บปีเกิดหรือเบอร์โทร
+model User {
+  id         String       @id @default(uuid()) @db.Uuid
+  lineUserId String       @unique
+  birthMonth Int
+  birthDay   Int?
+  createdAt  DateTime     @default(now())
+  consents   ConsentLog[]
+}
+
+model ConsentLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// เช่น marketing_line
+  purpose   String
+  granted   Boolean
+  version   String
+  createdAt DateTime @default(now())
+
+  @@index([userId, purpose, createdAt])
+}
