@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { PromoCard } from "@/components/promo-card";
+import { HeadingSkeleton, PromoListSkeleton } from "@/components/promo-card-skeleton";
 import { MONTHS, monthFromSlug } from "@/lib/months";
 import { getPromosForMonth } from "@/lib/promos/queries";
 
@@ -49,7 +50,14 @@ export default function MonthPage({ params }: PageProps<"/birthday/[month]">) {
         ← เลือกเดือนอื่น
       </Link>
       <div className="mt-3">
-        <Suspense fallback={<p className="text-muted-foreground">กำลังโหลด…</p>}>
+        <Suspense
+          fallback={
+            <div className="flex flex-col gap-6">
+              <HeadingSkeleton />
+              <PromoListSkeleton />
+            </div>
+          }
+        >
           <MonthPromos params={params} />
         </Suspense>
       </div>

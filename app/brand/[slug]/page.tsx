@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { PromoCard } from "@/components/promo-card";
+import { HeadingSkeleton, PromoListSkeleton } from "@/components/promo-card-skeleton";
 import { getBrandSlugs, getBrandWithPromos } from "@/lib/promos/queries";
 
 export async function generateStaticParams() {
@@ -45,7 +46,14 @@ export default function BrandPage({ params }: PageProps<"/brand/[slug]">) {
         ← หน้าแรก
       </Link>
       <div className="mt-3">
-        <Suspense fallback={<p className="text-muted-foreground">กำลังโหลด…</p>}>
+        <Suspense
+          fallback={
+            <div className="flex flex-col gap-6">
+              <HeadingSkeleton />
+              <PromoListSkeleton />
+            </div>
+          }
+        >
           <BrandPromos params={params} />
         </Suspense>
       </div>
