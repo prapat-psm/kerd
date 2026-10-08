@@ -14,6 +14,10 @@ describe("pageToText", () => {
     expect(pageToText(a)).toBe(pageToText(b));
   });
 
+  it("ถอดรหัส entity แบบตัวเลขฐานสิบและฐานสิบหก", () => {
+    expect(pageToText("<p>&#3650;&#x0E1B;&#X0E23;</p>")).toBe("โปร");
+  });
+
   it("ตัด noscript, svg และ template", () => {
     expect(pageToText("<noscript>x</noscript><svg><text>y</text></svg><template>z</template>ok")).toBe("ok");
   });

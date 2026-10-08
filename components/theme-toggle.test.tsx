@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { ThemeToggle } from "./theme-toggle";
 
 afterEach(() => {
@@ -37,5 +37,19 @@ describe("ThemeToggle", () => {
     localStorage.setItem("theme", "light");
     render(<ThemeToggle />);
     expect(pressed("สว่าง")).toBe("true");
+  });
+
+  it("ซิงก์เมื่อเปลี่ยนธีมจากแท็บอื่น และเลิกฟังเมื่อถูกถอดออก", () => {
+    const { unmount } = render(<ThemeToggle />);
+    localStorage.setItem("theme", "dark");
+    act(() => {
+      window.dispatchEvent(new StorageEvent("storage", { key: "theme" }));
+    });
+    expect(pressed("มืด")).toBe("true");
+
+    const remove = vi.spyOn(window, "removeEventListener");
+    unmount();
+    expect(remove).toHaveBeenCalledWith("storage", expect.any(Function));
+    remove.mockRestore();
   });
 });
