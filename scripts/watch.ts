@@ -5,6 +5,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { z } from "zod";
 import { PrismaClient } from "../generated/prisma/client";
 import { ALLOWED_HOSTS } from "../lib/watcher/allowed-hosts";
+import { describeError } from "../lib/watcher/describe-error";
 import { renderDigest } from "../lib/watcher/digest";
 import { fetchSource, type FetchDeps } from "../lib/watcher/fetch-source";
 import { runWatcher } from "../lib/watcher/run";
@@ -88,8 +89,8 @@ async function main() {
 
 main()
   .catch((e) => {
-    // log แค่ชื่อ error ไม่ log message/stack ที่อาจมี connection string
-    console.error("watcher failed:", e instanceof Error ? e.name : "unknown");
+    // log ชื่อ + error code + สาเหตุจาก DB (ปิดบัง connection string แล้ว) ไม่ log stack
+    console.error("watcher failed:", describeError(e));
     process.exitCode = 1;
   })
   .finally(() => prisma.$disconnect());

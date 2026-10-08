@@ -104,6 +104,23 @@ create policy watcher_snap on "SourceSnapshot" for all to kerd_watcher using (tr
 3. Actions → "Watch promo sources" → Run workflow 1 ครั้ง (ได้ baseline)
 4. รอบถัดไปจะส่ง email เมื่อหน้าเปลี่ยนหรือลิงก์เสีย
 
+## 6.1 แก้ปัญหา
+log จะแสดง `watcher failed: <ชื่อ> <Prisma code> pg=<Postgres code> <สาเหตุ>`
+| เห็น | สาเหตุ | แก้ |
+|---|---|---|
+| `P1000 pg=28P01 password authentication failed` | user/รหัสผิด, ยังไม่ได้สร้าง role, หรือรหัสมีอักขระพิเศษ (`@ : / # ? %`) ที่ไม่ได้ encode | ตั้งรหัสใหม่เป็นตัวอักษร+ตัวเลขล้วน (`alter role kerd_watcher password '...'`), user ต้องเป็น `kerd_watcher.<project-ref>` |
+| `pg=42501 permission denied for table X` | ยังไม่ได้รัน grant/policy ครบ | รัน SQL ข้อ 4.3 ใหม่ |
+| `P1001` | host/port ผิด | ใช้ host ของ pooler เดียวกับ `DATABASE_URL` |
+
+ทดสอบสิทธิ์ใน SQL editor ได้ก่อน:
+```sql
+set role kerd_watcher;
+select id, "sourceUrl" from "Promotion" where "verifyMethod" = 'auto' limit 1;
+select id, name from "Brand" limit 1;
+select count(*) from "SourceSnapshot";
+reset role;
+```
+
 ## 7. thai-pdpa-review (2026-10-08)
 | ระดับ | ประเด็น | ทำไม | แก้ยังไง |
 |---|---|---|---|
