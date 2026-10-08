@@ -6,6 +6,18 @@ Design: `docs/design.md` · Branding: `docs/branding.md` · ข้อมูล P
 ## Stack
 Next.js App Router + TypeScript · Tailwind + shadcn/ui · Prisma v7 (`@prisma/adapter-pg`) · Supabase Postgres (region สิงคโปร์) · Zod · Auth.js (LINE) · Vitest + Testing Library · Playwright · GitHub Actions · Resend · LINE Messaging API · Vercel
 
+## คำสั่ง
+```bash
+npm run dev          # dev server
+npm test             # vitest watch (TDD)
+npm run test:run     # vitest ครั้งเดียว (CI)
+npm run lint
+npm run typecheck    # next typegen + tsc
+npx prisma validate
+npm run db:migrate   # ต้องมี DIRECT_URL ใน .env (ดู .env.example)
+```
+Prisma client ถูก generate ไปที่ `generated/prisma` (ไม่ commit) ผ่าน `postinstall`
+
 ## กติกาการทำงาน
 - **TDD เสมอ (Vitest):** เขียน test ที่ fail ก่อน → โค้ดน้อยที่สุดให้ผ่าน → refactor ห้าม skip/disable test เพื่อให้ผ่าน
 - Logic ล้วนอยู่ใน `lib/` และมี unit test; integration test ใช้ Supabase local หรือ branch แยก ห้ามยิง DB จริง
