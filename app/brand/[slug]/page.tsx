@@ -45,8 +45,8 @@ async function BrandPromos({ params }: Pick<PageProps<"/brand/[slug]">, "params"
 export default function BrandPage({ params }: PageProps<"/brand/[slug]">) {
   return (
     <div className="pt-4">
-      <Link href="/" className="text-sm text-muted-foreground hover:underline">
-        ← หน้าแรก
+      <Link href="/brand" className="text-sm text-muted-foreground hover:underline">
+        ← แบรนด์ทั้งหมด
       </Link>
       <div className="mt-3">
         <Suspense

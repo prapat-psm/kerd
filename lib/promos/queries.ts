@@ -69,3 +69,15 @@ export async function getBrandSlugs(): Promise<string[]> {
   const brands = await prisma.brand.findMany({ select: { slug: true }, orderBy: { slug: "asc" } });
   return brands.map((b) => b.slug);
 }
+
+/** แบรนด์ที่มีโปรเผยแพร่แล้วอย่างน้อย 1 รายการ สำหรับหน้า /brand */
+export async function getBrandsWithPublishedPromos(): Promise<{ slug: string; name: string; category: string; promoCount: number }[]> {
+  cacheTag(TAG);
+  cacheLife("hours");
+  const brands = await prisma.brand.findMany({
+    where: { promotions: { some: { status: "published" } } },
+    select: { slug: true, name: true, category: true, _count: { select: { promotions: { where: { status: "published" } } } } },
+    orderBy: { name: "asc" },
+  });
+  return brands.map(({ _count, ...b }) => ({ ...b, promoCount: _count.promotions }));
+}
