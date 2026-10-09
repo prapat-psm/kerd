@@ -82,7 +82,7 @@ jobs:
             echo "::notice::ไม่มี variable PRODUCTION_URL ข้าม smoke test"
             exit 0
           fi
-          for path in / /birthday/october; do
+          for path in / /october; do
             code=$(curl -s -o /dev/null -w "%{http_code}" --retry 3 --retry-all-errors "$URL$path")
             echo "$path -> $code"
             [ "$code" = "200" ] || exit 1

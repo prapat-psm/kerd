@@ -2,17 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { PromoCard } from "@/components/promo-card";
+import { FilteredPromoList } from "@/components/filtered-promo-list";
 import { HeadingSkeleton, PromoListSkeleton } from "@/components/promo-card-skeleton";
 import { MONTHS, monthFromSlug } from "@/lib/months";
-import { stagger } from "@/lib/motion";
 import { getPromosForMonth } from "@/lib/promos/queries";
 
 export function generateStaticParams() {
   return MONTHS.map((m) => ({ month: m.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/birthday/[month]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/[month]">): Promise<Metadata> {
   const n = monthFromSlug((await params).month);
   if (!n) return {};
   const th = MONTHS[n - 1].th;
@@ -22,7 +21,7 @@ export async function generateMetadata({ params }: PageProps<"/birthday/[month]"
   };
 }
 
-async function MonthPromos({ params }: Pick<PageProps<"/birthday/[month]">, "params">) {
+async function MonthPromos({ params }: Pick<PageProps<"/[month]">, "params">) {
   const n = monthFromSlug((await params).month);
   if (!n) notFound();
   const promos = await getPromosForMonth(n);
@@ -34,19 +33,15 @@ async function MonthPromos({ params }: Pick<PageProps<"/birthday/[month]">, "par
       {promos.length === 0 ? (
         <p className="mt-6 text-muted-foreground">ยังไม่มีโปรที่ตรวจแล้วสำหรับเดือนนี้</p>
       ) : (
-        <div className="mt-6 flex flex-col gap-4">
-          {promos.map((p, i) => (
-            <div key={p.id} className="animate-fade-up stagger" style={stagger(i)}>
-              <PromoCard promo={p} linkBrand />
-            </div>
-          ))}
+        <div className="mt-6">
+          <FilteredPromoList promos={promos} />
         </div>
       )}
     </>
   );
 }
 
-export default function MonthPage({ params }: PageProps<"/birthday/[month]">) {
+export default function MonthPage({ params }: PageProps<"/[month]">) {
   return (
     <div className="pt-4">
       <Link href="/" className="text-sm text-muted-foreground hover:underline">
