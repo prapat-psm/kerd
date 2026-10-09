@@ -30,7 +30,7 @@ export function BrandDirectory({ brands }: { brands: BrandSummary[] }) {
               className="flex items-center justify-between gap-3 rounded-xl border bg-card px-4 py-3 shadow-xs transition-[translate,box-shadow,border-color] duration-200 ease-(--ease-out-quart) hover:border-primary hover:shadow-md focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none motion-safe:hover:-translate-y-0.5"
             >
               <span className="flex items-center gap-3">
-                <BrandMark name={b.name} />
+                <BrandMark name={b.name} slug={b.slug} />
                 <span className="flex flex-col">
                   <span className="font-medium text-foreground">{b.name}</span>
                   <span className="text-xs text-muted-foreground">{categoryLabel(b.category)}</span>

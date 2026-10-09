@@ -37,7 +37,7 @@ async function BrandPromos({ params }: Pick<PageProps<"/brand/[slug]">, "params"
         ])}
       />
       <div className="flex items-center gap-3">
-        <BrandMark name={brand.name} className="size-12 text-base" />
+        <BrandMark name={brand.name} slug={brand.slug} className="size-12 text-base" />
         <h1 className="text-2xl font-semibold text-foreground">โปรวันเกิด {brand.name}</h1>
       </div>
       {brand.promos.length === 0 ? (
