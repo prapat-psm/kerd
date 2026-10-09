@@ -70,3 +70,17 @@ Found 3 of 24. 2 go into the seed as draft; Krungsri is low confidence so the se
 
 Skip: Chester's, Daidomon (closed 2024), Greyhound Cafe, KOI Thé (no Thai site), Kamu Tea, Lotus's, AIS, SEA LIFE Bangkok.
 Still todo (site down, TLS errors, robots 403): Jeffer, Hot Pot, Shinkanzen, Yoshinoya, Ootoya, Chao Doi (rebranded CD), Kiehl's, Lancôme, Clinique, MAC, Konvy (robots blocks ClaudeBot), Robinson (502), HarborLand.
+
+# Research round 4 (checked 2026-10-09, 25 brands)
+
+Found 3 of 25. Uniqlo is high confidence and approved for publishing; ttb is low confidence so the seed skips it.
+
+| brand | source | verify_method | confidence | issue |
+|---|---|---|---|---|
+| Uniqlo TH | faq-th.uniqlo.com app coupon FAQ | auto | high | THB 100 birth-month coupon in the app; Online Store only; minimum spend changed on 22 Sep 2026 |
+| ONESIAM | onesiam.com member privilege 2026 | manual | medium | perks differ by tier and store; details only in an image table; likely ends with 2026 |
+| ttb | ttbbank.com/th/ttbprivilege | manual | low | "birthday gift" card with no details; Superior status and above per news; not seeded |
+
+Strong leads to check by hand (official page exists but bot-blocked): KBank PLUSTINUM card (birth-month cashback up to 25%), Bangkok Bank M Legend (birth-month coupons).
+Skip: Madame Tussauds, Fitness First, Virgin Active, Fine Arts museums, Grab, foodpanda (now redirects to Robinhood), Shopee, Lazada, Robinhood, Krungthai, CIMB Thai, Coca, HomePro, B2S.
+Still todo (bot walls): Big C, Power Buy, Jetts, NSM, TrueMoney, KBank, Bangkok Bank, KKP.
