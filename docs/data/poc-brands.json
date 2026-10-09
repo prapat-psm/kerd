@@ -863,5 +863,149 @@
     "confidence": "low",
     "difficulty": "hard",
     "notes": "curl ถูก Incapsula/WAF บล็อก อ่านได้ผ่าน WebFetch เท่านั้น ยังไม่ได้ยืนยันช่องทางจองเพราะหน้า krungsricard.com/th/promotion/veranda-hotel ตอบ 503 บัตรนี้สำหรับลูกค้า Krungsri Exclusive (ฐานะสูง) จึงเข้าถึงยาก สิทธิ์ Elite Havens/Dusit อาจต้องเป็น Dusit Gold ผ่านแอป Dusit Hotels & Rewards ของขวัญวันเกิดของ Krungsri Exclusive ที่อิงยอดเงินฝาก 10 ล้านบาทไม่ใช่สิทธิ์บัตรจึงไม่ได้นับ"
+  },
+  {
+    "brand": "Uniqlo Thailand",
+    "slug": "uniqlo-th",
+    "category": "retail",
+    "title": "UNIQLO App: คูปองวันเกิดลด 100 บาท",
+    "benefit": "สมาชิกแอป UNIQLO ที่ใส่วันเกิดไว้ รับคูปองส่วนลด 100 บาทในเดือนเกิด ใช้กับ Online Store เมื่อซื้อครบ 1,000 บาท",
+    "benefit_type": "discount_amount",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": null,
+    "requires_membership": true,
+    "membership_name": "UNIQLO App member",
+    "signup_lead_days": null,
+    "conditions": [
+      "ใช้ได้เฉพาะ Online Store",
+      "ยอดซื้อขั้นต่ำ 1,000 บาท (เงื่อนไขตั้งแต่ 22 ก.ย. 2569)",
+      "ใช้ได้เฉพาะในเดือนเกิด",
+      "ต้องระบุวันเกิดในบัญชีสมาชิก"
+    ],
+    "channels": [
+      "online",
+      "app"
+    ],
+    "how_to_redeem": [
+      "สมัครสมาชิกผ่านแอป UNIQLO และกรอกวันเกิดในโปรไฟล์",
+      "ในเดือนเกิด เปิดกล่องข้อความในแอปเพื่อดูคูปอง",
+      "ใช้คูปองตอนชำระเงินที่ Online Store เมื่อยอดถึงขั้นต่ำ"
+    ],
+    "required_docs": [],
+    "source_url": "https://faq-th.uniqlo.com/articles/en_US/FAQ/How-do-I-obtain-an-App-coupon",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "high",
+    "publish": true,
+    "difficulty": "easy",
+    "notes": "หน้า FAQ (โดเมนย่อย faq-th.uniqlo.com) ระบุเงื่อนไขสองช่วง: ถึง 20 ก.ย. 2569 ขั้นต่ำ 1,500 บาท และตั้งแต่ 22 ก.ย. 2569 ขั้นต่ำ 1,000 บาท ถ้าเพิ่งกรอกวันเกิดในเดือนเกิดจะได้คูปองภายใน 1-2 วันทำการ ใช้หน้าร้านไม่ได้"
+  },
+  {
+    "brand": "ONESIAM",
+    "slug": "onesiam",
+    "category": "retail",
+    "title": "ONESIAM Member: สิทธิพิเศษเดือนเกิดจากร้านค้าในเครือสยามพิวรรธน์",
+    "benefit": "สมาชิก ONESIAM ทุกระดับ (Black/Gold/Titanium/White) รับสิทธิ์เดือนเกิดจากร้านค้าร่วมรายการในสยามพารากอน สยามเซ็นเตอร์ สยามดิสคัฟเวอรี่ ไอคอนสยาม เช่น ของขวัญฟรี ส่วนลด 10-30% หรือทรีตเมนต์ฟรี สิทธิ์แตกต่างตามระดับและร้าน",
+    "benefit_type": "other",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": [
+      {
+        "tier": "ONESIAM BLACK",
+        "benefit": "สิทธิ์มากที่สุด เช่น ส่วนลด EVISU 30% บุฟเฟต์ Kagonoya ฟรี บริการสปา/ทรีตเมนต์ฟรีบางร้าน",
+        "conditions": [
+          "ใช้ในเดือนเกิด",
+          "บางร้านต้องจองล่วงหน้า"
+        ]
+      },
+      {
+        "tier": "ONESIAM GOLD",
+        "benefit": "ส่วนลดร้านค้าร่วมรายการ เช่น EVISU 20% Loft/Ecotopia 15% พร้อม Coin x5",
+        "conditions": [
+          "ใช้ในเดือนเกิด"
+        ]
+      },
+      {
+        "tier": "ONESIAM TITANIUM",
+        "benefit": "ส่วนลดร้านค้าร่วมรายการ เช่น EVISU 20% Loft/Ecotopia 15% พร้อม Coin x5",
+        "conditions": [
+          "ใช้ในเดือนเกิด"
+        ]
+      },
+      {
+        "tier": "ONESIAM WHITE",
+        "benefit": "ส่วนลดบางร้าน เช่น EVISU 10% Loft/Ecotopia 15% และของฟรีจากบางร้าน",
+        "conditions": [
+          "ใช้ในเดือนเกิด"
+        ]
+      }
+    ],
+    "requires_membership": true,
+    "membership_name": "ONESIAM Member (ONESIAM SuperApp)",
+    "signup_lead_days": null,
+    "conditions": [
+      "ใช้ได้เฉพาะในเดือนเกิด",
+      "สิทธิ์และเงื่อนไขต่างกันตามร้านค้าและระดับสมาชิก",
+      "บางร้านกำหนดยอดซื้อขั้นต่ำหรือต้องนัดหมายล่วงหน้า",
+      "ส่วนใหญ่จำกัด 1 สิทธิ์ต่อท่าน"
+    ],
+    "channels": [
+      "in_store",
+      "app"
+    ],
+    "how_to_redeem": [
+      "สมัครสมาชิก ONESIAM ผ่าน ONESIAM SuperApp",
+      "ในเดือนเกิด ไปที่ร้านค้าร่วมรายการตามสาขาที่กำหนด",
+      "แสดงสถานะสมาชิกในแอปพร้อมบัตรประชาชนหรือพาสปอร์ตเพื่อยืนยันวันเกิด"
+    ],
+    "required_docs": [
+      "บัตรประชาชนหรือหนังสือเดินทาง"
+    ],
+    "source_url": "https://www.onesiam.com/th/privilege/onesiam-member-privilege-2026",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "manual",
+    "confidence": "medium",
+    "difficulty": "medium",
+    "notes": "รายละเอียดอยู่ในรูปภาพตาราง (HBD_ONESIAM-Privileges-2026.jpg บน campaign.onesiam.com) ไม่ใช่ข้อความ HTML ต้องตรวจด้วยตา เป็นสิทธิ์ปี 2569 จึงน่าจะหมดสิ้นปี ไม่ได้ตรวจเกณฑ์ยอดใช้จ่ายของแต่ละระดับ"
+  },
+  {
+    "brand": "ttb bank",
+    "slug": "ttb",
+    "category": "bank",
+    "title": "ttb privilege: ของขวัญวันเกิดสำหรับลูกค้าที่มีสถานะ",
+    "benefit": "ลูกค้าที่มีสถานะในโปรแกรม ttb privilege ได้รับของขวัญเซอร์ไพรส์ในโอกาสวันเกิด (หน้าเว็บไม่ระบุว่าเป็นของอะไรหรือมูลค่าเท่าไร)",
+    "benefit_type": "other",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": null,
+    "requires_membership": true,
+    "membership_name": "ttb privilege (ผ่านแอป ttb touch)",
+    "signup_lead_days": null,
+    "conditions": [
+      "ต้องเป็นลูกค้า ttb ที่มีสถานะใน ttb privilege",
+      "หน้าเว็บทางการไม่ระบุระดับสถานะที่ได้สิทธิ์ (ข่าวระบุว่าสถานะ Superior ขึ้นไป)",
+      "รายละเอียดสิทธิ์ดูได้ในแอป ttb touch"
+    ],
+    "channels": [
+      "app"
+    ],
+    "how_to_redeem": [
+      "เปิดแอป ttb touch แล้วเข้าเมนู ttb privilege",
+      "ตรวจดูสิทธิ์ของขวัญวันเกิดในช่วงวันเกิดและกดรับตามที่แอปแจ้ง"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.ttbbank.com/th/ttbprivilege",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "manual",
+    "confidence": "low",
+    "difficulty": "hard",
+    "notes": "หน้าเว็บมีแค่การ์ด 'ของขวัญวันเกิด' ไม่บอกของขวัญ ระดับ หรือวิธีรับ curl โดน Incapsula บล็อก อ่านได้ผ่าน WebFetch เท่านั้น สถานะต้องมีสินทรัพย์/สินเชื่อหรือคะแนน WOW ถึงเกณฑ์ จึงใช้สิทธิ์ยาก"
   }
 ]

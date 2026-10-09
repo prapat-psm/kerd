@@ -27,7 +27,7 @@ hot-pot,Hot Pot,food,https://www.hotpot.co.th,todo,round3: hotpot.co.th serves a
 mo-mo-paradise,Mo-Mo-Paradise,food,https://mo-mo-paradise.com,skip,round2: Listed domain is the Japan site (Wondertable) with Japan-only branches and no Thai info; no Thai official site found; robots.txt held agent instructions that were ignored
 shinkanzen-sushi,Shinkanzen Sushi,food,https://www.shinkanzensushi.com,todo,round3: shinkanzensushi.com unreachable (proxy 502); no official brand domain found via search; only third-party listings
 hachiban-ramen,Hachiban Ramen,food,https://www.hachiban.co.th,skip,round2: robots.txt allows all; /th/promotion lists only set-menu deals; no member or birthday program on official site
-coca-restaurant,COCA Restaurant,food,https://www.coca.com,todo,
+coca-restaurant,COCA Restaurant,food,https://www.coca.com,skip,round4: Official coca.com restaurant and news pages show no member or birthday perk; Thai index reset connection; perks likely only via LINE which is off-limits
 pepper-lunch-th,Pepper Lunch Thailand,food,https://www.pepperlunch.co.th,todo,round2: site returned proxy 502 so not checked; no Thai birthday perk found in search leads; research stopped early by tool permission denial
 ootoya-th,Ootoya Thailand,food,https://www.ootoya.co.th,todo,round3: Official site unreachable (connection reset on robots.txt); web leads show only bank card discounts; no official birthday page verified
 yoshinoya-th,Yoshinoya Thailand,food,https://www.yoshinoya.co.th,todo,round3: Official site and robots.txt unreachable (proxy 502 on www and bare host); web leads show only bank card promos; no official birthday page verified
@@ -62,47 +62,47 @@ tsuruha-th,Tsuruha Thailand,beauty,https://www.tsuruha.co.th,todo,round2: tsuruh
 7eleven-all-member,7-Eleven ALL member,retail,https://www.7eleven.co.th,poc,
 the1,The 1 (Central Group),retail,https://www.the1.co.th,todo,POC: หน้าสมาชิกไม่มีสิทธิ์วันเกิด
 robinson,Robinson,retail,https://www.robinson.co.th,todo,round3: robots.txt allows all but every page returned CloudFront 502 origin error on three tries; search found only expired store-anniversary sales (Robinson Online Birthday Party 2020) not a customer birthday perk; retry later
-big-c,Big C,retail,https://www.bigc.co.th,todo,
+big-c,Big C,retail,https://www.bigc.co.th,todo,round4: robots allows but homepage returns Cloudflare JS challenge 403; bigcard.bigc.co.th connection reset; no official birthday page found via search
 lotuss,Lotus's,retail,https://www.lotuss.com,skip,round3: Member info lives on my.lotuss.com (robots allow all); member page / member FAQ / terms / kidzclub show no birthday perk; kidzclub content is JS or images only
 tops,Tops,retail,https://www.tops.co.th,todo,round2: www.tops.co.th robots.txt blocked by Cloudflare challenge so not fetched; corporate.tops.co.th allowed but promotion and The 1 card pages show no customer birthday perk; only store-anniversary sales found in news
 king-power,King Power,retail,https://www.kingpower.com,poc,
-onesiam,ONESIAM (Siam Paragon/Icon),retail,https://www.onesiam.com,todo,
-uniqlo-th,UNIQLO Thailand,retail,https://www.uniqlo.com/th,todo,
-homepro,HomePro,retail,https://www.homepro.co.th,todo,
-powerbuy,Power Buy,retail,https://www.powerbuy.co.th,todo,
-b2s,B2S,retail,https://www.b2s.co.th,todo,
+onesiam,ONESIAM (Siam Paragon/Icon),retail,https://www.onesiam.com,poc,
+uniqlo-th,UNIQLO Thailand,retail,https://www.uniqlo.com/th/th,poc,
+homepro,HomePro,retail,https://www.homepro.co.th,skip,round4: HomeCard member terms page has no birthday mention; no official birthday page found
+powerbuy,Power Buy,retail,https://www.powerbuy.co.th,todo,round4: robots.txt blocked by Cloudflare so not fetched; no official birthday page found via search
+b2s,B2S,retail,https://www.b2s.co.th,skip,round4: robots allows; homepage has no member or birthday section; no official birthday page found
 gsb-credit-card,บัตรเครดิตออมสิน (GSB),bank,https://www.gsb.or.th,poc,
 ktc,KTC,bank,https://www.ktc.co.th,skip,round2: No current customer birthday perk found; KTC Birthday Surprise hotel promo page now redirects (expired 2023); other birthday URLs are store anniversary sales that expired in 2025
-kbank,KBank,bank,https://www.kasikornbank.com,todo,
+kbank,KBank,bank,https://www.kasikornbank.com,todo,round4: Strong lead: KBank PLUSTINUM credit card birth-month K Point to cashback up to 25% (news says cap 5000 points or 1250 THB per year; 1 slip per year) at /th/personal/CreditCard/Pages/plustinum.aspx; robots allows path but curl gets Akamai 403 and WebFetch returns empty page so text not verified; needs manual check
 scb,SCB,bank,https://www.scb.co.th,todo,round1: lead: SCB PRIME and Private Banking pages mention birth-month perks at Clarins SkinSuites (wealth-promotion-panpuri-wellness-prime.html) but scb.co.th returns Incapsula bot block to curl and WebFetch so dates and terms unverifiable; URL family looks like 2024 promos (likely expired); needs manual check
-bbl,Bangkok Bank,bank,https://www.bangkokbank.com,todo,
+bbl,Bangkok Bank,bank,https://www.bangkokbank.com,todo,round4: robots.txt unreachable (HTTP2 error / 503) so no pages fetched; lead: M Legend Visa Infinite card has Birthday Month Privilege coupons in M Card app at /th-TH/Personal/Cards/BangkokBankM/MLegend; needs manual check
 krungsri,Krungsri,bank,https://www.krungsricard.com,poc,
-krungthai,Krungthai,bank,https://krungthai.com,todo,
+krungthai,Krungthai,bank,https://krungthai.com,skip,round4: Only bank-anniversary items found (Krungthai Birthday 56th game 2022 and NPA Birthday Sale ended May 2026) which do not count; no customer birthday perk; site blocks curl via Incapsula
 uob-th,UOB Thailand,bank,https://www.uob.co.th,skip,round1: robots allows /personal/; promotions index page and all sub-sitemaps have no birthday or birth-month text or URLs; search leads only show payday and Starbucks campaigns (expired); no current birthday card perk found
-ttb,ttb,bank,https://www.ttbbank.com,todo,
-cimb-th,CIMB Thai,bank,https://www.cimbthai.com,todo,
+ttb,ttb,bank,https://www.ttbbank.com,poc,
+cimb-th,CIMB Thai,bank,https://www.cimbthai.com,skip,round4: No birthday perk found on official site; CIMB Thai credit cards reportedly discontinued; robots disallows /th/personal/campaigns/
 aeon-th,AEON Thailand,bank,https://www.aeon.co.th,poc,
-kkp,Kiatnakin Phatra,bank,https://www.kkpfg.com,todo,
+kkp,Kiatnakin Phatra,bank,https://bank.kkpfg.com,todo,round4: No birthday perk found in site search; bank.kkpfg.com robots allows but pages return 403 to curl and WebFetch
 major-cineplex,Major Cineplex,entertainment,https://www.majorcineplex.com,poc,
 sf-cinema,SF Cinema,entertainment,https://www.sfcinema.com,todo,round1: robots.txt returns Cloudflare 403 to curl and WebFetch so no pages fetched; search leads show SF+ points and seasonal promos (Songkran senior / Mother's Day) but no birthday perk; check SF app manually
 dreamworld,Dream World,entertainment,https://www.dreamworld.co.th,poc,
 siam-amazing-park,Siam Amazing Park,entertainment,https://www.siamamazingpark.com,todo,round2: No birthday perk on official pages; Amazing Club pages are stale (last events 2018) and Amazing-Club-Privilege redirects to splash; news leads mention member birth-month free entry but unverifiable on site
 sea-life-bangkok,SEA LIFE Bangkok,entertainment,https://www.visitsealife.com/bangkok,skip,round3: Discount offers and annual pass benefits pages have no birthday perk; old birthday-party URL redirects to general admission (paid package not a perk)
-madame-tussauds-bangkok,Madame Tussauds Bangkok,entertainment,https://www.madametussauds.com/bangkok,todo,
-fitness-first-th,Fitness First Thailand,entertainment,https://www.fitnessfirst.co.th,todo,
-virgin-active-th,Virgin Active Thailand,entertainment,https://www.virginactive.co.th,todo,
-jetts-th,Jetts Thailand,entertainment,https://www.jetts.co.th,todo,
+madame-tussauds-bangkok,Madame Tussauds Bangkok,entertainment,https://www.madametussauds.com/bangkok,skip,round4: robots allowed; home tickets and help-centre pages have no birthday mention; search leads show only age-based free entry and early bird discounts
+fitness-first-th,Fitness First Thailand,entertainment,https://www.fitnessfirst.com/th/th,skip,round4: fitnessfirst.co.th redirects to fitnessfirst.com/th; robots allowed; FAQ and membership pages have no birthday perk (only general free guest pass)
+virgin-active-th,Virgin Active Thailand,entertainment,https://www.virginactive.co.th,skip,round4: robots allowed; home and /content/faq have no birthday mention; CelebrateYou promo page now 404 and was a join offer not birthday
+jetts-th,Jetts Thailand,entertainment,https://www.jetts.co.th,todo,round4: robots allows home but site returns HTTP 403 to our client (bot block); not bypassed; no birthday perk found in search leads
 harborland,HarborLand,entertainment,https://www.harborlandgroup.com,todo,round3: harborland.co.th redirects to harborlandgroup.com; robots.txt returns 403 so robots could not be confirmed and site was not fetched; no official birthday lead found
-grab-th,Grab Thailand,app,https://www.grab.com/th,todo,
-foodpanda-th,foodpanda Thailand,app,https://www.foodpanda.co.th,todo,
-shopee-th,Shopee Thailand,app,https://shopee.co.th,todo,
-lazada-th,Lazada Thailand,app,https://www.lazada.co.th,todo,
-truemoney,TrueMoney,app,https://www.truemoney.com,todo,
+grab-th,Grab Thailand,app,https://www.grab.com/th,skip,round4: GrabRewards now redirects to GrabCoins page; no customer birthday perk on grabcoins / grabunlimited / sitemap pages; only past company anniversary campaigns
+foodpanda-th,foodpanda Thailand,app,https://www.foodpanda.co.th,skip,round4: foodpanda.co.th (incl. robots.txt) now 301-redirects to Robinhood (robinhood.co.th) referral link; foodpanda no longer operates in Thailand so no perk
+shopee-th,Shopee Thailand,app,https://shopee.co.th,skip,round4: No personal birthday voucher on official pages; only 12.12 company birthday sale; shopee.co.th/blog/birthday-promotion is a roundup of other brands' birthday promos not a Shopee perk
+lazada-th,Lazada Thailand,app,https://www.lazada.co.th,skip,round4: No customer birthday perk found; only March company birthday sale (platform-wide); campaign pages are JS-only
+truemoney,TrueMoney,app,https://www.truemoney.com,todo,round4: robots.txt allows all but site returns 403 to curl and WebFetch (bot block); leads only mention company anniversary campaigns (TrueMoney Birthday 2024 ended Aug 2024)
 true-privilege,True Privilege,app,https://www.true.th,poc,
 ais-points,AIS Points / Serenade,app,https://www.ais.th,skip,round3: No birthday privilege on ais.th; loyalty and main sitemaps (1500+ URLs) have no birthday pages; leads only mention monthly Serenade Day
-robinhood,Robinhood,app,https://www.robinhood.in.th,todo,
+robinhood,Robinhood,app,https://www.robinhood.co.th,skip,round4: robinhood.in.th redirects to robinhood.co.th; homepage static HTML has no birthday perk; no official page found stating one
 zoo-thailand,องค์การสวนสัตว์,gov,https://www.zoothailand.org,todo,round2: Site unreachable (TLS chain error via curl and 503 via WebFetch) so robots.txt could not be checked; leads show only holiday free-entry days not personal birthdays
-fine-arts-museums,พิพิธภัณฑสถานแห่งชาติ (กรมศิลปากร),gov,https://www.finearts.go.th,todo,
-nsm,องค์การพิพิธภัณฑ์วิทยาศาสตร์แห่งชาติ,gov,https://www.nsm.or.th,todo,
+fine-arts-museums,พิพิธภัณฑสถานแห่งชาติ (กรมศิลปากร),gov,https://www.finearts.go.th,skip,round4: robots allows all; no birthday free entry found; official free-entry days are fixed dates (2 Apr Thai Heritage Day / 19 Sep Thai Museum Day / New Year) and age/student exemptions
+nsm,องค์การพิพิธภัณฑ์วิทยาศาสตร์แห่งชาติ,gov,https://www.nsm.or.th,todo,round4: robots.txt itself blocked by Incapsula bot wall so robots could not be confirmed; did not fetch site; search leads show no birthday free entry
 bts,BTS / Rabbit,gov,https://www.bts.co.th,todo,ขนส่งสาธารณะ
 mrt,MRT (BEM),gov,https://metro.bemplc.co.th,todo,ขนส่งสาธารณะ
