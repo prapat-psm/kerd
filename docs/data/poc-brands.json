@@ -152,7 +152,7 @@
     "source_url": "https://www.gsb.or.th/promotions/happy-birthday-x3/",
     "source_checked_at": "2026-10-08",
     "robots_txt": "allowed",
-    "verify_method": "auto", "confidence": "high", "difficulty": "medium",
+    "verify_method": "auto", "confidence": "high", "publish": true, "difficulty": "medium",
     "notes": "ใช้แทน KTC/Krungsri: KTC มีแต่โปร 'birthday' ที่เป็นวันครบรอบของร้านค้า (เช่น King Power) ส่วนโปร Minor Hotels หมดอายุไปแล้ว krungsricard.com ต่อ SSL ไม่สำเร็จ ทำให้เช็ก robots.txt ไม่ได้และไม่ได้ดึงข้อมูล GSB ยังมีหน้าแลกแต้มรายเดือนแยก ('Birthday Privilege' แลก gift card 500 บาท ใช้ 2,750 แต้มจากปกติ 5,500 สำหรับเดือน ต.ค. 2569 และเปลี่ยน slug ทุกเดือน) ซึ่งยังไม่ได้เพิ่มเข้ามา"
   },
   {
@@ -173,7 +173,7 @@
     "source_url": "https://www.watsons.co.th/en/member-watsonselite-terms",
     "source_checked_at": "2026-10-08",
     "robots_txt": "allowed",
-    "verify_method": "auto", "confidence": "high", "difficulty": "medium",
+    "verify_method": "auto", "confidence": "high", "publish": true, "difficulty": "medium",
     "notes": "สิทธิ์ของระดับ elite ระบุชัดเจน แต่ของสมาชิกทั่วไป (/th/watsons-member-birthday_21_V2) หน้าเว็บไม่มีรายละเอียดให้อ่าน ต้องยืนยันเอง ผลค้นหามี 'Online Birthday Sale' ปนมา ซึ่งเป็นวันเกิดของร้าน ไม่ใช่ของลูกค้า"
   },
   {
@@ -263,6 +263,7 @@
     "robots_txt": "allowed",
     "verify_method": "auto",
     "confidence": "high",
+    "publish": true,
     "difficulty": "easy",
     "notes": "ไม่ใช่ของฟรี แต่เป็นชุดราคาพิเศษ 799 บาท สิทธิ์ซื้อชุดใช้ได้ถึงสิ้นเดือนถัดจากเดือนเกิด (window_days_after=30 เป็นค่าประมาณ) ส่วนคะแนนคูณใช้เฉพาะเดือนเกิด แคมเปญระบุสิ้นสุด 31 ธ.ค. 2569 ต้องตรวจซ้ำต้นปี 2570 หน้า /hbd-gon-member/ อีกหน้าระบุบางสาขาเริ่มขายช้ากว่าและยกเว้นสาขาเซ็นทรัลพาร์ค โดเมนจริงคือ barbqplaza.com (www redirect)"
   },
@@ -363,6 +364,7 @@
     "robots_txt": "allowed",
     "verify_method": "auto",
     "confidence": "high",
+    "publish": true,
     "difficulty": "hard",
     "notes": "เฉพาะ Diamond (ยอดสะสม 6,000 บาท) ระดับ Red/Gold ไม่มีสิทธิวันเกิดบนหน้าเว็บ บทความลงวันที่ 30 ก.ย. 2026 ไม่มีวันสิ้นสุด /robots.txt ของโดเมนคืนหน้า HTML (ไม่มีไฟล์จริง) จึงถือว่าไม่มีข้อห้าม URL มีช่องว่าง (%20)"
   },
@@ -677,6 +679,7 @@
     "robots_txt": "allowed",
     "verify_method": "auto",
     "confidence": "high",
+    "publish": true,
     "difficulty": "medium",
     "notes": "สิทธิ์เป็นสัปดาห์เกิด (อาทิตย์-เสาร์) ไม่ใช่ทั้งเดือน หน้าบัตรไม่ระบุวันหมดอายุ (หน้าเดียวกันมีค่าธรรมเนียมที่มีผล 1 ก.ค. 2569 จึงน่าจะยังเป็นปัจจุบัน) ขั้นตอนรับสิทธิ์สรุปจากบทความทางการ https://www.aeon.co.th/aeon/tips-tricks/free-movie-major-aeon-mgen-visa"
   },

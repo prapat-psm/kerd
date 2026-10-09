@@ -18,11 +18,25 @@ describe("buildPocSeed", () => {
   });
 
   it("โปรเริ่มเป็น draft และยังไม่ถือว่าตรวจแล้ว จนกว่าคนจะยืนยัน", () => {
-    for (const { promotion } of buildPocSeed(raw).rows) {
-      expect(promotion.status).toBe("draft");
+    for (const { promotion } of buildPocSeed(raw).rows.filter((r) => r.promotion.status === "draft")) {
       expect(promotion.lastVerifiedAt).toBeNull();
       expect(promotion).not.toHaveProperty("brandSlug");
     }
+  });
+
+  it("เผยแพร่เฉพาะ record ที่คนอนุมัติ (publish: true) โดยใช้วันที่ตรวจต้นทางเป็นวันตรวจล่าสุด", () => {
+    const published = buildPocSeed(raw).rows.filter((r) => r.promotion.status === "published");
+    expect(published.map((r) => r.brand.slug).sort()).toEqual(
+      ["aeon-th", "bar-b-q-plaza", "gsb-credit-card", "pizza-hut-th", "watsons-th"],
+    );
+    for (const { promotion } of published) expect(promotion.lastVerifiedAt).toEqual(new Date("2026-10-08"));
+  });
+
+  it("ไม่เผยแพร่ record ที่ confidence ไม่สูง แม้จะติด publish: true", () => {
+    const base = { slug: "x", brand: "X", category: "food", title: "X", benefit: "ลด 10%", benefit_type: "other", window: "month" };
+    const rec = { ...base, source_url: "https://x.com", how_to_redeem: ["แสดงบัตร"], verify_method: "auto", source_checked_at: "2026-10-08" };
+    const { rows } = buildPocSeed([{ ...rec, confidence: "medium", publish: true }]);
+    expect(rows[0].promotion.status).toBe("draft");
   });
 
   it("ไม่ส่ง tiers เมื่อไม่มี tier (ให้ DB เป็น NULL)", () => {
