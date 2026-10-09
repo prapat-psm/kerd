@@ -55,6 +55,17 @@ jobs:
           else
             npx prisma migrate deploy
           fi
+      # นำเข้าโปรจาก docs/data/poc-brands.json (รันซ้ำได้) ก่อน deploy เพื่อให้หน้าที่ build ได้ข้อมูลล่าสุด
+      # โปรที่ approve แล้ว (publish: true + confidence high) เป็น published ที่เหลือเป็น draft
+      - name: Seed promotions
+        env:
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+        run: |
+          if [ -z "$DIRECT_URL" ]; then
+            echo "::notice::ไม่มี secret DIRECT_URL ข้าม db:seed"
+          else
+            DATABASE_URL="$DIRECT_URL" npm run db:seed
+          fi
       # ให้ Vercel build เอง: env ของ production (เช่น DATABASE_URL แบบ Sensitive) ใช้ได้เฉพาะตอน build บน Vercel
       # ถ้าดึง env ลงมา build บน runner ค่า Sensitive จะว่าง ทำให้ build บน runner ต่อ DB ไม่ได้
       - id: deploy

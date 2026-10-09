@@ -26,4 +26,12 @@ describe("การตั้งค่า deploy", () => {
     expect(workflow).not.toContain("--prebuilt");
     expect(workflow).toMatch(/vercel deploy --prod/);
   });
+
+  it("seed โปรจาก docs/data หลัง migrate และก่อน deploy เพื่อให้ build ได้ข้อมูลล่าสุด", () => {
+    const migrate = workflow.indexOf("npx prisma migrate deploy");
+    const seed = workflow.indexOf("npm run db:seed");
+    const deploy = workflow.indexOf("vercel deploy --prod");
+    expect(seed).toBeGreaterThan(migrate);
+    expect(deploy).toBeGreaterThan(seed);
+  });
 });
