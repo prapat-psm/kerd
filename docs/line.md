@@ -1,5 +1,7 @@
 # LINE Login + เตือนฉัน
 
+> **พักไว้ (2026-10-09):** ปุ่มเตือนฉันและหน้า `/remind` ถูกซ่อนด้วย `LINE_REMINDERS_ENABLED = false` ใน `lib/features.ts` เปิดใหม่ได้ด้วยการเปลี่ยนเป็น `true` พร้อมตั้ง env ด้านล่าง
+
 หน้า `/remind` ใช้ Auth.js (LINE provider) แบบ JWT ในคุกกี้ ไม่มีตาราง session
 ขอ scope แค่ `openid` จึงได้แค่ LINE userId (ไม่ได้ชื่อ รูป อีเมล) และ `bot_prompt=aggressive` ชวนเพิ่มเพื่อน LINE OA ตอน login
 ถ้ายังไม่ตั้ง env ครบ หน้า `/remind` จะแสดง "เปิดให้ใช้เร็วๆ นี้"

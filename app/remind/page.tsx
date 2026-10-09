@@ -5,7 +5,8 @@ import { loadAccount, signInWithLine, signOutAction } from "@/app/actions/accoun
 import { ReminderForm } from "@/components/reminder-form";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { lineLoginEnabled } from "@/lib/account/auth-config";
+import { notFound } from "next/navigation";
+import { lineRemindersOn } from "@/lib/features";
 
 export const metadata: Metadata = {
   title: "เตือนฉันก่อนเดือนเกิด",
@@ -20,9 +21,6 @@ function parseMonth(v: string | string[] | undefined): number | undefined {
 async function RemindBody({ searchParams }: Pick<PageProps<"/remind">, "searchParams">) {
   const month = parseMonth((await searchParams).month);
 
-  if (!lineLoginEnabled(process.env)) {
-    return <p className="rounded-lg bg-muted p-4">เปิดให้ใช้เร็วๆ นี้ ระหว่างนี้ดูโปรของเดือนเกิดคุณได้จากหน้าแรก</p>;
-  }
 
   const session = await auth();
   if (!session?.user?.id) {
@@ -55,6 +53,8 @@ async function RemindBody({ searchParams }: Pick<PageProps<"/remind">, "searchPa
 }
 
 export default function RemindPage({ searchParams }: PageProps<"/remind">) {
+  // พักฟีเจอร์ LINE ไว้ (lib/features.ts)
+  if (!lineRemindersOn(process.env)) notFound();
   return (
     <div className="flex flex-col gap-4 pt-4">
       <h1 className="text-2xl font-semibold">เตือนฉันก่อนเดือนเกิด</h1>

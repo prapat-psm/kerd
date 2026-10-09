@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { FilteredPromoList } from "@/components/filtered-promo-list";
 import { HeadingSkeleton, PromoListSkeleton } from "@/components/promo-card-skeleton";
+import { lineRemindersOn } from "@/lib/features";
 import { MONTHS, monthFromSlug } from "@/lib/months";
 import { getPromosForMonth } from "@/lib/promos/queries";
 
@@ -32,11 +33,13 @@ async function MonthPromos({ params }: Pick<PageProps<"/[month]">, "params">) {
       <h1 className="text-2xl font-semibold text-foreground">โปรวันเกิดเดือน{MONTHS[n - 1].th}</h1>
       <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
         <p className="text-sm text-muted-foreground">{promos.length} โปรที่ตรวจแล้ว</p>
-        <Button asChild variant="outline" size="sm">
-          <Link href={`/remind?month=${n}`}>
-            <span aria-hidden>🔔</span> เตือนฉันก่อนเดือนเกิด
-          </Link>
-        </Button>
+        {lineRemindersOn(process.env) && (
+          <Button asChild variant="outline" size="sm">
+            <Link href={`/remind?month=${n}`}>
+              <span aria-hidden>🔔</span> เตือนฉันก่อนเดือนเกิด
+            </Link>
+          </Button>
+        )}
       </div>
       {promos.length === 0 ? (
         <p className="mt-6 text-muted-foreground">ยังไม่มีโปรที่ตรวจแล้วสำหรับเดือนนี้</p>
