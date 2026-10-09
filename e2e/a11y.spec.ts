@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 // ทุกหน้าหลักต้องผ่าน WCAG 2.1 AA ทั้งธีมสว่างและมืด (ต้องมีโปร published อย่างน้อย 1 ใบ ดู scripts/e2e-fixture.sql)
-const PAGES = ["/", "/birthday/october", "/brand/mk-restaurants"];
+const PAGES = ["/", "/october", "/brand", "/brand/mk-restaurants", "/privacy", "/terms"];
 
 for (const scheme of ["light", "dark"] as const) {
   for (const path of PAGES) {
@@ -17,12 +17,29 @@ for (const scheme of ["light", "dark"] as const) {
 }
 
 test("หน้าเดือนมีการ์ดโปรให้ตรวจ", async ({ page }) => {
-  await page.goto("/birthday/october");
+  await page.goto("/october");
   await expect(page.locator('[data-slot="card"]').first()).toBeVisible();
 });
 
-test("skip link พาไปเนื้อหาหลักด้วยคีย์บอร์ด", async ({ page }) => {
+test("ลิงก์เก่า /birthday/october ย้ายไป /october", async ({ page }) => {
   await page.goto("/birthday/october");
+  await expect(page).toHaveURL(/\/october$/);
+});
+
+test("กรองหมวดบนหน้าเดือนแล้วเหลือเฉพาะหมวดนั้น", async ({ page }) => {
+  await page.goto("/october");
+  const group = page.getByRole("group", { name: "กรองตามหมวด" });
+  const all = await page.locator('[data-slot="card"]').count();
+  const chip = group.getByRole("button").nth(1);
+  const expected = Number(await chip.locator("span").last().textContent());
+  await chip.click();
+  await expect(chip).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator('[data-slot="card"]')).toHaveCount(expected);
+  expect(expected).toBeLessThan(all);
+});
+
+test("skip link พาไปเนื้อหาหลักด้วยคีย์บอร์ด", async ({ page }) => {
+  await page.goto("/october");
   await page.keyboard.press("Tab");
   const skip = page.getByRole("link", { name: "ข้ามไปเนื้อหาหลัก" });
   await expect(skip).toBeFocused();

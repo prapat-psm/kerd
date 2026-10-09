@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { IBM_Plex_Sans_Thai } from "next/font/google";
 import { Logo } from "@/components/logo";
+import { SiteFooter } from "@/components/site-footer";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { THEME_SCRIPT } from "@/lib/theme";
 import "./globals.css";
@@ -37,12 +38,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <span className="text-2xl font-semibold">kerd</span>
             <span className="text-sm text-muted-foreground">เกิด</span>
           </Link>
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            <Link href="/brand" className="rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:underline">
+              แบรนด์
+            </Link>
+            <ThemeToggle />
+          </div>
         </header>
         <main id="main" tabIndex={-1} className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 outline-none">{children}</main>
-        <footer className="mx-auto w-full max-w-3xl px-4 py-8 text-xs text-muted-foreground">
-          ข้อมูลรวบรวมจากหน้าเว็บทางการของแต่ละแบรนด์ เงื่อนไขอาจเปลี่ยนได้ กรุณาตรวจสิทธิ์ที่ต้นทางก่อนใช้ทุกครั้ง
-        </footer>
+        <SiteFooter />
       </body>
     </html>
   );
