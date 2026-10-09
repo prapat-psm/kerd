@@ -497,5 +497,237 @@
     "confidence": "medium",
     "difficulty": "easy",
     "notes": "เนื้อหาเป็นรูปภาพ 2 รูป (BDPackage69.jpg และ Bdfreegift.jpg) ไม่มีข้อความใน HTML URL ยังเป็น birthday-package-2022 แต่หัวข้อหน้าเป็น Birthday Package 2026 และรูประบุปี 2569 หน้า FAQ ยืนยันว่า Birthday Gift ใช้ได้ที่ร้านเท่านั้น ไม่ใช่ชุดของขวัญที่ขาย"
+  },
+  {
+    "brand": "Cute Press",
+    "slug": "cute-press",
+    "category": "beauty",
+    "title": "Cute Press Member: ส่วนลดวันเกิด 30–50% ตามระดับสมาชิก",
+    "benefit": "สมาชิก Cute Press ได้ส่วนลดวันเกิด 30–50% (สุทธิ) ตามระดับสมาชิก ใช้ได้ภายในวงเงินของแต่ละระดับ ระดับ Platinum ได้ Gift Set มูลค่า 1,000 บาทเพิ่มเมื่อใช้สิทธิ์เต็มวงเงิน",
+    "benefit_type": "discount_percent",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": [
+      {
+        "tier": "Platinum",
+        "benefit": "ส่วนลด 50% วงเงิน 6,000 บาท + Platinum Gift Set มูลค่า 1,000 บาท เมื่อใช้สิทธิ์เต็มวงเงิน",
+        "conditions": [
+          "ยอดซื้อสะสมสุทธิ 4,001 บาท/ปี ขึ้นไป",
+          "ของขวัญจัดส่งภายใน 20 วันหลังหมดเขตสิทธิ์เดือนเกิด"
+        ]
+      },
+      {
+        "tier": "Diamond",
+        "benefit": "ส่วนลด 50% วงเงิน 4,000 บาท",
+        "conditions": [
+          "ยอดซื้อสะสมสุทธิ 2,001–4,000 บาท/ปี"
+        ]
+      },
+      {
+        "tier": "Gold",
+        "benefit": "ส่วนลด 40% วงเงิน 2,000 บาท",
+        "conditions": [
+          "ยอดซื้อสะสมสุทธิ 1,001–2,000 บาท/ปี"
+        ]
+      },
+      {
+        "tier": "Silver",
+        "benefit": "ส่วนลด 40% วงเงิน 1,000 บาท",
+        "conditions": [
+          "ยอดซื้อสะสมสุทธิ 501–1,000 บาท/ปี"
+        ]
+      },
+      {
+        "tier": "Bronze",
+        "benefit": "ส่วนลด 30% สินค้าราคาปกติสูงสุด 5 ชิ้น",
+        "conditions": [
+          "ยอดซื้อสะสมสุทธิน้อยกว่า 501 บาท/ปี",
+          "ใช้สิทธิ์ได้ครั้งเดียว"
+        ]
+      }
+    ],
+    "requires_membership": true,
+    "membership_name": "Cute Press Member",
+    "signup_lead_days": null,
+    "conditions": [
+      "วงเงินคิดก่อนหักส่วนลด",
+      "ใช้ส่วนลดได้ภายใน 2 เดือน และใช้ได้หลายครั้งในวงเงิน (ยกเว้น Bronze ใช้ได้ครั้งเดียว)",
+      "ระดับคิดจากยอดซื้อสะสม 12 เดือนก่อนเดือนเกิด ไม่รวมยอดจากบิลส่วนลดวันเกิด",
+      "สะสมยอดเพื่อเลื่อนระดับก่อนเดือนเกิดได้",
+      "ระดับ Silver ขึ้นไปได้คะแนน 2 เท่าในบิลสิทธิ์วันเกิด"
+    ],
+    "channels": [
+      "in_store",
+      "online",
+      "app"
+    ],
+    "how_to_redeem": [
+      "สมัครสมาชิก Cute Press (ฟรี) และกรอกวันเกิดในบัญชี",
+      "ในช่วงเดือนเกิด ใช้สิทธิ์ส่วนลดวันเกิดตามระดับสมาชิก ตรวจเงื่อนไขล่าสุดใน Cute Press Mobile Application"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.cutepress.com/member-benefits.html",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "medium",
+    "difficulty": "medium",
+    "notes": "หน้าเว็บไม่ระบุวันหมดอายุ และไม่ได้บอกชัดว่าใช้ได้ที่ช่องทางใดบ้าง (หน้าร้าน/ออนไลน์/แอป) ระบุว่าใช้ได้ภายใน 2 เดือน แต่ไม่ชัดว่านับจากเดือนเกิดหรือไม่ robots.txt ว่างเปล่า"
+  },
+  {
+    "brand": "Dream World",
+    "slug": "dreamworld",
+    "category": "entertainment",
+    "title": "ดรีมเวิลด์: เที่ยวตรงวันเกิดรับบัตรดรีมเวิลด์วีซ่าฟรี",
+    "benefit": "เจ้าของวันเกิดที่มาตรงวันเกิดรับบัตรดรีมเวิลด์วีซ่าฟรี 1 ใบ (มูลค่า 800 บาท) ถ้ามาในเดือนเกิดจ่าย 630 บาท และผู้ติดตามไม่เกิน 3 คนจ่ายคนละ 695 บาท",
+    "benefit_type": "free_entry",
+    "window": "day",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": [
+      {
+        "tier": "ตรงวันเกิด",
+        "benefit": "บัตรดรีมเวิลด์วีซ่าฟรี 1 ใบ (ปกติ 800 บาท)",
+        "conditions": [
+          "มาเที่ยวตรงวันเกิด",
+          "ลงทะเบียนล่วงหน้าอย่างน้อย 1 วัน"
+        ]
+      },
+      {
+        "tier": "ตรงเดือนเกิด",
+        "benefit": "บัตรดรีมเวิลด์วีซ่าราคา 630 บาท (ปกติ 800 บาท)",
+        "conditions": [
+          "มาเที่ยวภายในเดือนเกิด",
+          "ลงทะเบียนล่วงหน้าอย่างน้อย 1 วัน"
+        ]
+      },
+      {
+        "tier": "ผู้ติดตาม",
+        "benefit": "บัตรดรีมเวิลด์วีซ่าคนละ 695 บาท",
+        "conditions": [
+          "ไม่เกิน 3 คนต่อสิทธิ์ของเจ้าของวันเกิด/เดือนเกิด"
+        ]
+      }
+    ],
+    "requires_membership": false,
+    "membership_name": null,
+    "signup_lead_days": 1,
+    "conditions": [
+      "ต้องลงทะเบียนรับสิทธิ์ล่วงหน้าอย่างน้อย 1 วัน",
+      "เจ้าของวันเกิด/เดือนเกิดต้องแสดงบัตรประชาชนตัวจริง",
+      "รับสิทธิ์ที่ห้องประชาสัมพันธ์ของสวนสนุก",
+      "เงื่อนไขเป็นไปตามที่บริษัทกำหนด"
+    ],
+    "channels": [
+      "in_store",
+      "online"
+    ],
+    "how_to_redeem": [
+      "ลงทะเบียนรับสิทธิ์ผ่านลิงก์ลงทะเบียนในหน้าโปรโมชันของดรีมเวิลด์ อย่างน้อย 1 วันก่อนวันที่จะไป",
+      "ในวันเกิด (หรือภายในเดือนเกิด) ไปที่ห้องประชาสัมพันธ์ของดรีมเวิลด์ พร้อมบัตรประชาชนตัวจริง",
+      "รับบัตรดรีมเวิลด์วีซ่าฟรี หรือซื้อในราคาพิเศษสำหรับเดือนเกิดและผู้ติดตาม"
+    ],
+    "required_docs": [
+      "บัตรประชาชนตัวจริง"
+    ],
+    "source_url": "https://www.dreamworld.co.th/promotion/25",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "medium",
+    "difficulty": "medium",
+    "notes": "หน้าโปรไม่ระบุวันสิ้นสุด ข้อมูลอัปเดตล่าสุด 31 ส.ค. 2569 (จาก API ของเว็บ) ใน HTML แบบ static มีแค่หัวข้อการ์ด 'เที่ยวตรงวันเกิด รับบัตรดรีมเวิลด์วีซ่าฟรี' ส่วนรายละเอียดเงื่อนไขโหลดด้วย JS จาก /api/promotion/all ลิงก์ลงทะเบียนอยู่ที่ reg.dreamworld.co.th/regdw (เว็บไม่มี robots.txt จึงถือว่าไม่ห้าม)"
+  },
+  {
+    "brand": "AEON Thailand",
+    "slug": "aeon-th",
+    "category": "bank",
+    "title": "บัตรเครดิต AEON M GEN VISA: ดูหนังฟรีเพิ่ม 1 ที่นั่งในสัปดาห์เกิด",
+    "benefit": "ผู้ถือบัตร AEON M GEN VISA รับสิทธิ์ดูหนังฟรีเพิ่ม 1 ที่นั่งที่ Major Cineplex ในสัปดาห์เกิด (นอกเหนือจากสิทธิ์ดูหนังฟรีรายเดือน)",
+    "benefit_type": "free_item",
+    "window": "week",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": null,
+    "requires_membership": true,
+    "membership_name": "บัตรเครดิต AEON M GEN VISA",
+    "signup_lead_days": null,
+    "conditions": [
+      "เฉพาะบัตรเครดิต AEON M GEN VISA",
+      "ใช้ได้ตั้งแต่วันอาทิตย์ถึงวันเสาร์ของสัปดาห์ที่ตรงกับวันเกิดเท่านั้น",
+      "เฉพาะที่นั่งปกติในระบบ 2D อัปเกรดที่นั่งไม่ได้",
+      "ใช้สิทธิ์ที่ Major Cineplex"
+    ],
+    "channels": [
+      "in_store",
+      "app"
+    ],
+    "how_to_redeem": [
+      "ในสัปดาห์เกิด เปิดแอป AEON THAI MOBILE แล้วกดรับสิทธิ์ตั๋วหนังฟรีวันเกิดเพื่อรับ QR",
+      "ที่ Major Cineplex แสดงบัตร AEON M GEN VISA พร้อมบัตรประชาชนตัวจริง",
+      "เลือกรอบและที่นั่ง (2D ที่นั่งปกติ) แล้วใช้ QR จากแอปเพื่อรับตั๋ว"
+    ],
+    "required_docs": [
+      "บัตรเครดิต AEON M GEN VISA",
+      "บัตรประชาชนตัวจริง"
+    ],
+    "source_url": "https://www.aeon.co.th/aeon/cards/m-gen-visa-card",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "high",
+    "difficulty": "medium",
+    "notes": "สิทธิ์เป็นสัปดาห์เกิด (อาทิตย์-เสาร์) ไม่ใช่ทั้งเดือน หน้าบัตรไม่ระบุวันหมดอายุ (หน้าเดียวกันมีค่าธรรมเนียมที่มีผล 1 ก.ค. 2569 จึงน่าจะยังเป็นปัจจุบัน) ขั้นตอนรับสิทธิ์สรุปจากบทความทางการ https://www.aeon.co.th/aeon/tips-tricks/free-movie-major-aeon-mgen-visa"
+  },
+  {
+    "brand": "True Privilege / TrueYou",
+    "slug": "true-privilege",
+    "category": "app",
+    "title": "ลูกค้าทรู (True Card 5 สี): เน็ตและโทรฟรีในวันเกิด",
+    "benefit": "ลูกค้าทรูที่มีทรูการ์ดได้เน็ตฟรี 1 GB และโทรฟรีในเครือข่าย 24 ชม. ในวันเกิด (ทรูแบล็คได้เน็ต 2 GB และ SMS ฟรี 50 ข้อความ) พร้อมคูปองพิเศษในเดือนเกิด",
+    "benefit_type": "other",
+    "window": "day",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": [
+      {
+        "tier": "TrueBlack",
+        "benefit": "เน็ตฟรี 2 GB โทรฟรีในเครือข่าย 24 ชม. SMS ฟรี 50 ข้อความ",
+        "conditions": [
+          "ลูกค้าระดับทรูแบล็ค"
+        ]
+      },
+      {
+        "tier": "TrueRed / TrueBlue / TrueGreen / TrueWhite",
+        "benefit": "เน็ตฟรี 1 GB โทรฟรีในเครือข่าย 24 ชม.",
+        "conditions": [
+          "ลูกค้าระดับทรูการ์ดสีนั้นๆ"
+        ]
+      }
+    ],
+    "requires_membership": true,
+    "membership_name": "True Card (ทรูแบล็ค/เรด/บลู/กรีน/ไวท์)",
+    "signup_lead_days": null,
+    "conditions": [
+      "ต้องเป็นลูกค้าทรูที่มีระดับทรูการ์ด",
+      "โทรฟรีเฉพาะในเครือข่ายทรู",
+      "สิทธิ์เน็ต/โทรฟรีใช้ได้เฉพาะวันเกิด คูปองพิเศษใช้ในเดือนเกิด"
+    ],
+    "channels": [
+      "app"
+    ],
+    "how_to_redeem": [
+      "ตรวจสอบระดับทรูการ์ดและวันเกิดที่ลงทะเบียนไว้ในแอป TrueID",
+      "ในวันเกิด ตรวจสอบสิทธิ์เน็ตและโทรฟรีที่เข้าเบอร์ทรู และดูคูปองเดือนเกิดในหมวดสิทธิพิเศษของแอป TrueID"
+    ],
+    "required_docs": [],
+    "source_url": "https://privilege.trueid.net/truecard/benefits.html",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "manual",
+    "confidence": "low",
+    "difficulty": "easy",
+    "notes": "แหล่งที่มาเป็นตารางสิทธิทรูการ์ดบน privilege.trueid.net (โดเมนของทรู) ไม่ใช่ true.th หน้าไม่มีวันที่หรือวันหมดอายุ และไม่บอกวิธีรับสิทธิ์ ขั้นตอนข้างบนจึงเป็นการสรุปแบบกว้างๆ หน้าเงื่อนไขเก่าปี 2020 เคยระบุว่าสิทธิ์จะเข้าเบอร์อัตโนมัติในวันเกิด ควรตรวจซ้ำแบบ manual ว่ายังใช้ได้จริง ตั้งเป็น manual เพราะ confidence ต่ำ ยังไม่เข้า seed"
   }
 ]
