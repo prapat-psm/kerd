@@ -49,7 +49,10 @@ export function PromoCard({ promo, linkBrand = false }: { promo: PromoCardData; 
             )}
           </h2>
         </CardTitle>
-        <CardDescription>{promo.windowLabel}</CardDescription>
+        <CardDescription>
+          {promo.windowLabel}
+          {promo.period && <span className="mt-0.5 block font-medium text-foreground">{promo.period}</span>}
+        </CardDescription>
         <CardAction>
           <FreshnessBadge freshness={promo.freshness} />
         </CardAction>

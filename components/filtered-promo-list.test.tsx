@@ -6,7 +6,7 @@ import { FilteredPromoList } from "./filtered-promo-list";
 
 afterEach(cleanup);
 
-function promo(id: string, name: string, category: string): PromoCardData {
+function promo(id: string, name: string, category: string, window: PromoCardData["window"] = "month"): PromoCardData {
   return {
     id,
     title: `โปร ${name}`,
@@ -19,13 +19,15 @@ function promo(id: string, name: string, category: string): PromoCardData {
     sourceUrl: `https://example.com/${id}`,
     lastVerifiedAt: new Date("2026-10-01"),
     brand: { name, slug: id, category },
+    window,
     windowLabel: "ใช้ได้ทั้งเดือนเกิด",
+    period: null,
     tiers: null,
     freshness: "fresh",
   };
 }
 
-const promos = [promo("a", "MK", "food"), promo("b", "KBank", "bank"), promo("c", "Sizzler", "food")];
+const promos = [promo("a", "MK", "food"), promo("b", "KBank", "bank", "day"), promo("c", "Sizzler", "food", "week")];
 const cards = () => screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent);
 
 describe("FilteredPromoList", () => {
@@ -46,13 +48,46 @@ describe("FilteredPromoList", () => {
 
   it("กลับมา 'ทั้งหมด' ได้", () => {
     render(<FilteredPromoList promos={promos} />);
-    fireEvent.click(screen.getByRole("button", { name: /ธนาคาร/ }));
-    fireEvent.click(screen.getByRole("button", { name: /ทั้งหมด/ }));
+    const group = screen.getByRole("group", { name: "กรองตามหมวด" });
+    fireEvent.click(within(group).getByRole("button", { name: /ธนาคาร/ }));
+    fireEvent.click(within(group).getByRole("button", { name: /ทั้งหมด/ }));
     expect(cards()).toHaveLength(3);
   });
 
   it("มีหมวดเดียวไม่ต้องแสดงตัวกรอง", () => {
     render(<FilteredPromoList promos={[promos[0]]} />);
     expect(screen.queryByRole("group", { name: "กรองตามหมวด" })).toBeNull();
+  });
+
+  it("กรองตามช่วงที่ใช้ได้ (วันเกิด / สัปดาห์ / ทั้งเดือน)", () => {
+    render(<FilteredPromoList promos={promos} />);
+    const group = screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" });
+    fireEvent.click(within(group).getByRole("button", { name: /^วันเกิด/ }));
+    expect(cards()).toEqual(["KBank"]);
+  });
+
+  it("ใช้ตัวกรองหมวดและช่วงร่วมกันได้", () => {
+    render(<FilteredPromoList promos={promos} />);
+    fireEvent.click(screen.getByRole("button", { name: /อาหาร/ }));
+    fireEvent.click(within(screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("button", { name: /สัปดาห์วันเกิด/ }));
+    expect(cards()).toEqual(["Sizzler"]);
+  });
+
+  it("ถ้ากรองแล้วไม่เหลือโปร บอกให้ลองเปลี่ยนตัวกรอง", () => {
+    render(<FilteredPromoList promos={promos} />);
+    fireEvent.click(screen.getByRole("button", { name: /ธนาคาร/ }));
+    fireEvent.click(within(screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("button", { name: /สัปดาห์วันเกิด/ }));
+    expect(screen.getByText("ไม่มีโปรที่ตรงกับตัวกรองนี้")).toBeTruthy();
+  });
+
+  it("ทุกโปรใช้ได้ช่วงเดียวกัน ไม่ต้องแสดงตัวกรองช่วง", () => {
+    render(<FilteredPromoList promos={[promos[0]]} />);
+    expect(screen.queryByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).toBeNull();
+  });
+
+  it("แต่ละแถวตัวกรองมีป้ายบอกว่ากรองอะไร", () => {
+    render(<FilteredPromoList promos={promos} />);
+    expect(screen.getByText("หมวด")).toBeTruthy();
+    expect(screen.getByText("ใช้ได้ช่วง")).toBeTruthy();
   });
 });

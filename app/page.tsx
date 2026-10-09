@@ -1,32 +1,48 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { MONTHS } from "@/lib/months";
-import { stagger } from "@/lib/motion";
+import { Suspense } from "react";
+import { FilteredPromoList } from "@/components/filtered-promo-list";
+import { JsonLd } from "@/components/json-ld";
+import { PromoListSkeleton } from "@/components/promo-card-skeleton";
+import { getCurrentPromos } from "@/lib/promos/queries";
+import { promoListJsonLd, siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
+async function AllPromos() {
+  const promos = await getCurrentPromos();
+  const brands = [...new Map(promos.map((p) => [p.brand.slug, { name: p.brand.name, slug: p.brand.slug }])).values()];
+
+  return (
+    <>
+      <JsonLd data={promoListJsonLd(siteUrl(process.env), brands)} />
+      <p className="text-sm text-muted-foreground">
+        {promos.length} โปรจาก {brands.length} แบรนด์ ที่ตรวจกับหน้าเว็บทางการแล้ว
+      </p>
+      {promos.length === 0 ? (
+        <p className="mt-6 text-muted-foreground">ยังไม่มีโปรที่ตรวจแล้ว</p>
+      ) : (
+        <div className="mt-4">
+          <FilteredPromoList promos={promos} />
+        </div>
+      )}
+    </>
+  );
+}
+
 export default function Home() {
   return (
-    <div className="flex flex-col gap-8 pt-6">
+    <div className="flex flex-col gap-6 pt-6">
       <section>
-        <h1 className="text-3xl font-semibold text-foreground">เดือนเกิดนี้ ได้อะไรบ้าง?</h1>
-        <p className="mt-2 text-muted-foreground">เลือกเดือนเกิดของคุณ ดูโปรที่ใช้ได้ พร้อมวิธีใช้สิทธิ์และวันที่ตรวจล่าสุด</p>
+        <h1 className="text-3xl font-semibold text-foreground">วันเกิดนี้ ได้อะไรบ้าง?</h1>
+        <p className="mt-2 text-muted-foreground">
+          รวมโปรวันเกิดและเดือนเกิดทุกแบรนด์ กรองตามหมวด หรือตามช่วงที่ใช้ได้ (เฉพาะวันเกิด สัปดาห์วันเกิด หรือทั้งเดือนเกิด)
+        </p>
       </section>
-
-      <nav aria-label="เลือกเดือนเกิด">
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {MONTHS.map((m, i) => (
-            <li key={m.slug} className="animate-fade-up stagger" style={stagger(i)}>
-              <Button asChild variant="outline" size="lg" className="w-full bg-card text-base hover:border-primary motion-safe:hover:-translate-y-0.5">
-                <Link href={`/${m.slug}`} prefetch={true}>
-                  {m.th}
-                </Link>
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <div>
+        <Suspense fallback={<PromoListSkeleton />}>
+          <AllPromos />
+        </Suspense>
+      </div>
     </div>
   );
 }

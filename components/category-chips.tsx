@@ -8,13 +8,17 @@ export function CategoryChips({
   options,
   value,
   onChange,
+  label = "กรองตามหมวด",
+  className,
 }: {
+  className?: string;
+  label?: string;
   options: CategoryOption[];
   value: string;
   onChange: (value: string) => void;
 }) {
   return (
-    <div role="group" aria-label="กรองตามหมวด" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none]">
+    <div role="group" aria-label={label} className={cn("-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none]", className)}>
       {options.map((o) => {
         const active = o.value === value;
         return (

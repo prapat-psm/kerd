@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { activeInMonth, formatThaiDate, toCardData, windowLabel, type PromoRow } from "./view";
+import { formatThaiDate, isCurrent, periodLabel, toCardData, windowLabel, type PromoRow } from "./view";
 
 describe("windowLabel", () => {
   it("โปรทั้งเดือน", () => {
@@ -35,24 +35,46 @@ describe("formatThaiDate", () => {
   });
 });
 
-describe("activeInMonth", () => {
-  const today = new Date(2026, 9, 8);
+describe("isCurrent", () => {
+  const today = new Date(2026, 9, 8, 12);
 
-  it("โปรที่ไม่มีวันเริ่ม/หมดอายุ ใช้ได้ทุกเดือน", () => {
-    expect(activeInMonth({ validFrom: null, validUntil: null }, 3, today)).toBe(true);
+  it("โปรที่ไม่มีวันหมดอายุ แสดงตลอด", () => {
+    expect(isCurrent({ validFrom: null, validUntil: null }, today)).toBe(true);
   });
 
-  it("โปรที่หมดก่อนเดือนนั้นมาถึง ไม่นับ", () => {
-    // ก.พ. ถัดไปคือ ก.พ. 2027 แต่โปรหมด 31 ธ.ค. 2026
-    expect(activeInMonth({ validFrom: null, validUntil: new Date(2026, 11, 31) }, 2, today)).toBe(false);
+  it("โปรที่หมดไปแล้ว ไม่แสดง", () => {
+    expect(isCurrent({ validFrom: null, validUntil: new Date(2026, 9, 7) }, today)).toBe(false);
   });
 
-  it("โปรที่หมดกลางเดือน ยังนับในเดือนนั้น", () => {
-    expect(activeInMonth({ validFrom: null, validUntil: new Date(2026, 9, 15) }, 10, today)).toBe(true);
+  it("โปรที่หมดวันนี้ ยังแสดง", () => {
+    expect(isCurrent({ validFrom: null, validUntil: new Date(2026, 9, 8) }, today)).toBe(true);
   });
 
-  it("โปรที่เริ่มหลังเดือนนั้นจบ ไม่นับ", () => {
-    expect(activeInMonth({ validFrom: new Date(2026, 11, 1), validUntil: null }, 11, today)).toBe(false);
+  it("โปรที่ยังไม่เริ่ม ยังแสดง (การ์ดบอกวันเริ่ม)", () => {
+    expect(isCurrent({ validFrom: new Date(2026, 11, 1), validUntil: null }, today)).toBe(true);
+  });
+});
+
+describe("periodLabel", () => {
+  const now = new Date("2026-10-08T03:00:00Z");
+
+  it("ไม่มีช่วงเวลา ไม่ต้องแสดง", () => {
+    expect(periodLabel(null, null, now)).toBeNull();
+  });
+
+  it("มีวันหมดอายุ บอกว่าใช้ได้ถึงวันไหน", () => {
+    expect(periodLabel(null, new Date("2026-12-31T00:00:00+07:00"), now)).toBe("ใช้ได้ถึง 31 ธ.ค. 2569");
+  });
+
+  it("ยังไม่เริ่ม บอกวันเริ่ม", () => {
+    expect(periodLabel(new Date("2026-11-01T00:00:00+07:00"), null, now)).toBe("เริ่ม 1 พ.ย. 2569");
+    expect(periodLabel(new Date("2026-11-01T00:00:00+07:00"), new Date("2026-12-31T00:00:00+07:00"), now)).toBe(
+      "เริ่ม 1 พ.ย. 2569 ใช้ได้ถึง 31 ธ.ค. 2569",
+    );
+  });
+
+  it("เริ่มไปแล้ว ไม่ต้องบอกวันเริ่ม", () => {
+    expect(periodLabel(new Date("2026-01-01T00:00:00+07:00"), null, now)).toBeNull();
   });
 });
 
@@ -85,6 +107,14 @@ describe("toCardData", () => {
     expect(card.windowLabel).toBe("ใช้ได้ทั้งเดือนเกิด");
     expect(card.tiers).toEqual([{ tier: "Gold", benefit: "เป็ดย่าง", conditions: [] }]);
     expect(card.brand.slug).toBe("mk-restaurants");
+  });
+
+  it("ส่งช่วงที่ใช้ได้ (วัน/สัปดาห์/เดือน) และช่วงเวลาของโปรไปให้ตัวกรองและการ์ด", () => {
+    expect(toCardData(row, now)).toMatchObject({ window: "month", period: null });
+    expect(toCardData({ ...row, window: "day", validUntil: new Date("2026-12-31T00:00:00+07:00") }, now)).toMatchObject({
+      window: "day",
+      period: "ใช้ได้ถึง 31 ธ.ค. 2569",
+    });
   });
 
   it("นับเฉพาะ feedback ที่บอกว่าใช้ไม่ได้ เป็น downvote", () => {
