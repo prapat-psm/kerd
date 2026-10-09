@@ -7,7 +7,7 @@ PR → CI (lint, typecheck, unit + coverage, build, e2e) → merge → CI บน
 - **CI** (`.github/workflows/ci.yml`): ESLint ห้ามมี warning, coverage ต้องไม่ต่ำกว่าเกณฑ์ใน `vitest.config.mts`
   (functions 95%, lines/statements 90%, branches 85%) ดูตัวเลขได้ใน Summary ของ run และ artifact `coverage`
 - **Deploy** (`.github/workflows/deploy.yml`): รันเมื่อ CI บน `main` ผ่านเท่านั้น, deploy commit เดียวกับที่ CI ตรวจ,
-  รัน `prisma migrate deploy` ก่อน แล้ว `vercel deploy --prod` (build บน Vercel เพื่อใช้ env แบบ Sensitive ได้) และ smoke test
+  รัน `prisma migrate deploy` และ `npm run db:seed` (นำเข้าโปรจาก `docs/data/poc-brands.json`) ก่อน แล้ว `vercel deploy --prod` (build บน Vercel เพื่อใช้ env แบบ Sensitive ได้) และ smoke test
 - `vercel.json` ปิด auto deploy ของ `main` จาก Vercel เอง (preview ของ PR ยังทำงานตามเดิม) และตั้ง region `sin1`
 - deploy ซ้ำด้วยมือ: Actions → Deploy → Run workflow
 - rollback: Vercel dashboard → Deployments → เลือกรุ่นก่อนหน้า → Instant Rollback
