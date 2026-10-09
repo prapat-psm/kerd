@@ -4,6 +4,7 @@ import { CONTACT_EMAIL, LegalPage } from "@/components/legal-page";
 export const metadata: Metadata = {
   title: "ข้อกำหนดการใช้งาน",
   description: "ข้อกำหนดการใช้งาน Kerd ความถูกต้องของข้อมูลโปร เครื่องหมายการค้า และการแจ้งแก้ไขข้อมูล",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

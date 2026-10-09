@@ -93,3 +93,15 @@ test("ฟีเจอร์ LINE พักไว้: ไม่มีปุ่ม
   const res = await page.goto("/remind");
   expect(res?.status()).toBe(404);
 });
+
+test("SEO: robots, sitemap, canonical และ structured data", async ({ page, request }) => {
+  expect(await (await request.get("/robots.txt")).text()).toContain("Sitemap:");
+  const sitemap = await (await request.get("/sitemap.xml")).text();
+  expect(sitemap).toContain("/october</loc>");
+  expect(sitemap).toContain("/brand/mk-restaurants</loc>");
+  await page.goto("/october");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/october$/);
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /opengraph-image/);
+  const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
+  expect(ld.map((t) => JSON.parse(t)["@type"])).toEqual(["ItemList", "BreadcrumbList"]);
+});

@@ -56,3 +56,17 @@ describe("favicon.ico", () => {
     expect(ico.subarray(offset + 1, offset + 4).toString("ascii")).toBe("PNG");
   });
 });
+
+describe.each(["opengraph-image.png", "twitter-image.png"])("%s", (file) => {
+  const png = read(file);
+
+  it("เป็น PNG 1200x630 ตามขนาดที่ Facebook/LINE/X แนะนำ และไม่เกิน 300KB", () => {
+    expect(png.subarray(1, 4).toString("ascii")).toBe("PNG");
+    expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+    expect(png.length).toBeLessThan(300_000);
+  });
+
+  it("มีข้อความ alt", () => {
+    expect(read(file.replace(".png", ".alt.txt")).toString("utf8")).toContain("Kerd");
+  });
+});

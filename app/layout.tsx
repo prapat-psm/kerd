@@ -4,6 +4,7 @@ import { IBM_Plex_Sans_Thai } from "next/font/google";
 import { Logo } from "@/components/logo";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { siteUrl } from "@/lib/seo";
 import { THEME_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -14,8 +15,11 @@ const plexThai = IBM_Plex_Sans_Thai({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl(process.env)),
   title: { default: "Kerd · เกิด: เดือนเกิดนี้ ได้อะไรบ้าง?", template: "%s · Kerd เกิด" },
   description: "รวมโปรวันเกิดและเดือนเกิดจากแบรนด์ดัง พร้อมวิธีใช้สิทธิ์ แหล่งที่มา และวันที่ตรวจล่าสุด",
+  openGraph: { type: "website", siteName: "Kerd · เกิด", locale: "th_TH" },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
