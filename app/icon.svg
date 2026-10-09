@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- เทียนวันเกิด เปลวไฟเป็นเครื่องหมายถูก (docs/branding.md) เส้นหนากว่า components/logo.tsx ให้อ่านออกที่ 16px -->
+  <style>
+    .fill { fill: #FF6B5B; }
+    .stroke { stroke: #FF6B5B; }
+    @media (prefers-color-scheme: dark) {
+      .fill { fill: #FF8273; }
+      .stroke { stroke: #FF8273; }
+    }
+  </style>
+  <mask id="stripe">
+    <rect width="32" height="32" fill="#fff"/>
+    <path d="M9 23.5l14-3.5" stroke="#000" stroke-width="2.2"/>
+  </mask>
+  <rect class="fill" x="10.5" y="15" width="11" height="15" rx="2.5" mask="url(#stripe)"/>
+  <path class="stroke" d="M10.5 8.5l4 3.8L22 3" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

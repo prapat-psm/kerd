@@ -38,6 +38,19 @@ describe("หน้านโยบาย: ฟอร์มแจ้งโปร",
   });
 });
 
+describe("หน้านโยบาย: LINE Login และเตือนฉัน", () => {
+  it("บอกคุกกี้เข้าสู่ระบบที่จำเป็น อายุ 30 วัน และไม่เก็บชื่อ/รูป/อีเมล", () => {
+    render(<PrivacyPage />);
+    expect(screen.getByText(/คุกกี้เข้าสู่ระบบ.*30 วัน/)).toBeTruthy();
+    expect(screen.getByText(/ไม่ได้รับชื่อ รูป หรืออีเมล/)).toBeTruthy();
+  });
+
+  it("บอกวิธีลบข้อมูลเองที่หน้าเตือนฉัน", () => {
+    render(<PrivacyPage />);
+    expect(screen.getByRole("link", { name: "หน้าเตือนฉัน" }).getAttribute("href")).toBe("/remind");
+  });
+});
+
 describe("หน้าข้อกำหนดการใช้งาน", () => {
   it("บอกว่าเงื่อนไขของแบรนด์เป็นที่สุด และขอนำข้อมูลออกได้ภายใน 48 ชั่วโมง", () => {
     render(<TermsPage />);
