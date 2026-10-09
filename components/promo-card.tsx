@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PromoFeedback } from "@/components/promo-feedback";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -106,6 +107,7 @@ export function PromoCard({ promo, linkBrand = false }: { promo: PromoCardData; 
           </Button>
         </div>
         <p className="text-xs text-muted-foreground">เพื่อความถูกต้อง กรุณากดลิงก์เพื่อตรวจสิทธิ์ที่ต้นทางอีกครั้งก่อนใช้สิทธิ์</p>
+        <PromoFeedback promoId={promo.id} />
       </CardFooter>
     </Card>
   );

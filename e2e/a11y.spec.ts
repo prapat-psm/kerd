@@ -61,3 +61,17 @@ test("เลือกธีมมืดแล้วจำไว้ และไ�
   const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   expect(bg).toBe("rgb(14, 19, 32)");
 });
+
+test("👎 ต้องเลือกเหตุผล แล้วส่งรายงานได้", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/october");
+  const card = page.locator('[data-slot="card"]').first();
+  await card.getByRole("button", { name: /ไม่ถูกต้อง/ }).click();
+  const form = card.getByRole("form", { name: "แจ้งข้อมูลไม่ถูกต้อง" });
+  await form.getByText("หน้าร้านไม่ให้ใช้สิทธิ์").click();
+  await form.getByLabel(/สาขา/).fill("สาขาทดสอบ e2e");
+  const { violations } = await new AxeBuilder({ page }).include('[data-slot="card"]').withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+  expect(violations.map((v) => v.id)).toEqual([]);
+  await form.getByRole("button", { name: "ส่งรายงาน" }).click();
+  await expect(card.getByRole("status")).toContainText("ขอบคุณ");
+});

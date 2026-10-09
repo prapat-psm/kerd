@@ -21,6 +21,16 @@ describe("หน้านโยบายความเป็นส่วนต�
   });
 });
 
+describe("หน้านโยบาย: การแจ้งโปรไม่ถูกต้อง", () => {
+  it("บอกว่าเก็บอะไร ไม่เก็บ IP ลบรายละเอียดใน 180 วัน และส่ง email ผ่าน Resend", () => {
+    render(<PrivacyPage />);
+    expect(screen.getByRole("heading", { level: 2, name: "เมื่อคุณกด 👍 หรือ 👎" })).toBeTruthy();
+    expect(screen.getByText(/ไม่ผูกกับตัวคุณ/)).toBeTruthy();
+    expect(screen.getByText(/180 วัน/)).toBeTruthy();
+    expect(screen.getByText(/Resend \(สหรัฐอเมริกา\)/)).toBeTruthy();
+  });
+});
+
 describe("หน้าข้อกำหนดการใช้งาน", () => {
   it("บอกว่าเงื่อนไขของแบรนด์เป็นที่สุด และขอนำข้อมูลออกได้ภายใน 48 ชั่วโมง", () => {
     render(<TermsPage />);
