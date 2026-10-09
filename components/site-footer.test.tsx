@@ -10,7 +10,7 @@ describe("SiteFooter", () => {
     render(<SiteFooter />);
     const nav = screen.getByRole("navigation", { name: "ลิงก์ท้ายเว็บ" });
     const hrefs = [...nav.querySelectorAll("a")].map((a) => a.getAttribute("href"));
-    expect(hrefs).toEqual(["/brand", "/privacy", "/terms"]);
+    expect(hrefs).toEqual(["/brand", "/submit", "/privacy", "/terms"]);
   });
 
   it("ยังคงคำเตือนให้ตรวจสิทธิ์ที่ต้นทาง", () => {
