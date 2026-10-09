@@ -1,0 +1,40 @@
+"use client";
+
+import type { CategoryOption } from "@/lib/categories";
+import { cn } from "@/lib/utils";
+
+// ปุ่มเลือกหมวดแบบ toggle (aria-pressed) เลื่อนแนวนอนได้บนมือถือ
+export function CategoryChips({
+  options,
+  value,
+  onChange,
+}: {
+  options: CategoryOption[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div role="group" aria-label="กรองตามหมวด" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none]">
+      {options.map((o) => {
+        const active = o.value === value;
+        return (
+          <button
+            key={o.value}
+            type="button"
+            aria-pressed={active}
+            onClick={() => onChange(o.value)}
+            className={cn(
+              "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium outline-none",
+              "transition-[background-color,border-color,color,scale] duration-200 ease-(--ease-out-quart)",
+              "focus-visible:ring-[3px] focus-visible:ring-ring/50 motion-safe:active:scale-95",
+              active ? "border-primary bg-primary text-primary-foreground" : "bg-card text-foreground hover:border-primary",
+            )}
+          >
+            {o.label}
+            <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "bg-background/30" : "bg-muted")}>{o.count}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}

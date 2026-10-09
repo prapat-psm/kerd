@@ -16,7 +16,7 @@ export default function Home() {
           {MONTHS.map((m, i) => (
             <li key={m.slug} className="animate-fade-up stagger" style={stagger(i)}>
               <Button asChild variant="outline" size="lg" className="w-full bg-card text-base hover:border-primary motion-safe:hover:-translate-y-0.5">
-                <Link href={`/birthday/${m.slug}`} prefetch={true}>
+                <Link href={`/${m.slug}`} prefetch={true}>
                   {m.th}
                 </Link>
               </Button>
