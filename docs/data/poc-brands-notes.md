@@ -57,3 +57,16 @@ Skip (checked, no perk or brand gone): Hachiban, Texas Chicken (left Thailand 20
 Still todo (site down, bot-blocked, JS-only, or research cut short): Oishi, CoCo Ichibanya, Pepper Lunch, Burger King, Dunkin', Tim Hortons, Sephora, Tsuruha, Tops, Zoo Thailand, Beautrium, Siam Amazing Park (news says members get birth-month entry, not confirmed on the official site).
 
 Round 1 + 2 hit rate is about 23% (10 of 44). Brands with a clear member program on a static page do best; JS apps and bot walls are the main blockers.
+
+# Research round 3 (checked 2026-10-09, 24 brands)
+
+Found 3 of 24. 2 go into the seed as draft; Krungsri is low confidence so the seed skips it.
+
+| brand | source | verify_method | confidence | issue |
+|---|---|---|---|---|
+| McDonald's TH | mcdonalds.co.th/birthdayService | auto | medium | Party@McD set 299 THB with birthday extras; a party package at participating branches, not a personal freebie; no end date |
+| King Power | kingpower.com FAQ birthday celebration | auto | medium | 25% cashback on 2 full-price items, usable 3 months from birth month; not on King Power Online; no end date |
+| Krungsri Exclusive Signature | krungsri.com privileges | manual | low | hotel 2-for-1 nights in birth month; site behind bot wall so details came from a summary; not seeded |
+
+Skip: Chester's, Daidomon (closed 2024), Greyhound Cafe, KOI Thé (no Thai site), Kamu Tea, Lotus's, AIS, SEA LIFE Bangkok.
+Still todo (site down, TLS errors, robots 403): Jeffer, Hot Pot, Shinkanzen, Yoshinoya, Ootoya, Chao Doi (rebranded CD), Kiehl's, Lancôme, Clinique, MAC, Konvy (robots blocks ClaudeBot), Robinson (502), HarborLand.

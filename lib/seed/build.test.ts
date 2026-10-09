@@ -8,8 +8,8 @@ const raw = JSON.parse(readFileSync(join(process.cwd(), "docs/data/poc-brands.js
 describe("buildPocSeed", () => {
   it("ได้ 1 แบรนด์ต่อ 1 โปร เฉพาะ record ที่ผ่าน", () => {
     const { rows } = buildPocSeed(raw);
-    expect(rows).toHaveLength(16);
-    expect(new Set(rows.map((r) => r.brand.slug)).size).toBe(16);
+    expect(rows).toHaveLength(18);
+    expect(new Set(rows.map((r) => r.brand.slug)).size).toBe(18);
   });
 
   it("เอาชื่อและหมวดของแบรนด์จากไฟล์ต้นทาง", () => {
@@ -48,6 +48,6 @@ describe("buildPocSeed", () => {
   });
 
   it("ส่งรายการที่ถูกข้ามออกมาด้วย", () => {
-    expect(buildPocSeed(raw).skipped).toHaveLength(4);
+    expect(buildPocSeed(raw).skipped).toHaveLength(5);
   });
 });
