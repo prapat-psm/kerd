@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 // ทุกหน้าหลักต้องผ่าน WCAG 2.1 AA ทั้งธีมสว่างและมืด (ต้องมีโปร published อย่างน้อย 1 ใบ ดู scripts/e2e-fixture.sql)
-const PAGES = ["/", "/october", "/brand", "/brand/mk-restaurants", "/privacy", "/terms", "/remind", "/submit"];
+const PAGES = ["/", "/october", "/brand", "/brand/mk-restaurants", "/privacy", "/terms", "/submit"];
 
 for (const scheme of ["light", "dark"] as const) {
   for (const path of PAGES) {
@@ -86,9 +86,10 @@ test("แจ้งโปรจาก footer แล้วเข้าคิว", 
   await expect(page.getByRole("status")).toContainText("ตรวจกับหน้าเว็บทางการ");
 });
 
-test("หน้าเดือนพาไปเตือนฉันพร้อมเดือนนั้น และยังไม่ login เห็นปุ่ม LINE", async ({ page }) => {
+test("ฟีเจอร์ LINE พักไว้: ไม่มีปุ่มเตือนฉัน และ /remind เป็น 404", async ({ page }) => {
   await page.goto("/october");
-  await page.getByRole("link", { name: /เตือนฉันก่อนเดือนเกิด/ }).click();
-  await expect(page).toHaveURL(/\/remind\?month=10$/);
-  await expect(page.getByRole("button", { name: "เข้าสู่ระบบด้วย LINE" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.getByRole("link", { name: /เตือนฉันก่อนเดือนเกิด/ })).toHaveCount(0);
+  const res = await page.goto("/remind");
+  expect(res?.status()).toBe(404);
 });

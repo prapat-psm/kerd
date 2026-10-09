@@ -38,16 +38,12 @@ describe("หน้านโยบาย: ฟอร์มแจ้งโปร",
   });
 });
 
-describe("หน้านโยบาย: LINE Login และเตือนฉัน", () => {
-  it("บอกคุกกี้เข้าสู่ระบบที่จำเป็น อายุ 30 วัน และไม่เก็บชื่อ/รูป/อีเมล", () => {
+describe("หน้านโยบาย: LINE (พักไว้)", () => {
+  it("บอกตรงๆ ว่ายังไม่มีคุกกี้เข้าสู่ระบบและยังไม่เปิดแจ้งเตือนทาง LINE", () => {
     render(<PrivacyPage />);
-    expect(screen.getByText(/คุกกี้เข้าสู่ระบบ.*30 วัน/)).toBeTruthy();
-    expect(screen.getByText(/ไม่ได้รับชื่อ รูป หรืออีเมล/)).toBeTruthy();
-  });
-
-  it("บอกวิธีลบข้อมูลเองที่หน้าเตือนฉัน", () => {
-    render(<PrivacyPage />);
-    expect(screen.getByRole("link", { name: "หน้าเตือนฉัน" }).getAttribute("href")).toBe("/remind");
+    expect(screen.getByText(/ตอนนี้ยังไม่มีระบบเข้าสู่ระบบ/)).toBeTruthy();
+    expect(screen.getByRole("heading", { level: 2, name: /แจ้งเตือนวันเกิดผ่าน LINE \(ยังไม่เปิดให้ใช้\)/ })).toBeTruthy();
+    expect(screen.queryByRole("link", { name: "หน้าเตือนฉัน" })).toBeNull();
   });
 });
 
