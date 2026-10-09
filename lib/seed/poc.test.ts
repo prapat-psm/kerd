@@ -8,13 +8,13 @@ const raw = JSON.parse(readFileSync(join(process.cwd(), "docs/data/poc-brands.js
 describe("parsePocBrands", () => {
   it("ข้าม record ที่ยังไม่พร้อมเผยแพร่: confidence ต่ำ หรือไม่รู้ว่าได้อะไร", () => {
     const { skipped } = parsePocBrands(raw);
-    // Starbucks, After You, True, Krungsri, ttb = confidence ต่ำ; Swensen's = รายละเอียดสิทธิ์อยู่ในแอปเท่านั้น (benefit เป็น null)
-    expect(skipped.map((s) => s.slug).sort()).toEqual(["after-you", "krungsri", "starbucks-th", "swensens", "true-privilege", "ttb"]);
+    // Starbucks, After You, True, Krungsri, ttb, Innisfree = confidence ต่ำ; Swensen's = รายละเอียดสิทธิ์อยู่ในแอปเท่านั้น (benefit เป็น null)
+    expect(skipped.map((s) => s.slug).sort()).toEqual(["after-you", "innisfree-th", "krungsri", "starbucks-th", "swensens", "true-privilege", "ttb"]);
   });
 
   it("แปลง record ที่ใช้ได้เป็น PromotionInput", () => {
     const { valid } = parsePocBrands(raw);
-    expect(valid).toHaveLength(20);
+    expect(valid).toHaveLength(23);
     const mk = valid.find((p) => p.brandSlug === "mk-restaurants");
     expect(mk?.howToRedeem.length).toBeGreaterThan(0);
     expect(mk?.sourceUrl).toMatch(/^https:\/\//);

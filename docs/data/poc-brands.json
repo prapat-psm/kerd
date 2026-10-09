@@ -1007,5 +1007,166 @@
     "confidence": "low",
     "difficulty": "hard",
     "notes": "หน้าเว็บมีแค่การ์ด 'ของขวัญวันเกิด' ไม่บอกของขวัญ ระดับ หรือวิธีรับ curl โดน Incapsula บล็อก อ่านได้ผ่าน WebFetch เท่านั้น สถานะต้องมีสินทรัพย์/สินเชื่อหรือคะแนน WOW ถึงเกณฑ์ จึงใช้สิทธิ์ยาก"
+  },
+  {
+    "brand": "Hard Rock Cafe Bangkok",
+    "slug": "hard-rock-cafe-bangkok",
+    "category": "food",
+    "title": "บราวนี่วันเกิดฟรี + รูปใส่กรอบ เมื่อจองโต๊ะในเดือนเกิด",
+    "benefit": "รับ Hard Rock Birthday Brownie ฟรี พร้อมการฉลองวันเกิดสไตล์ Hard Rock และรูปถ่ายใส่กรอบฟรี",
+    "benefit_type": "free_item",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": null,
+    "requires_membership": false,
+    "membership_name": null,
+    "signup_lead_days": null,
+    "conditions": [
+      "ต้องจองโต๊ะมาทานในเดือนเกิด",
+      "แสดงพาสปอร์ตหรือบัตรประชาชนกับพนักงาน",
+      "เฉพาะสาขากรุงเทพฯ (สยามสแควร์ ซอย 11)"
+    ],
+    "channels": [
+      "in_store"
+    ],
+    "how_to_redeem": [
+      "จองโต๊ะที่ Hard Rock Cafe Bangkok ให้ตรงกับเดือนเกิด",
+      "วันที่มาทาน แจ้งพนักงานว่าเป็นเดือนเกิดและแสดงบัตรประชาชนหรือพาสปอร์ต",
+      "รับบราวนี่วันเกิดและรูปถ่ายใส่กรอบ"
+    ],
+    "required_docs": [
+      "บัตรประชาชนหรือพาสปอร์ต"
+    ],
+    "source_url": "https://cafe.hardrock.com/bangkok/files/5311/On-Going_Promotions.pdf",
+    "source_checked_at": "2026-10-09",
+    "robots_txt": "allowed",
+    "verify_method": "manual",
+    "confidence": "medium",
+    "difficulty": "easy",
+    "notes": "อ่าน PDF โปรโมชั่นต่อเนื่องบนเว็บทางการสาขากรุงเทพฯ ระบุบราวนี่วันเกิดฟรีเมื่อจองในเดือนเกิด แต่ในไฟล์เดียวกันมีโปร Citi ที่หมดอายุ 30 มิ.ย. 2562 และอ้างถึง Hard Rock Rewards ที่ยกเลิกแล้ว จึงอาจล้าสมัย หน้าแรกสาขาปัจจุบันไม่ได้พูดถึงโปรวันเกิด ควรโทรยืนยันกับสาขาก่อนเผยแพร่"
+  },
+  {
+    "brand": "Laneige Thailand",
+    "slug": "laneige-th",
+    "category": "beauty",
+    "title": "Laneige สมาชิกหน้าร้าน: ลด 20% + แต้ม x2 + Birthday Kit ในเดือนเกิด",
+    "benefit": "สมาชิกได้ส่วนลด 20% และคะแนนสะสม 2 เท่าในเดือนเกิด พร้อมรับ Birthday Kit เมื่อซื้อสินค้าใดก็ได้",
+    "benefit_type": "discount_percent",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": null,
+    "requires_membership": true,
+    "membership_name": "Laneige Store Membership",
+    "signup_lead_days": null,
+    "conditions": [
+      "ต้องเป็นสมาชิก Laneige (สมัครฟรีที่เคาน์เตอร์หน้าร้าน)",
+      "ใช้ได้ภายในเดือนเกิดเท่านั้น",
+      "Birthday Kit ได้เมื่อซื้อสินค้าใดก็ได้",
+      "หน้าเว็บไม่ระบุว่าใช้ออนไลน์ได้หรือรวมกับโปรอื่นได้หรือไม่"
+    ],
+    "channels": [
+      "in_store"
+    ],
+    "how_to_redeem": [
+      "สมัครสมาชิกฟรีที่เคาน์เตอร์ Laneige",
+      "ไปซื้อสินค้าที่ร้าน Laneige ในเดือนเกิด และแจ้งพนักงานว่าเป็นสมาชิกเพื่อรับส่วนลด 20% แต้ม x2 และ Birthday Kit"
+    ],
+    "required_docs": [],
+    "source_url": "https://th.laneige.com/pages/membership",
+    "source_checked_at": "2026-10-09",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "high",
+    "publish": true,
+    "difficulty": "easy",
+    "notes": "ตรวจหน้า membership และ membership-term-conditions บน th.laneige.com ระบุส่วนลด 20% แต้ม 2 เท่า และ Birthday Kit ในเดือนเกิด แต่ไม่ระบุขั้นตอนใช้สิทธิ์ เอกสาร หรือช่องทางออนไลน์ชัดเจน"
+  },
+  {
+    "brand": "Innisfree Thailand",
+    "slug": "innisfree-th",
+    "category": "beauty",
+    "title": "Innisfree สิทธิประโยชน์เดือนเกิดสมาชิก VIP (หน้าร้าน)",
+    "benefit": "สมาชิก VIP มีสิทธิประโยชน์เดือนเกิด (หน้าเว็บไม่ระบุมูลค่าหรือของที่ได้)",
+    "benefit_type": "other",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": null,
+    "requires_membership": true,
+    "membership_name": "Innisfree Membership (VIP)",
+    "signup_lead_days": null,
+    "conditions": [
+      "สำหรับสมาชิกระดับ VIP",
+      "ตอนนี้แต้มและคูปองใช้ได้ที่หน้าร้านเท่านั้น ยังใช้กับการซื้อบนเว็บไม่ได้",
+      "หน้าเว็บไม่ระบุมูลค่าหรือเงื่อนไขของสิทธิ์วันเกิด"
+    ],
+    "channels": [
+      "in_store"
+    ],
+    "how_to_redeem": [
+      "เช็กสถานะสมาชิกและสิทธิ์ในแอป Innisfree หรือถามพนักงานที่ร้าน",
+      "ใช้สิทธิ์เดือนเกิดที่ร้าน Innisfree ภายในเดือนเกิด"
+    ],
+    "required_docs": [],
+    "source_url": "https://th.innisfree.com/pages/faqs",
+    "source_checked_at": "2026-10-09",
+    "robots_txt": "allowed",
+    "verify_method": "manual",
+    "confidence": "low",
+    "difficulty": "medium",
+    "notes": "หน้า FAQ พูดถึงสิทธิประโยชน์เดือนเกิด VIP แค่ในหัวข้อคำถาม และบอกว่าแต้มกับคูปองใช้ได้แค่หน้าร้าน ไม่มีรายละเอียดของที่ได้ ต้องตรวจสอบกับร้านหรือแอปเอง"
+  },
+  {
+    "brand": "Charles & Keith Thailand",
+    "slug": "charles-keith-th",
+    "category": "retail",
+    "title": "ส่วนลดเดือนเกิดสมาชิก CHARLES & KEITH",
+    "benefit": "โค้ดลดทันที ฿200 (สมาชิก) หรือ ฿500 (VIP) เมื่อซื้อสินค้าราคาปกติครบ ฿2,000 พร้อมส่งฟรีแบบมาตรฐาน",
+    "benefit_type": "discount_amount",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": [
+      {
+        "tier": "สมาชิกทั่วไป",
+        "benefit": "ลดทันที ฿200",
+        "conditions": [
+          "ซื้อสินค้าราคาปกติครบ ฿2,000"
+        ]
+      },
+      {
+        "tier": "VIP (ยอดซื้อสะสม ฿12,500 ขึ้นไป)",
+        "benefit": "ลดทันที ฿500",
+        "conditions": [
+          "ซื้อสินค้าราคาปกติครบ ฿2,000"
+        ]
+      }
+    ],
+    "requires_membership": true,
+    "membership_name": "CHARLES & KEITH Member / VIP",
+    "signup_lead_days": null,
+    "conditions": [
+      "ใช้กับสินค้าราคาปกติเท่านั้น ยอดขั้นต่ำ ฿2,000",
+      "ใช้ร่วมกับบัตรกำนัล สินค้าลดราคา หรือสินค้าโปรเจกต์พิเศษไม่ได้",
+      "โค้ดที่ส่งทางอีเมลยังใช้ที่สาขาไม่ได้"
+    ],
+    "channels": [
+      "online"
+    ],
+    "how_to_redeem": [
+      "สมัครสมาชิกที่ charleskeith.co.th และระบุวันเกิด",
+      "รอรับโค้ดส่วนลดเดือนเกิดทางอีเมล",
+      "เข้าสู่ระบบ แล้วกรอกโค้ดตอนชำระเงินออนไลน์"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.charleskeith.co.th/th/information/customer-care/faq/my-account-and-privileges.html",
+    "source_checked_at": "2026-10-09",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "medium",
+    "difficulty": "easy",
+    "notes": "หน้า FAQ สิทธิพิเศษเขียนว่าเป็นสิทธิเดือนเกิด ลด ฿200 และ ฿500 เมื่อซื้อครบ ฿2,000 แต่ไม่ได้บอกชัดว่ายอดไหนเป็นของระดับไหน (เดาจากตารางว่า ฿200 สมาชิก ฿500 VIP) และไม่ได้บอกว่าโค้ดส่งเมื่อไหร่หรือหมดอายุเมื่อไหร่ หน้า /membership ถูก robots.txt ห้ามจึงไม่ได้เปิด"
   }
 ]
