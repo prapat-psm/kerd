@@ -19,4 +19,6 @@ export const ALLOWED_HOSTS: readonly string[] = [
   "www.mcdonalds.co.th",
   "www.kingpower.com",
   "faq-th.uniqlo.com",
+  "th.laneige.com",
+  "www.charleskeith.co.th",
 ];

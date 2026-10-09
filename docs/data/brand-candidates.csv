@@ -106,3 +106,26 @@ fine-arts-museums,พิพิธภัณฑสถานแห่งชาต�
 nsm,องค์การพิพิธภัณฑ์วิทยาศาสตร์แห่งชาติ,gov,https://www.nsm.or.th,todo,round4: robots.txt itself blocked by Incapsula bot wall so robots could not be confirmed; did not fetch site; search leads show no birthday free entry
 bts,BTS / Rabbit,gov,https://www.bts.co.th,todo,ขนส่งสาธารณะ
 mrt,MRT (BEM),gov,https://metro.bemplc.co.th,todo,ขนส่งสาธารณะ
+wine-connection,Wine Connection,food,https://wineconnection.co.th,skip,round5: robots allows site but no birthday perk on any public TH page (homepage FAQ and 112 pages in sitemap checked); loyalty The Vault is only a LINE LIFF link; old food-club-th page with birthday sparkling bottle now 404 and looked like SG pricing
+hard-rock-cafe-bangkok,Hard Rock Cafe Bangkok,food,https://cafe.hardrock.com/bangkok/,poc,round5: medium confidence draft
+dairy-queen-th,Dairy Queen Thailand,food,https://www.dairyqueenthailand.com,skip,round5: robots allows all; promotion page and birthday set page checked; birthday sets are paid cakes only and no birthday perk for customers; D-Member LINE stamp campaign has no birthday reward
+mister-donut-th,Mister Donut Thailand,food,https://www.misterdonut.co.th,todo,round5: robots.txt and homepage return HTTP 503 so site could not be checked; perks appear to run via LINE OA which is out of scope
+sukiya-th,Sukiya Thailand,food,https://www.sukiya.co.th,todo,round5: www.sukiya.co.th robots.txt returns 403 and bare domain does not resolve; no other official Thai page found
+laneige-th,Laneige Thailand,beauty,https://th.laneige.com,poc,round5: high confidence published
+innisfree-th,Innisfree Thailand,beauty,https://th.innisfree.com,poc,round5: low confidence seed skips
+shiseido-th,Shiseido Thailand,beauty,https://www.shiseido.co.th,todo,round5: Camellia Club page on shiseido.co.th has no benefit text; details sit on beautyconnect.shiseido.co.th which is a JS-only app
+matsumoto-kiyoshi-th,Matsumoto Kiyoshi Thailand,beauty,https://www.matsukiyo.co.th,skip,round5: Official site home and promotions page show no member or birthday benefit; promo page is image only
+lush-th,Lush Thailand,beauty,https://th.lush.com,skip,round5: No loyalty or birthday program on th.lush.com; only account signup and newsletter
+pandora-th,Pandora Thailand,retail,https://th.pandora.net,todo,round5: th.pandora.net and pandora.co.th return 403 on robots.txt so site not fetched
+the-mall-m-card,The Mall Group M Card,retail,https://www.themall.co.th,todo,round5: themall.co.th robots.txt redirects to themalllifestore.com which returns 403 so site not fetched; Bangkok Bank docs say a birth-month perk exists but it is redeemed only in the M Card app
+siam-takashimaya,Siam Takashimaya,retail,https://siamtakashimaya.co.th,todo,round5: robots.txt is 404 so the site is allowed; news-promotion page has only an image banner titled Members Birthday'24 with no text details; the cards page lists no birthday perk; needs a manual check of the banner image
+ikea-th,IKEA Thailand,retail,https://www.ikea.com/th/th/,skip,round5: IKEA Family TH page lists member prices and points and events but no birthday perk
+charles-keith-th,Charles & Keith Thailand,retail,https://www.charleskeith.co.th/th,poc,round5: medium confidence draft
+decathlon-th,Decathlon Thailand,retail,https://www.decathlon.co.th,skip,round5: no membership or birthday perk found on decathlon.co.th homepage or via search
+pomelo-th,Pomelo,retail,https://www.pomelofashion.com/th/th/,skip,round5: official homepage and FAQ show no birthday perk or Pomelo Perks page; only coupon sites claim 25 percent birthday off
+kidzania-bangkok,KidZania Bangkok,entertainment,https://bangkok.kidzania.com,todo,round5: robots.txt unreachable (HTTP 500 on bangkok.kidzania.com and 503 on kidzania.co.th) so site not fetched; web search showed no official birthday perk
+centara-hotels-th,Centara Hotels,entertainment,https://www.centarahotelsresorts.com,skip,round5: robots allowed; CentaraThe1 home and about-us tier pages and offers page list no birthday benefit; only an expired 2024 birthday bonus found in third-party news
+thai-airways-royal-orchid-plus,Thai Airways Royal Orchid Plus,entertainment,https://www.thaiairways.com,todo,round5: robots.txt allows ROP pages but site returns 403 to fetcher (bot wall); search found no birthday perk
+bangkok-airways-flyerbonus,Bangkok Airways FlyerBonus,entertainment,https://flyerbonus.bangkokair.com,todo,round5: flyerbonus.bangkokair.com robots.txt returns 403 so not fetched; annual birth-month bonus with registration existed 2024 and 2025 per third-party sources but no 2026 version confirmed
+ptt-blue-card,PTT Blue Card,app,https://www.pttbluecard.com,todo,round5: pttbluecard.com robots.txt redirects to unrelated domain asoleap.org and bluecard.co.th does not resolve; official site unverifiable and perks likely app-only
+pt-max-card,PT Max Card,app,https://www.pt.co.th,todo,round5: robots.txt on pt.co.th returns 403 so site not fetched

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { BrandMark } from "@/components/brand-mark";
 import { JsonLd } from "@/components/json-ld";
 import { PromoCard } from "@/components/promo-card";
 import { HeadingSkeleton, PromoListSkeleton } from "@/components/promo-card-skeleton";
@@ -35,7 +36,10 @@ async function BrandPromos({ params }: Pick<PageProps<"/brand/[slug]">, "params"
           { name: brand.name, path: `/brand/${brand.slug}` },
         ])}
       />
-      <h1 className="text-2xl font-semibold text-foreground">โปรวันเกิด {brand.name}</h1>
+      <div className="flex items-center gap-3">
+        <BrandMark name={brand.name} slug={brand.slug} className="size-12 text-base" />
+        <h1 className="text-2xl font-semibold text-foreground">โปรวันเกิด {brand.name}</h1>
+      </div>
       {brand.promos.length === 0 ? (
         <p className="mt-6 text-muted-foreground">ยังไม่มีโปรที่ตรวจแล้วของแบรนด์นี้</p>
       ) : (

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/brand-mark";
 import { PromoFeedback } from "@/components/promo-feedback";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -38,7 +39,8 @@ export function PromoCard({ promo, linkBrand = false }: { promo: PromoCardData; 
   return (
     <Card className="gap-4 transition-[translate,box-shadow] duration-200 ease-(--ease-out-quart) hover:shadow-md motion-safe:hover:-translate-y-0.5">
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="flex items-center gap-3">
+          <BrandMark name={promo.brand.name} slug={promo.brand.slug} />
           <h2 className="text-lg">
             {linkBrand ? (
               <Link href={`/brand/${promo.brand.slug}`} className="hover:underline">

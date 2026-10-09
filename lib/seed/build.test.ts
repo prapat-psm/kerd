@@ -8,8 +8,8 @@ const raw = JSON.parse(readFileSync(join(process.cwd(), "docs/data/poc-brands.js
 describe("buildPocSeed", () => {
   it("ได้ 1 แบรนด์ต่อ 1 โปร เฉพาะ record ที่ผ่าน", () => {
     const { rows } = buildPocSeed(raw);
-    expect(rows).toHaveLength(20);
-    expect(new Set(rows.map((r) => r.brand.slug)).size).toBe(20);
+    expect(rows).toHaveLength(23);
+    expect(new Set(rows.map((r) => r.brand.slug)).size).toBe(23);
   });
 
   it("เอาชื่อและหมวดของแบรนด์จากไฟล์ต้นทาง", () => {
@@ -27,9 +27,11 @@ describe("buildPocSeed", () => {
   it("เผยแพร่เฉพาะ record ที่คนอนุมัติ (publish: true) โดยใช้วันที่ตรวจต้นทางเป็นวันตรวจล่าสุด", () => {
     const published = buildPocSeed(raw).rows.filter((r) => r.promotion.status === "published");
     expect(published.map((r) => r.brand.slug).sort()).toEqual(
-      ["aeon-th", "bar-b-q-plaza", "gsb-credit-card", "pizza-hut-th", "uniqlo-th", "watsons-th"],
+      ["aeon-th", "bar-b-q-plaza", "gsb-credit-card", "laneige-th", "pizza-hut-th", "uniqlo-th", "watsons-th"],
     );
-    for (const { promotion } of published) expect(promotion.lastVerifiedAt).toEqual(new Date("2026-10-08"));
+    const verifiedAt = Object.fromEntries(published.map((r) => [r.brand.slug, r.promotion.lastVerifiedAt]));
+    expect(verifiedAt["watsons-th"]).toEqual(new Date("2026-10-08"));
+    expect(verifiedAt["laneige-th"]).toEqual(new Date("2026-10-09"));
   });
 
   it("ไม่เผยแพร่ record ที่ confidence ไม่สูง แม้จะติด publish: true", () => {
@@ -48,6 +50,6 @@ describe("buildPocSeed", () => {
   });
 
   it("ส่งรายการที่ถูกข้ามออกมาด้วย", () => {
-    expect(buildPocSeed(raw).skipped).toHaveLength(6);
+    expect(buildPocSeed(raw).skipped).toHaveLength(7);
   });
 });

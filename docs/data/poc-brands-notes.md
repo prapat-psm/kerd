@@ -84,3 +84,19 @@ Found 3 of 25. Uniqlo is high confidence and approved for publishing; ttb is low
 Strong leads to check by hand (official page exists but bot-blocked): KBank PLUSTINUM card (birth-month cashback up to 25%), Bangkok Bank M Legend (birth-month coupons).
 Skip: Madame Tussauds, Fitness First, Virgin Active, Fine Arts museums, Grab, foodpanda (now redirects to Robinhood), Shopee, Lazada, Robinhood, Krungthai, CIMB Thai, Coca, HomePro, B2S.
 Still todo (bot walls): Big C, Power Buy, Jetts, NSM, TrueMoney, KBank, Bangkok Bank, KKP.
+
+## Round 5 (2026-10-09): 24 new brands
+
+Found (added to poc-brands.json):
+| Brand | Perk | Confidence | Seed |
+|-------|------|------------|------|
+| Laneige Thailand | Store member: 20% off, x2 points and a Birthday Kit with any purchase in birth month | high | published |
+| Charles & Keith Thailand | Birth-month email code: ฿200 off (member) or ฿500 off (VIP) on ฿2,000 full-price online | medium | draft (which amount goes with which tier is inferred) |
+| Hard Rock Cafe Bangkok | Free birthday brownie and framed photo when you book in birth month, show ID | medium | draft (source PDF also holds a 2019 promo, so it may be stale: confirm by phone) |
+| Innisfree Thailand | VIP birth-month benefit mentioned in FAQ heading only | low | seed skips |
+
+Skip (no perk on official site): Wine Connection, Dairy Queen, Matsumoto Kiyoshi, Lush, IKEA, Decathlon, Pomelo, Centara.
+Todo (could not check): Mister Donut (503), Sukiya (403), KidZania (robots 500), Thai Airways ROP (bot wall), Bangkok Airways FlyerBonus (robots 403), PTT Blue Card (domain redirects elsewhere), PT Max Card (403), Shiseido (JS-only), Pandora (403), The Mall M Card (403), Siam Takashimaya (perk only in an image banner).
+Au Bon Pain: no official Thai site found (only social pages), so it is not in brand-candidates.csv.
+
+Leads to check by hand: Bangkok Airways FlyerBonus (yearly birth-month points with registration), Siam Takashimaya (Members Birthday banner), The Mall M Card (birth-month perk in the app).
