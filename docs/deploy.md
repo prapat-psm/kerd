@@ -23,5 +23,6 @@ PR → CI (lint, typecheck, unit + coverage, build, e2e) → merge → CI บน
    - ถ้าอยากกดอนุมัติก่อนทุก deploy ให้เปิด Required reviewers
 4. Vercel → Project → Settings → Environment Variables (Production): `DATABASE_URL` (pooler 6543)
    และสำหรับ email แจ้ง 👎: `RESEND_API_KEY`, `DIGEST_TO`, `DIGEST_FROM` (ค่าเดียวกับ environment `watcher`; ถ้าไม่ตั้ง ระบบยังบันทึกรายงานแต่ไม่ส่ง email)
+   และสำหรับ LINE Login: `AUTH_SECRET`, `AUTH_LINE_ID`, `AUTH_LINE_SECRET` (ขั้นตอนใน `docs/line.md`)
 
 ห้ามใส่ค่า secret ลงในไฟล์ใน repo หรือในแชต

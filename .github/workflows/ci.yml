@@ -20,6 +20,12 @@ jobs:
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
       DIRECT_URL: postgresql://postgres:postgres@localhost:5432/postgres
+      # ค่าปลอมเพื่อให้ e2e เห็นปุ่มเข้าสู่ระบบ LINE (ไม่ใช่ channel จริง ไม่ได้ login จริง)
+      AUTH_SECRET: e2e-only-not-a-real-secret-000000000000
+      AUTH_LINE_ID: "0000000000"
+      AUTH_LINE_SECRET: e2e-only
+      # นอก Vercel ต้องบอก Auth.js ว่า host เชื่อถือได้
+      AUTH_TRUST_HOST: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
