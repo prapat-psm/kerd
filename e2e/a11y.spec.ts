@@ -93,3 +93,43 @@ test("ฟีเจอร์ LINE พักไว้: ไม่มีปุ่ม
   const res = await page.goto("/remind");
   expect(res?.status()).toBe(404);
 });
+
+test("SEO: robots, sitemap, canonical และ structured data", async ({ page, request }) => {
+  expect(await (await request.get("/robots.txt")).text()).toContain("Sitemap:");
+  const sitemap = await (await request.get("/sitemap.xml")).text();
+  expect(sitemap).toContain("/october</loc>");
+  expect(sitemap).toContain("/brand/mk-restaurants</loc>");
+  await page.goto("/october");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/october$/);
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /opengraph-image/);
+  const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
+  expect(ld.map((t) => JSON.parse(t)["@type"])).toEqual(["ItemList", "BreadcrumbList"]);
+});
+
+for (const scheme of ["light", "dark"] as const) {
+  test(`privacy และ T&C เปิดเป็น dialog จาก footer ผ่าน axe และปิดแล้วกลับหน้าเดิม (${scheme})`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: scheme, reducedMotion: "reduce" });
+    await page.goto("/october");
+    const footer = page.getByRole("navigation", { name: "ลิงก์ท้ายเว็บ" });
+    for (const [link, path, title] of [
+      ["ความเป็นส่วนตัวและคุกกี้", "/privacy", "นโยบายความเป็นส่วนตัวและคุกกี้"],
+      ["ข้อกำหนดการใช้งาน", "/terms", "ข้อกำหนดการใช้งาน"],
+    ]) {
+      await footer.getByRole("link", { name: link }).click();
+      const dialog = page.getByRole("dialog", { name: title });
+      await expect(dialog).toBeVisible();
+      await expect(page).toHaveURL(path);
+      const { violations } = await new AxeBuilder({ page }).include("[role=dialog]").withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+      expect(violations.map((v) => v.id)).toEqual([]);
+      await page.keyboard.press("Escape");
+      await expect(dialog).toHaveCount(0);
+      await expect(page).toHaveURL("/october");
+    }
+  });
+}
+
+test("เปิด /privacy ตรงๆ ได้หน้าเต็ม ไม่มี dialog", async ({ page }) => {
+  await page.goto("/privacy");
+  await expect(page.getByRole("heading", { level: 1, name: "นโยบายความเป็นส่วนตัวและคุกกี้" })).toBeVisible();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+});

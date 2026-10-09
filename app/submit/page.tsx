@@ -4,6 +4,7 @@ import { SubmissionForm } from "@/components/submission-form";
 export const metadata: Metadata = {
   title: "แจ้งโปรวันเกิดที่ยังไม่มี",
   description: "เจอโปรวันเกิดที่ Kerd ยังไม่มี ส่งลิงก์หน้าเว็บทางการให้ทีมตรวจและเพิ่มได้",
+  alternates: { canonical: "/submit" },
 };
 
 export default function SubmitPage() {

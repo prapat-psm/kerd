@@ -95,6 +95,7 @@
   /* motion: สั้นและนุ่ม ไม่แย่งความสนใจจากเนื้อหา */
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --animate-fade-up: fade-up 320ms var(--ease-out-quart) both;
+  --animate-fade-in: fade-in 200ms var(--ease-out-quart) both;
 
   @keyframes fade-up {
     from {
@@ -104,6 +105,13 @@
     to {
       opacity: 1;
       transform: none;
+    }
+  }
+
+  /* ใช้กับ dialog: เปลี่ยนแค่ opacity เพราะ dialog จัดกึ่งกลางด้วย transform */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
     }
   }
 }
