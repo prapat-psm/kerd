@@ -43,6 +43,7 @@ Prisma client ถูก generate ไปที่ `generated/prisma` (ไม่ c
 ## Claude tooling
 - Plugin: superpowers (ประกาศใน `.claude/settings.json`) ใช้ brainstorming → writing-plans → test-driven-development
 - Project skills: `thai-pdpa-review`, `hbd-marketing-pulse` ใน `.claude/skills/`
+- Subagent `kerd-designer` (`.claude/agents/`) ดูแล design, branding, icon และ micro-animation ใช้กับงาน UI และรีวิวหน้าจอ
 - Supabase MCP: ตั้งไว้ใน `.mcp.json` ผูกกับ dev project (`pkkgbfeamdhhloyhecjz`) เท่านั้น ห้ามชี้ไป prod; รายละเอียดใน `docs/design.md` ข้อ 5.3
 - UI ใช้ shadcn/ui (`components/ui`, ตั้งค่าใน `components.json`) เพิ่ม component ด้วย `npx shadcn@latest add <name>`; สีต้องตรง `docs/branding.md` (test ใน `app/tokens.test.ts`)
 - ทุกตารางใน schema `public` ต้องเปิด RLS ใน migration (มี test ใน `prisma/rls.test.ts`)
