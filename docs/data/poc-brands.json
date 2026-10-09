@@ -152,7 +152,7 @@
     "source_url": "https://www.gsb.or.th/promotions/happy-birthday-x3/",
     "source_checked_at": "2026-10-08",
     "robots_txt": "allowed",
-    "verify_method": "auto", "confidence": "high", "difficulty": "medium",
+    "verify_method": "auto", "confidence": "high", "publish": true, "difficulty": "medium",
     "notes": "ใช้แทน KTC/Krungsri: KTC มีแต่โปร 'birthday' ที่เป็นวันครบรอบของร้านค้า (เช่น King Power) ส่วนโปร Minor Hotels หมดอายุไปแล้ว krungsricard.com ต่อ SSL ไม่สำเร็จ ทำให้เช็ก robots.txt ไม่ได้และไม่ได้ดึงข้อมูล GSB ยังมีหน้าแลกแต้มรายเดือนแยก ('Birthday Privilege' แลก gift card 500 บาท ใช้ 2,750 แต้มจากปกติ 5,500 สำหรับเดือน ต.ค. 2569 และเปลี่ยน slug ทุกเดือน) ซึ่งยังไม่ได้เพิ่มเข้ามา"
   },
   {
@@ -173,7 +173,7 @@
     "source_url": "https://www.watsons.co.th/en/member-watsonselite-terms",
     "source_checked_at": "2026-10-08",
     "robots_txt": "allowed",
-    "verify_method": "auto", "confidence": "high", "difficulty": "medium",
+    "verify_method": "auto", "confidence": "high", "publish": true, "difficulty": "medium",
     "notes": "สิทธิ์ของระดับ elite ระบุชัดเจน แต่ของสมาชิกทั่วไป (/th/watsons-member-birthday_21_V2) หน้าเว็บไม่มีรายละเอียดให้อ่าน ต้องยืนยันเอง ผลค้นหามี 'Online Birthday Sale' ปนมา ซึ่งเป็นวันเกิดของร้าน ไม่ใช่ของลูกค้า"
   },
   {
@@ -263,6 +263,7 @@
     "robots_txt": "allowed",
     "verify_method": "auto",
     "confidence": "high",
+    "publish": true,
     "difficulty": "easy",
     "notes": "ไม่ใช่ของฟรี แต่เป็นชุดราคาพิเศษ 799 บาท สิทธิ์ซื้อชุดใช้ได้ถึงสิ้นเดือนถัดจากเดือนเกิด (window_days_after=30 เป็นค่าประมาณ) ส่วนคะแนนคูณใช้เฉพาะเดือนเกิด แคมเปญระบุสิ้นสุด 31 ธ.ค. 2569 ต้องตรวจซ้ำต้นปี 2570 หน้า /hbd-gon-member/ อีกหน้าระบุบางสาขาเริ่มขายช้ากว่าและยกเว้นสาขาเซ็นทรัลพาร์ค โดเมนจริงคือ barbqplaza.com (www redirect)"
   },
@@ -363,6 +364,7 @@
     "robots_txt": "allowed",
     "verify_method": "auto",
     "confidence": "high",
+    "publish": true,
     "difficulty": "hard",
     "notes": "เฉพาะ Diamond (ยอดสะสม 6,000 บาท) ระดับ Red/Gold ไม่มีสิทธิวันเกิดบนหน้าเว็บ บทความลงวันที่ 30 ก.ย. 2026 ไม่มีวันสิ้นสุด /robots.txt ของโดเมนคืนหน้า HTML (ไม่มีไฟล์จริง) จึงถือว่าไม่มีข้อห้าม URL มีช่องว่าง (%20)"
   },
@@ -677,6 +679,7 @@
     "robots_txt": "allowed",
     "verify_method": "auto",
     "confidence": "high",
+    "publish": true,
     "difficulty": "medium",
     "notes": "สิทธิ์เป็นสัปดาห์เกิด (อาทิตย์-เสาร์) ไม่ใช่ทั้งเดือน หน้าบัตรไม่ระบุวันหมดอายุ (หน้าเดียวกันมีค่าธรรมเนียมที่มีผล 1 ก.ค. 2569 จึงน่าจะยังเป็นปัจจุบัน) ขั้นตอนรับสิทธิ์สรุปจากบทความทางการ https://www.aeon.co.th/aeon/tips-tricks/free-movie-major-aeon-mgen-visa"
   },
@@ -729,5 +732,136 @@
     "confidence": "low",
     "difficulty": "easy",
     "notes": "แหล่งที่มาเป็นตารางสิทธิทรูการ์ดบน privilege.trueid.net (โดเมนของทรู) ไม่ใช่ true.th หน้าไม่มีวันที่หรือวันหมดอายุ และไม่บอกวิธีรับสิทธิ์ ขั้นตอนข้างบนจึงเป็นการสรุปแบบกว้างๆ หน้าเงื่อนไขเก่าปี 2020 เคยระบุว่าสิทธิ์จะเข้าเบอร์อัตโนมัติในวันเกิด ควรตรวจซ้ำแบบ manual ว่ายังใช้ได้จริง ตั้งเป็น manual เพราะ confidence ต่ำ ยังไม่เข้า seed"
+  },
+  {
+    "brand": "McDonald's Thailand",
+    "slug": "mcdonalds-th",
+    "category": "food",
+    "title": "Party@McD: ชุดปาร์ตี้วันเกิด 299 บาท แถมของวันเกิด",
+    "benefit": "สั่งชุด Party@McD ราคา 299 บาท (เลือกเมนูชุด 3 อย่างจาก 4 ตัวเลือก) รับฟรี McFlurry การ์ดวันเกิด และมงกุฎปาร์ตี้ (มูลค่า 99 บาท)",
+    "benefit_type": "other",
+    "window": "day",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": null,
+    "requires_membership": false,
+    "membership_name": null,
+    "signup_lead_days": null,
+    "conditions": [
+      "ต้องซื้อชุด Party@McD ราคา 299 บาท",
+      "เฉพาะสาขาที่ร่วมรายการ ทั้งซื้อกลับบ้านและ McDrive-Thru",
+      "เริ่ม 1 ก.ค. 2026 ไม่ระบุวันสิ้นสุด",
+      "เลือกชิ้นส่วนไก่ไม่ได้ และเมนูข้าว/ไก่มีช่วงเวลาขาย"
+    ],
+    "channels": [
+      "in_store"
+    ],
+    "how_to_redeem": [
+      "ตรวจรายชื่อสาขาที่ร่วมรายการจากลิงก์ในหน้าโปร",
+      "สั่งชุด Party@McD ที่เคาน์เตอร์หรือ McDrive-Thru แล้วเลือกเมนู 3 อย่าง",
+      "รับ McFlurry การ์ดวันเกิด และมงกุฎปาร์ตี้ฟรีพร้อมชุด"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.mcdonalds.co.th/birthdayService",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "medium",
+    "difficulty": "easy",
+    "notes": "เป็นชุดปาร์ตี้วันเกิดแบบต้องซื้อ ไม่ใช่ของฟรีสำหรับเจ้าของวันเกิด และหน้าไม่ได้ระบุว่าต้องแสดงหลักฐานวันเกิด เว็บที่ให้มา mcthai.co.th เป็นหน้า 404 เว็บทางการจริงคือ mcdonalds.co.th เป็นชุดปาร์ตี้ราคาพิเศษ ไม่ใช่ของฟรีส่วนตัว"
+  },
+  {
+    "brand": "King Power",
+    "slug": "king-power",
+    "category": "retail",
+    "title": "King Power: เงินคืน 25% ช่วงเดือนเกิด (Birthday Celebration)",
+    "benefit": "สมาชิกคิง เพาเวอร์ซื้อสินค้าที่ร่วมรายการในราคาเต็ม รับเงินคืน 25% ของราคาสินค้าเข้าบัญชีสมาชิก ได้ 2 สิทธิ์ (สิทธิ์ละ 1 ชิ้น)",
+    "benefit_type": "other",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 59,
+    "tiers": null,
+    "requires_membership": true,
+    "membership_name": "สมาชิก King Power (บัตรสมาชิกที่ยังมีสถานะ)",
+    "signup_lead_days": null,
+    "conditions": [
+      "ใช้ได้ภายใน 3 เดือน โดยนับเดือนเกิดเป็นเดือนที่ 1",
+      "ต้องซื้อในราคาเต็ม ไม่รวมกับส่วนลดสมาชิก",
+      "ไม่รวมเหล้า บุหรี่ และสินค้าที่ไม่ร่วมรายการ",
+      "2 สิทธิ์ สิทธิ์ละ 1 ชิ้น",
+      "ใช้ไม่ได้ที่ King Power Online",
+      "เงินคืนเข้าบัญชีสมาชิก ไม่ใช่ส่วนลดหน้าร้าน"
+    ],
+    "channels": [
+      "in_store"
+    ],
+    "how_to_redeem": [
+      "สมัคร/ตรวจสอบว่าเป็นสมาชิก King Power ที่ยังมีสถานะ",
+      "ภายใน 3 เดือนนับจากเดือนเกิด ซื้อสินค้าที่ร่วมรายการในราคาเต็มที่คิง เพาเวอร์ ดาวน์ทาวน์ สนามบิน หรือผ่าน Call to Shop / Chat to Shop แล้วแจ้งใช้สิทธิ์วันเกิด",
+      "รับเงินคืน 25% เข้าบัญชีสมาชิก"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.kingpower.com/th/content/information-and-tips-faqs-birthday-celebration",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "auto",
+    "confidence": "medium",
+    "difficulty": "medium",
+    "notes": "หน้า FAQ ไม่ระบุวันหมดอายุ window_days_after=59 คือประมาณ 2 เดือนหลังเดือนเกิด ใช้ได้ทั้งหน้าร้านและ Call/Chat to Shop แต่ไม่ใช่ King Power Online ไม่เกี่ยวกับเซลวันครบรอบร้าน"
+  },
+  {
+    "brand": "Krungsri (บัตรเครดิตกรุงศรี)",
+    "slug": "krungsri",
+    "category": "bank",
+    "title": "บัตรกรุงศรี เอ็กซ์คลูซีฟ ซิกเนเจอร์: พักโรงแรม 2 คืนจ่าย 1 คืนในเดือนเกิด",
+    "benefit": "ผู้ถือบัตรเครดิตกรุงศรี เอ็กซ์คลูซีฟ ซิกเนเจอร์ เข้าพัก 2 คืนติดกันในเดือนเกิดที่ Veranda Resort / Veranda Collection จ่ายเพียง 1 คืน (ไม่รวมอาหารเช้า) และมีสิทธิพิเศษเดือนเกิดที่ Elite Havens เมื่อพัก 2 คืนขึ้นไป",
+    "benefit_type": "other",
+    "window": "month",
+    "window_days_before": 0,
+    "window_days_after": 0,
+    "tiers": [
+      {
+        "tier": "Veranda Resort / Veranda Collection",
+        "benefit": "พัก 2 คืนติดกัน จ่าย 1 คืน (ไม่รวมอาหารเช้า)",
+        "conditions": [
+          "เข้าพักในเดือนเกิด",
+          "ระยะเวลา 1 ต.ค. 2568 – 20 ธ.ค. 2569"
+        ]
+      },
+      {
+        "tier": "Elite Havens (เครือดุสิต)",
+        "benefit": "สิทธิพิเศษเดือนเกิด (หน้าไม่ระบุรายละเอียด)",
+        "conditions": [
+          "พักอย่างน้อย 2 คืนติดกัน",
+          "ระยะเวลา 1 ต.ค. 2568 – 30 ธ.ค. 2569"
+        ]
+      }
+    ],
+    "requires_membership": true,
+    "membership_name": "บัตรเครดิตกรุงศรี เอ็กซ์คลูซีฟ ซิกเนเจอร์",
+    "signup_lead_days": null,
+    "conditions": [
+      "เฉพาะบัตรกรุงศรี เอ็กซ์คลูซีฟ ซิกเนเจอร์",
+      "เข้าพักในเดือนเกิด 2 คืนติดกัน",
+      "ไม่รวมวันหยุดนักขัตฤกษ์ วันหยุดยาว ตรุษจีน ปีใหม่ สงกรานต์",
+      "จองแล้วคืนเงิน เปลี่ยนแปลง หรือยกเลิกไม่ได้",
+      "แลกเป็นเงินสดหรือรวมกับโปรอื่นไม่ได้"
+    ],
+    "channels": [
+      "in_store"
+    ],
+    "how_to_redeem": [
+      "ตรวจรายละเอียดและช่องทางจองในหน้าโปรของ krungsricard.com (veranda-hotel / dusit-gold)",
+      "จองห้องพักกับโรงแรมที่ร่วมรายการสำหรับวันในเดือนเกิด โดยแจ้งใช้สิทธิ์บัตรกรุงศรี เอ็กซ์คลูซีฟ ซิกเนเจอร์ และชำระด้วยบัตร",
+      "เก็บหลักฐานการจองและสลิปไว้เผื่อการตรวจสอบ"
+    ],
+    "required_docs": [],
+    "source_url": "https://www.krungsri.com/th/wealth/krungsri-exclusive/privileges/eat-drink-travel",
+    "source_checked_at": "2026-10-08",
+    "robots_txt": "allowed",
+    "verify_method": "manual",
+    "confidence": "low",
+    "difficulty": "hard",
+    "notes": "curl ถูก Incapsula/WAF บล็อก อ่านได้ผ่าน WebFetch เท่านั้น ยังไม่ได้ยืนยันช่องทางจองเพราะหน้า krungsricard.com/th/promotion/veranda-hotel ตอบ 503 บัตรนี้สำหรับลูกค้า Krungsri Exclusive (ฐานะสูง) จึงเข้าถึงยาก สิทธิ์ Elite Havens/Dusit อาจต้องเป็น Dusit Gold ผ่านแอป Dusit Hotels & Rewards ของขวัญวันเกิดของ Krungsri Exclusive ที่อิงยอดเงินฝาก 10 ล้านบาทไม่ใช่สิทธิ์บัตรจึงไม่ได้นับ"
   }
 ]

@@ -16,4 +16,6 @@ export const ALLOWED_HOSTS: readonly string[] = [
   "www.cutepress.com",
   "www.aeon.co.th",
   "www.dreamworld.co.th",
+  "www.mcdonalds.co.th",
+  "www.kingpower.com",
 ];

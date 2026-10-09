@@ -15,7 +15,12 @@ async function main() {
   for (const { brand, promotion } of rows) {
     const b = await prisma.brand.upsert({ where: { slug: brand.slug }, create: brand, update: brand });
     const existing = await prisma.promotion.findFirst({ where: { brandId: b.id }, select: { id: true } });
-    if (existing) await prisma.promotion.update({ where: { id: existing.id }, data: promotion });
+    // รันซ้ำไม่ดึงโปรที่คนเผยแพร่เองใน Studio กลับเป็น draft
+    const data =
+      promotion.status === "published"
+        ? promotion
+        : Object.fromEntries(Object.entries(promotion).filter(([k]) => k !== "status" && k !== "lastVerifiedAt"));
+    if (existing) await prisma.promotion.update({ where: { id: existing.id }, data });
     else await prisma.promotion.create({ data: { ...promotion, brandId: b.id } });
     console.log(`✓ ${brand.slug}`);
   }
