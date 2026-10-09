@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { JsonLd } from "@/components/json-ld";
 import { PromoCard } from "@/components/promo-card";
 import { HeadingSkeleton, PromoListSkeleton } from "@/components/promo-card-skeleton";
 import { stagger } from "@/lib/motion";
 import { getBrandSlugs, getBrandWithPromos } from "@/lib/promos/queries";
+import { breadcrumbJsonLd, pageOpenGraph, siteUrl } from "@/lib/seo";
 
 export async function generateStaticParams() {
   return (await getBrandSlugs()).map((slug) => ({ slug }));
@@ -14,10 +16,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/brand/[slug]">): Promise<Metadata> {
   const brand = await getBrandWithPromos((await params).slug);
   if (!brand) return {};
-  return {
-    title: `โปรวันเกิด ${brand.name}`,
-    description: `สิทธิ์วันเกิดของ ${brand.name} วิธีใช้สิทธิ์ เงื่อนไข และลิงก์ตรวจสิทธิ์ที่หน้าเว็บทางการ`,
-  };
+  const title = `โปรวันเกิด ${brand.name}`;
+  const description = `สิทธิ์วันเกิดของ ${brand.name} วิธีใช้สิทธิ์ เงื่อนไข และลิงก์ตรวจสิทธิ์ที่หน้าเว็บทางการ`;
+  const url = `/brand/${brand.slug}`;
+  return { title, description, alternates: { canonical: url }, openGraph: pageOpenGraph(title, description, url) };
 }
 
 async function BrandPromos({ params }: Pick<PageProps<"/brand/[slug]">, "params">) {
@@ -26,6 +28,13 @@ async function BrandPromos({ params }: Pick<PageProps<"/brand/[slug]">, "params"
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(siteUrl(process.env), [
+          { name: "หน้าแรก", path: "/" },
+          { name: "แบรนด์ทั้งหมด", path: "/brand" },
+          { name: brand.name, path: `/brand/${brand.slug}` },
+        ])}
+      />
       <h1 className="text-2xl font-semibold text-foreground">โปรวันเกิด {brand.name}</h1>
       {brand.promos.length === 0 ? (
         <p className="mt-6 text-muted-foreground">ยังไม่มีโปรที่ตรวจแล้วของแบรนด์นี้</p>

@@ -7,6 +7,7 @@ import { getBrandsWithPublishedPromos } from "@/lib/promos/queries";
 export const metadata: Metadata = {
   title: "แบรนด์ทั้งหมด",
   description: "รวมแบรนด์ที่มีโปรวันเกิดและเดือนเกิด เลือกตามหมวด อาหาร ธนาคาร ช้อปปิ้ง ความงาม และอื่นๆ",
+  alternates: { canonical: "/brand" },
 };
 
 async function Brands() {

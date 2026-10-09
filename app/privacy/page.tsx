@@ -5,6 +5,7 @@ import { CONTACT_EMAIL, LegalPage } from "@/components/legal-page";
 export const metadata: Metadata = {
   title: "นโยบายความเป็นส่วนตัวและคุกกี้",
   description: "Kerd เก็บข้อมูลอะไร ใช้คุกกี้หรือไม่ และสิทธิ์ของคุณตาม พ.ร.บ.คุ้มครองข้อมูลส่วนบุคคล",
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPage() {
