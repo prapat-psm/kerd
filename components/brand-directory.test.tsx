@@ -24,6 +24,12 @@ describe("BrandDirectory", () => {
     expect(screen.getByRole("link", { name: /KBank/ }).textContent).toContain("2 โปร");
   });
 
+  it("มีอักษรย่อของแบรนด์แทนโลโก้ โดยไม่เปลี่ยนชื่อลิงก์", () => {
+    render(<BrandDirectory brands={brands} />);
+    const link = screen.getByRole("link", { name: /Sizzler/ });
+    expect(link.querySelector("[aria-hidden]")?.textContent).toBe("S");
+  });
+
   it("กรองตามหมวดได้", () => {
     render(<BrandDirectory brands={brands} />);
     fireEvent.click(screen.getByRole("button", { name: /อาหาร/ }));

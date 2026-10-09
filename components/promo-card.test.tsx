@@ -36,6 +36,11 @@ describe("PromoCard", () => {
     expect(screen.getByText("ใช้ได้ทั้งเดือนเกิด")).toBeTruthy();
   });
 
+  it("มีอักษรย่อของแบรนด์แทนโลโก้ ข้างชื่อแบรนด์", () => {
+    const { container } = render(<PromoCard promo={card} />);
+    expect(container.querySelector("[data-slot=brand-mark]")?.textContent).toBe("MK");
+  });
+
   it("แสดงวิธีใช้สิทธิ์เป็นขั้นตอนตามลำดับ", () => {
     render(<PromoCard promo={card} />);
     const steps = within(screen.getByRole("list", { name: "วิธีใช้สิทธิ์" })).getAllByRole("listitem");
