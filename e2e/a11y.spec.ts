@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 // ทุกหน้าหลักต้องผ่าน WCAG 2.1 AA ทั้งธีมสว่างและมืด (ต้องมีโปร published อย่างน้อย 1 ใบ ดู scripts/e2e-fixture.sql)
-const PAGES = ["/", "/october", "/brand", "/brand/mk-restaurants", "/privacy", "/terms", "/remind"];
+const PAGES = ["/", "/october", "/brand", "/brand/mk-restaurants", "/privacy", "/terms", "/remind", "/submit"];
 
 for (const scheme of ["light", "dark"] as const) {
   for (const path of PAGES) {
@@ -74,6 +74,16 @@ test("👎 ต้องเลือกเหตุผล แล้วส่ง�
   expect(violations.map((v) => v.id)).toEqual([]);
   await form.getByRole("button", { name: "ส่งรายงาน" }).click();
   await expect(card.getByRole("status")).toContainText("ขอบคุณ");
+});
+
+test("แจ้งโปรจาก footer แล้วเข้าคิว", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("navigation", { name: "ลิงก์ท้ายเว็บ" }).getByRole("link", { name: "แจ้งโปรที่ยังไม่มี" }).click();
+  await page.getByLabel("ชื่อแบรนด์").fill("แบรนด์ทดสอบ e2e");
+  await page.getByLabel(/ลิงก์หน้าเว็บทางการ/).fill("https://example.com/birthday");
+  await page.getByLabel("ได้สิทธิ์อะไร").fill("ของขวัญวันเกิด");
+  await page.getByRole("button", { name: "ส่งให้ทีมตรวจ" }).click();
+  await expect(page.getByRole("status")).toContainText("ตรวจกับหน้าเว็บทางการ");
 });
 
 test("หน้าเดือนพาไปเตือนฉันพร้อมเดือนนั้น และยังไม่ login เห็นปุ่ม LINE", async ({ page }) => {

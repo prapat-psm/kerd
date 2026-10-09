@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const LINKS = [
   { href: "/brand", label: "แบรนด์ทั้งหมด" },
+  { href: "/submit", label: "แจ้งโปรที่ยังไม่มี" },
   { href: "/privacy", label: "ความเป็นส่วนตัวและคุกกี้" },
   { href: "/terms", label: "ข้อกำหนดการใช้งาน" },
 ];
