@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children, modal }: LayoutProps<"/">) {
   return (
     // suppressHydrationWarning: THEME_SCRIPT ตั้ง data-theme ก่อน React hydrate
     <html lang="th" className={`${plexThai.variable} h-full antialiased`} suppressHydrationWarning>
@@ -51,6 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </header>
         <main id="main" tabIndex={-1} className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 outline-none">{children}</main>
         <SiteFooter />
+        {modal}
       </body>
     </html>
   );
