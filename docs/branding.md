@@ -40,6 +40,16 @@
 - **IBM Plex Sans Thai** (หัวข้อ + เนื้อหา) หรือ **Noto Sans Thai** เป็นตัวสำรอง (ทั้งคู่ฟรีบน Google Fonts)
 - ตัวเลขวันที่/badge: tabular numbers
 
+## Motion
+Minimal แต่มีลูกเล่นเล็กๆ: motion ต้องอธิบาย ยืนยัน หรือทำให้ยิ้มได้ชั่วครู่ ถ้าไม่ใช่ 3 อย่างนี้ให้ตัดออก
+- เวลา: เปลี่ยนสถานะ (hover/กด/toggle) 120-200ms, ปรากฏ 240-320ms, stagger 50ms สูงสุด 6 ชิ้น (`lib/motion.ts`)
+- easing: `--ease-out-quart` (`app/globals.css`) ไม่ใช้ bounce ยกเว้นจังหวะพิเศษ 1 จุด
+- ขยับเฉพาะ transform / opacity / สี ไม่ขยับ layout
+- เคารพ "ลดการเคลื่อนไหว" ของระบบเสมอ ไม่มี loop ยาวเกิน 5 วินาที ไม่กระพริบ
+- ลูกเล่นประจำแบรนด์ (ใช้ได้ไม่เกิน 1 จุดต่อหน้า): เปลวเทียนไหวตอน hover โลโก้, เครื่องหมายถูกค่อยๆ วาดบน badge "ตรวจแล้ว", ปุ่ม/chip ยุบตัวเล็กน้อยตอนกด
+
+ผู้ดูแล design และ branding: subagent `kerd-designer` (`.claude/agents/kerd-designer.md`)
+
 ## โดเมน (ยังไม่ได้ยืนยันว่าว่าง)
 ตรวจจาก sandbox ไม่ได้ เพราะเครือข่ายบล็อก WHOIS/RDAP ต้องเช็กเองที่ registrar (เช่น Cloudflare Registrar, Namecheap) และ THNIC สำหรับ .th
 | ลำดับ | โดเมน | หมายเหตุ |
