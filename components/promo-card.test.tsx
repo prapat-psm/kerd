@@ -1,8 +1,10 @@
 // @vitest-environment jsdom
 import { cleanup, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { PromoCard } from "./promo-card";
 import type { PromoCardData } from "@/lib/promos/view";
+
+vi.mock("@/app/actions/feedback", () => ({ sendFeedback: vi.fn() }));
 
 afterEach(cleanup);
 
@@ -80,5 +82,9 @@ describe("PromoCard", () => {
   it("ลิงก์ชื่อแบรนด์ไปหน้าแบรนด์ได้เมื่อขอ", () => {
     render(<PromoCard promo={card} linkBrand />);
     expect(screen.getByRole("link", { name: "MK Restaurants" }).getAttribute("href")).toBe("/brand/mk-restaurants");
+  });
+  it("มีปุ่ม 👍/👎 ให้ผู้ใช้แจ้งว่าข้อมูลยังใช้ได้ไหม", () => {
+    render(<PromoCard promo={card} />);
+    expect(screen.getByRole("group", { name: "ข้อมูลนี้ยังใช้ได้ไหม" })).toBeTruthy();
   });
 });

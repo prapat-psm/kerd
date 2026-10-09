@@ -4,6 +4,8 @@ import { setTimeout as sleep } from "node:timers/promises";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { z } from "zod";
 import { PrismaClient } from "../generated/prisma/client";
+import { sendResendEmail } from "../lib/email";
+import { noteRetentionCutoff } from "../lib/feedback/retention";
 import { ALLOWED_HOSTS } from "../lib/watcher/allowed-hosts";
 import { describeError } from "../lib/watcher/describe-error";
 import { renderDigest } from "../lib/watcher/digest";
@@ -37,16 +39,9 @@ async function getRobots(origin: string): Promise<string> {
 }
 
 async function sendDigest(subject: string, html: string) {
-  if (!env.RESEND_API_KEY || !env.DIGEST_TO || !env.DIGEST_FROM) {
+  if ((await sendResendEmail({ subject, html }, env, fetch)) === "skipped") {
     console.log("ข้าม email: ยังไม่ได้ตั้ง RESEND_API_KEY / DIGEST_TO / DIGEST_FROM");
-    return;
   }
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
-    body: JSON.stringify({ from: env.DIGEST_FROM, to: [env.DIGEST_TO], subject, html }),
-  });
-  if (!res.ok) throw new Error(`resend_${res.status}`);
 }
 
 async function main() {
@@ -82,6 +77,13 @@ async function main() {
   });
 
   for (const r of results) console.log(`${r.kind.padEnd(9)} ${r.promotionId}${r.reason ? ` ${r.reason}` : ""}`);
+
+  // PDPA: ลบรายละเอียด/สาขาที่ผู้ใช้พิมพ์ใน 👎 เมื่อเก่าเกินกำหนด
+  const purged = await prisma.promoFeedback.updateMany({
+    where: { createdAt: { lt: noteRetentionCutoff(new Date()) }, OR: [{ note: { not: null } }, { branch: { not: null } }] },
+    data: { note: null, branch: null },
+  });
+  if (purged.count) console.log(`ลบรายละเอียด feedback เก่า ${purged.count} รายการ`);
 
   const digest = renderDigest(results);
   if (digest) await sendDigest(digest.subject, digest.html);
