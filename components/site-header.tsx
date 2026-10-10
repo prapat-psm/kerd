@@ -10,9 +10,14 @@ export function SiteHeader() {
         <span className="text-2xl font-semibold">kerd</span>
         <span className="text-sm text-muted-foreground">เกิด</span>
       </Link>
-      <Link href="/brand" className="rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:underline">
-        แบรนด์
-      </Link>
+      <nav aria-label="เมนูหลัก (จอใหญ่)" className="flex items-center gap-4 max-md:hidden">
+        <Link href="/brand" className="rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:underline">
+          แบรนด์
+        </Link>
+        <Link href="/submit" className="rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:underline">
+          แจ้งโปร
+        </Link>
+      </nav>
     </header>
   );
 }
