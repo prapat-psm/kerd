@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { freshnessStatus, type Freshness } from "@/lib/freshness";
 import { addDays } from "@/lib/dates";
-import { nextOccurrence } from "@/lib/months";
 import { WEEK_SPAN } from "@/lib/eligibility";
 
 const Tiers = z.array(z.object({ tier: z.string(), benefit: z.string(), conditions: z.array(z.string()).default([]) }));
@@ -29,8 +28,10 @@ export type PromoRow = {
   feedback: { stillValid: boolean; createdAt: Date }[];
 };
 
-export type PromoCardData = Omit<PromoRow, "window" | "windowDaysBefore" | "windowDaysAfter" | "tiers" | "validFrom" | "validUntil" | "feedback"> & {
+export type PromoCardData = Omit<PromoRow, "windowDaysBefore" | "windowDaysAfter" | "tiers" | "validFrom" | "validUntil" | "feedback"> & {
   windowLabel: string;
+  /** ช่วงเวลาของโปรที่มีกำหนด เช่น "ใช้ได้ถึง 31 ธ.ค. 2569" (null = ใช้ได้ทั้งปี) */
+  period: string | null;
   tiers: Tier[] | null;
   freshness: Freshness;
 };
@@ -50,16 +51,20 @@ export function formatThaiDate(d: Date): string {
   return thaiDate.format(d).replace("พ.ศ. ", "");
 }
 
-/** โปรยังใช้ได้ในเดือนเกิดครั้งถัดไปของเดือนนั้นหรือไม่ */
-export function activeInMonth(p: Pick<PromoRow, "validFrom" | "validUntil">, month: number, today: Date): boolean {
-  const { start, end } = nextOccurrence(month, today);
-  if (p.validUntil && p.validUntil < start) return false;
-  if (p.validFrom && p.validFrom >= addDays(end, 1)) return false;
-  return true;
+/** โปรยังไม่หมดอายุ (หมดวันนี้ยังนับ) โปรที่ยังไม่เริ่มก็แสดงได้ เพราะการ์ดบอกวันเริ่ม */
+export function isCurrent(p: Pick<PromoRow, "validFrom" | "validUntil">, today: Date): boolean {
+  return !p.validUntil || today < addDays(p.validUntil, 1);
+}
+
+export function periodLabel(validFrom: Date | null, validUntil: Date | null, now: Date): string | null {
+  const parts = [];
+  if (validFrom && validFrom > now) parts.push(`เริ่ม ${formatThaiDate(validFrom)}`);
+  if (validUntil) parts.push(`ใช้ได้ถึง ${formatThaiDate(validUntil)}`);
+  return parts.length ? parts.join(" ") : null;
 }
 
 export function toCardData(row: PromoRow, now: Date): PromoCardData {
-  const { window, windowDaysBefore, windowDaysAfter, tiers, feedback, ...rest } = row;
+  const { window, windowDaysBefore, windowDaysAfter, tiers, feedback, validFrom, validUntil, ...rest } = row;
   const parsedTiers = Tiers.safeParse(tiers);
   return {
     id: rest.id,
@@ -73,7 +78,9 @@ export function toCardData(row: PromoRow, now: Date): PromoCardData {
     sourceUrl: rest.sourceUrl,
     lastVerifiedAt: rest.lastVerifiedAt,
     brand: rest.brand,
+    window,
     windowLabel: windowLabel(window, windowDaysBefore, windowDaysAfter),
+    period: periodLabel(validFrom, validUntil, now),
     tiers: parsedTiers.success && parsedTiers.data.length ? parsedTiers.data : null,
     freshness: freshnessStatus(
       { lastVerifiedAt: rest.lastVerifiedAt, downvoteDates: feedback.filter((f) => !f.stillValid).map((f) => f.createdAt) },

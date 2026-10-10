@@ -12,7 +12,9 @@ const card: PromoCardData = {
   id: "p1",
   title: "โปรวันเกิด MK",
   benefit: "เป็ดย่าง 1 จาน",
+  window: "month",
   windowLabel: "ใช้ได้ทั้งเดือนเกิด",
+  period: null,
   tiers: [
     { tier: "Silver", benefit: "ลด 10%", conditions: [] },
     { tier: "Gold", benefit: "เป็ดย่าง 1 จาน", conditions: ["ยอดขั้นต่ำ 500 บาท"] },
@@ -91,5 +93,17 @@ describe("PromoCard", () => {
   it("มีปุ่ม 👍/👎 ให้ผู้ใช้แจ้งว่าข้อมูลยังใช้ได้ไหม", () => {
     render(<PromoCard promo={card} />);
     expect(screen.getByRole("group", { name: "ข้อมูลนี้ยังใช้ได้ไหม" })).toBeTruthy();
+  });
+});
+
+describe("PromoCard: ช่วงเวลาของโปร", () => {
+  it("โปรที่มีวันหมดอายุ แสดงว่าใช้ได้ถึงวันไหน", () => {
+    render(<PromoCard promo={{ ...card, period: "ใช้ได้ถึง 31 ธ.ค. 2569" }} />);
+    expect(screen.getByText("ใช้ได้ถึง 31 ธ.ค. 2569")).toBeTruthy();
+  });
+
+  it("โปรที่ไม่มีช่วงเวลา ไม่แสดงอะไรเพิ่ม", () => {
+    render(<PromoCard promo={card} />);
+    expect(screen.queryByText(/ใช้ได้ถึง/)).toBeNull();
   });
 });

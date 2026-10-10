@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 // ทุกหน้าหลักต้องผ่าน WCAG 2.1 AA ทั้งธีมสว่างและมืด (ต้องมีโปร published อย่างน้อย 1 ใบ ดู scripts/e2e-fixture.sql)
-const PAGES = ["/", "/october", "/brand", "/brand/mk-restaurants", "/privacy", "/terms", "/submit"];
+const PAGES = ["/", "/brand", "/brand/mk-restaurants", "/privacy", "/terms", "/submit"];
 
 for (const scheme of ["light", "dark"] as const) {
   for (const path of PAGES) {
@@ -16,18 +16,32 @@ for (const scheme of ["light", "dark"] as const) {
   }
 }
 
-test("หน้าเดือนมีการ์ดโปรให้ตรวจ", async ({ page }) => {
-  await page.goto("/october");
+test("หน้าแรกแสดงการ์ดโปรทันที ไม่ต้องเลือกเดือน", async ({ page }) => {
+  await page.goto("/");
   await expect(page.locator('[data-slot="card"]').first()).toBeVisible();
 });
 
-test("ลิงก์เก่า /birthday/october ย้ายไป /october", async ({ page }) => {
-  await page.goto("/birthday/october");
-  await expect(page).toHaveURL(/\/october$/);
+test("ลิงก์หน้าเดือนเดิม (/october, /birthday/october) ย้ายไปหน้าแรก", async ({ page }) => {
+  for (const old of ["/october", "/birthday/october"]) {
+    await page.goto(old);
+    await expect(page).toHaveURL(/\/$/);
+  }
 });
 
-test("กรองหมวดบนหน้าเดือนแล้วเหลือเฉพาะหมวดนั้น", async ({ page }) => {
-  await page.goto("/october");
+test("กรองตามช่วงที่ใช้ได้แล้วเหลือเฉพาะโปรช่วงนั้น", async ({ page }) => {
+  await page.goto("/");
+  const group = page.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" });
+  const all = await page.locator('[data-slot="card"]').count();
+  const chip = group.getByRole("button").nth(1);
+  const expected = Number(await chip.locator("span").last().textContent());
+  await chip.click();
+  await expect(chip).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator('[data-slot="card"]')).toHaveCount(expected);
+  expect(expected).toBeLessThan(all);
+});
+
+test("กรองหมวดบนหน้าแรกแล้วเหลือเฉพาะหมวดนั้น", async ({ page }) => {
+  await page.goto("/");
   const group = page.getByRole("group", { name: "กรองตามหมวด" });
   const all = await page.locator('[data-slot="card"]').count();
   const chip = group.getByRole("button").nth(1);
@@ -39,7 +53,7 @@ test("กรองหมวดบนหน้าเดือนแล้วเ�
 });
 
 test("skip link พาไปเนื้อหาหลักด้วยคีย์บอร์ด", async ({ page }) => {
-  await page.goto("/october");
+  await page.goto("/");
   await page.keyboard.press("Tab");
   const skip = page.getByRole("link", { name: "ข้ามไปเนื้อหาหลัก" });
   await expect(skip).toBeFocused();
@@ -64,7 +78,7 @@ test("เลือกธีมมืดแล้วจำไว้ และไ�
 
 test("👎 ต้องเลือกเหตุผล แล้วส่งรายงานได้", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/october");
+  await page.goto("/");
   const card = page.locator('[data-slot="card"]').first();
   await card.getByRole("button", { name: /ไม่ถูกต้อง/ }).click();
   const form = card.getByRole("form", { name: "แจ้งข้อมูลไม่ถูกต้อง" });
@@ -87,7 +101,7 @@ test("แจ้งโปรจาก footer แล้วเข้าคิว", 
 });
 
 test("ฟีเจอร์ LINE พักไว้: ไม่มีปุ่มเตือนฉัน และ /remind เป็น 404", async ({ page }) => {
-  await page.goto("/october");
+  await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("link", { name: /เตือนฉันก่อนเดือนเกิด/ })).toHaveCount(0);
   const res = await page.goto("/remind");
@@ -97,19 +111,19 @@ test("ฟีเจอร์ LINE พักไว้: ไม่มีปุ่ม
 test("SEO: robots, sitemap, canonical และ structured data", async ({ page, request }) => {
   expect(await (await request.get("/robots.txt")).text()).toContain("Sitemap:");
   const sitemap = await (await request.get("/sitemap.xml")).text();
-  expect(sitemap).toContain("/october</loc>");
+  expect(sitemap).not.toContain("/october</loc>");
   expect(sitemap).toContain("/brand/mk-restaurants</loc>");
-  await page.goto("/october");
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/october$/);
+  await page.goto("/");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /^https?:\/\/[^/]+\/?$/);
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /opengraph-image/);
   const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
-  expect(ld.map((t) => JSON.parse(t)["@type"])).toEqual(["ItemList", "BreadcrumbList"]);
+  expect(ld.map((t) => JSON.parse(t)["@type"])).toEqual(["ItemList"]);
 });
 
 for (const scheme of ["light", "dark"] as const) {
   test(`privacy และ T&C เปิดเป็น dialog จาก footer ผ่าน axe และปิดแล้วกลับหน้าเดิม (${scheme})`, async ({ page }) => {
     await page.emulateMedia({ colorScheme: scheme, reducedMotion: "reduce" });
-    await page.goto("/october");
+    await page.goto("/brand");
     const footer = page.getByRole("navigation", { name: "ลิงก์ท้ายเว็บ" });
     for (const [link, path, title] of [
       ["ความเป็นส่วนตัวและคุกกี้", "/privacy", "นโยบายความเป็นส่วนตัวและคุกกี้"],
@@ -123,7 +137,7 @@ for (const scheme of ["light", "dark"] as const) {
       expect(violations.map((v) => v.id)).toEqual([]);
       await page.keyboard.press("Escape");
       await expect(dialog).toHaveCount(0);
-      await expect(page).toHaveURL("/october");
+      await expect(page).toHaveURL("/brand");
     }
   });
 }

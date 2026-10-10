@@ -3,7 +3,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { prisma } from "@/lib/db";
 import { DOWNVOTE_WINDOW_DAYS } from "@/lib/freshness";
-import { activeInMonth, toCardData, type PromoCardData } from "./view";
+import { isCurrent, toCardData, type PromoCardData } from "./view";
 
 // ข้อมูลเปลี่ยนวันละไม่กี่ครั้ง: cache ไว้ระดับชั่วโมง และล้างได้ทันทีด้วย revalidateTag("promos", "max")
 const TAG = "promos";
@@ -33,7 +33,8 @@ function recentFeedback(now: Date) {
   return { where: { createdAt: { gte: since } }, select: { stillValid: true, createdAt: true } };
 }
 
-export async function getPromosForMonth(month: number): Promise<PromoCardData[]> {
+/** โปรที่เปิดแสดงและยังไม่หมดอายุ ทุกแบรนด์ (โปรส่วนใหญ่ใช้ได้ทุกเดือน จึงไม่แยกตามเดือนเกิด) */
+export async function getCurrentPromos(): Promise<PromoCardData[]> {
   cacheTag(TAG);
   cacheLife("hours");
   const now = new Date();
@@ -42,7 +43,7 @@ export async function getPromosForMonth(month: number): Promise<PromoCardData[]>
     select: { ...promoSelect, feedback: recentFeedback(now) },
     orderBy: { brand: { name: "asc" } },
   });
-  return rows.filter((r) => activeInMonth(r, month, now)).map((r) => toCardData(r, now));
+  return rows.filter((r) => isCurrent(r, now)).map((r) => toCardData(r, now));
 }
 
 export async function getBrandWithPromos(slug: string) {
@@ -60,7 +61,7 @@ export async function getBrandWithPromos(slug: string) {
   });
   if (!brand) return null;
   const { promotions, ...info } = brand;
-  return { ...info, promos: promotions.map((r) => toCardData(r, now)) };
+  return { ...info, promos: promotions.filter((r) => isCurrent(r, now)).map((r) => toCardData(r, now)) };
 }
 
 export async function getBrandSlugs(): Promise<string[]> {

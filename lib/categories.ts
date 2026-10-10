@@ -1,4 +1,4 @@
-// หมวดของแบรนด์ (Brand.category) และตัวกรองบนหน้าเดือน/หน้ารวมแบรนด์
+// หมวดของแบรนด์ (Brand.category) และตัวกรองบนหน้าแรก/หน้ารวมแบรนด์
 const LABELS: Record<string, string> = {
   food: "อาหาร",
   drink: "เครื่องดื่ม",

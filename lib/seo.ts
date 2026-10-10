@@ -1,5 +1,3 @@
-import { MONTHS } from "@/lib/months";
-
 /** URL หลักของเว็บ: ตั้ง NEXT_PUBLIC_SITE_URL เมื่อโดเมน kerd.app พร้อม ไม่งั้นใช้โดเมน production ของ Vercel */
 export function siteUrl(env: Record<string, string | undefined>): string {
   if (env.NEXT_PUBLIC_SITE_URL) return env.NEXT_PUBLIC_SITE_URL.replace(/\/+$/, "");
@@ -18,7 +16,6 @@ export function sitemapEntries(base: string, brandSlugs: string[], now: Date): S
   });
   return [
     e("/", "daily", 1),
-    ...MONTHS.map((m) => e(`/${m.slug}`, "daily", 0.9)),
     e("/brand", "weekly", 0.7),
     ...brandSlugs.map((slug) => e(`/brand/${slug}`, "weekly", 0.6)),
     e("/submit", "monthly", 0.3),
@@ -37,11 +34,11 @@ export function robotsRules(base: string) {
 
 const CONTEXT = "https://schema.org";
 
-export function monthListJsonLd(base: string, monthTh: string, brands: { name: string; slug: string }[]) {
+export function promoListJsonLd(base: string, brands: { name: string; slug: string }[]) {
   return {
     "@context": CONTEXT,
     "@type": "ItemList",
-    name: `โปรวันเกิดเดือน${monthTh}`,
+    name: "โปรวันเกิดและเดือนเกิดทุกแบรนด์",
     itemListElement: brands.map((b, i) => ({ "@type": "ListItem", position: i + 1, name: b.name, url: `${base}/brand/${b.slug}` })),
   };
 }

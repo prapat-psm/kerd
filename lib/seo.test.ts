@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { breadcrumbJsonLd, jsonLdScript, monthListJsonLd, pageOpenGraph, robotsRules, siteUrl, sitemapEntries } from "./seo";
+import { breadcrumbJsonLd, jsonLdScript, promoListJsonLd, pageOpenGraph, robotsRules, siteUrl, sitemapEntries } from "./seo";
 
 describe("siteUrl", () => {
   it("ใช้ NEXT_PUBLIC_SITE_URL ก่อน (ตัด / ท้าย)", () => {
@@ -19,20 +19,19 @@ describe("sitemapEntries", () => {
   const now = new Date("2026-10-09T00:00:00Z");
   const entries = sitemapEntries("https://kerd.app", ["mk-restaurants", "sizzler"], now);
 
-  it("มีหน้าแรก 12 เดือน หน้าแบรนด์ทั้งหมด และหน้าแบรนด์แต่ละแบรนด์", () => {
+  it("มีหน้าแรก หน้าแบรนด์ทั้งหมด และหน้าแบรนด์แต่ละแบรนด์ ไม่มีหน้าเดือนแล้ว (redirect ไปหน้าแรก)", () => {
     const urls = entries.map((e) => e.url);
     expect(urls[0]).toBe("https://kerd.app/");
-    expect(urls).toContain("https://kerd.app/october");
-    expect(urls.filter((u) => /\/(january|february|march|april|may|june|july|august|september|october|november|december)$/.test(u))).toHaveLength(12);
+    expect(urls).not.toContain("https://kerd.app/october");
     expect(urls).toContain("https://kerd.app/brand");
     expect(urls).toContain("https://kerd.app/brand/mk-restaurants");
-    expect(urls).toHaveLength(1 + 12 + 1 + 2 + 3);
+    expect(urls).toHaveLength(1 + 1 + 2 + 3);
   });
 
-  it("หน้าเดือนสำคัญกว่าหน้าอื่น และหน้ากฎหมายต่ำสุด", () => {
+  it("หน้าแรกสำคัญสุด และหน้ากฎหมายต่ำสุด", () => {
     const p = (path: string) => entries.find((e) => e.url === `https://kerd.app${path}`)!.priority;
     expect(p("/")).toBe(1);
-    expect(p("/october")).toBeGreaterThan(p("/brand/sizzler"));
+    expect(p("/")).toBeGreaterThan(p("/brand/sizzler"));
     expect(p("/privacy")).toBeLessThan(p("/brand/sizzler"));
     expect(entries.every((e) => e.lastModified === now)).toBe(true);
   });
@@ -53,11 +52,11 @@ describe("robotsRules", () => {
 });
 
 describe("JSON-LD", () => {
-  it("หน้าเดือนเป็น ItemList ของแบรนด์ที่ลิงก์ไปหน้าแบรนด์", () => {
-    expect(monthListJsonLd("https://kerd.app", "ตุลาคม", [{ name: "MK", slug: "mk-restaurants" }])).toEqual({
+  it("หน้าแรกเป็น ItemList ของแบรนด์ที่ลิงก์ไปหน้าแบรนด์", () => {
+    expect(promoListJsonLd("https://kerd.app", [{ name: "MK", slug: "mk-restaurants" }])).toEqual({
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: "โปรวันเกิดเดือนตุลาคม",
+      name: "โปรวันเกิดและเดือนเกิดทุกแบรนด์",
       itemListElement: [{ "@type": "ListItem", position: 1, name: "MK", url: "https://kerd.app/brand/mk-restaurants" }],
     });
   });
