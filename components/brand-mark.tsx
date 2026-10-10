@@ -11,7 +11,7 @@ export function BrandMark({ name, slug, className }: { name: string; slug: strin
       aria-hidden="true"
       data-slot="brand-mark"
       className={cn(
-        "grid size-10 shrink-0 place-items-center overflow-hidden rounded-full bg-primary/15 text-sm font-semibold tracking-tight text-foreground ring-1 ring-primary/30",
+        "grid size-10 shrink-0 place-items-center overflow-hidden rounded-full bg-muted text-sm font-semibold tracking-tight text-foreground ring-1 ring-border",
         logo && "bg-card",
         className,
       )}
