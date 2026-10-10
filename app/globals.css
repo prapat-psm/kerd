@@ -102,6 +102,7 @@
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --animate-fade-up: fade-up 320ms var(--ease-out-quart) both;
   --animate-fade-in: fade-in 200ms var(--ease-out-quart) both;
+  --animate-flicker: flicker 600ms ease-in-out 2;
 
   @keyframes fade-up {
     from {
@@ -111,6 +112,16 @@
     to {
       opacity: 1;
       transform: none;
+    }
+  }
+
+  /* โลโก้: เปลวเทียนไหว 2 รอบแล้วกลับที่เดิม */
+  @keyframes flicker {
+    33% {
+      transform: rotate(-6deg);
+    }
+    66% {
+      transform: rotate(4deg);
     }
   }
 

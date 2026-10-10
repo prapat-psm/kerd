@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import Link from "next/link";
 import { IBM_Plex_Sans_Thai } from "next/font/google";
-import { Logo } from "@/components/logo";
 import { SiteFooter } from "@/components/site-footer";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { SiteHeader } from "@/components/site-header";
 import { siteUrl } from "@/lib/seo";
 import { THEME_SCRIPT } from "@/lib/theme";
 import "./globals.css";
@@ -45,19 +43,7 @@ export default function RootLayout({ children, modal }: LayoutProps<"/">) {
         >
           ข้ามไปเนื้อหาหลัก
         </a>
-        <header className="mx-auto flex w-full max-w-3xl items-center justify-between px-4 py-5">
-          <Link href="/" className="flex items-baseline gap-2 rounded-md" aria-label="Kerd เกิด หน้าแรก">
-            <Logo className="size-7 self-center" />
-            <span className="text-2xl font-semibold">kerd</span>
-            <span className="text-sm text-muted-foreground">เกิด</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/brand" className="rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:underline">
-              แบรนด์
-            </Link>
-            <ThemeToggle />
-          </div>
-        </header>
+        <SiteHeader />
         <main id="main" tabIndex={-1} className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 outline-none">{children}</main>
         <SiteFooter />
         {modal}

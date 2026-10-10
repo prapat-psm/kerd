@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const LINKS = [
   { href: "/brand", label: "แบรนด์ทั้งหมด" },
@@ -21,6 +22,7 @@ export function SiteFooter() {
           ))}
         </ul>
       </nav>
+      <ThemeToggle className="self-start" />
       <p>ข้อมูลรวบรวมจากหน้าเว็บทางการของแต่ละแบรนด์ เงื่อนไขอาจเปลี่ยนได้ กรุณาตรวจสิทธิ์ที่ต้นทางก่อนใช้ทุกครั้ง</p>
     </footer>
   );
