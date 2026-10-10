@@ -5,7 +5,6 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { z } from "zod";
 import { PrismaClient } from "../generated/prisma/client";
 import { sendResendEmail } from "../lib/email";
-import { noteRetentionCutoff } from "../lib/feedback/retention";
 import { ALLOWED_HOSTS } from "../lib/watcher/allowed-hosts";
 import { describeError } from "../lib/watcher/describe-error";
 import { renderDigest } from "../lib/watcher/digest";
@@ -78,15 +77,13 @@ async function main() {
 
   for (const r of results) console.log(`${r.kind.padEnd(9)} ${r.promotionId}${r.reason ? ` ${r.reason}` : ""}`);
 
-  // PDPA: ลบรายละเอียด/สาขาที่ผู้ใช้พิมพ์ใน 👎 เมื่อเก่าเกินกำหนด
-  const purged = await prisma.promoFeedback.updateMany({
-    where: { createdAt: { lt: noteRetentionCutoff(new Date()) }, OR: [{ note: { not: null } }, { branch: { not: null } }] },
-    data: { note: null, branch: null },
-  });
-  if (purged.count) console.log(`ลบรายละเอียด feedback เก่า ${purged.count} รายการ`);
-
   const digest = renderDigest(results);
   if (digest) await sendDigest(digest.subject, digest.html);
+
+  // PDPA: ลบรายละเอียด/สาขาที่ผู้ใช้พิมพ์ใน 👎 เมื่อเก่าเกินกำหนด
+  // ผ่าน function ใน DB เพราะ role ของ watcher อ่านตาราง feedback ไม่ได้ (migration 20261010000000)
+  const [{ purged }] = await prisma.$queryRaw<{ purged: number }[]>`select purge_old_feedback_notes() as purged`;
+  if (purged) console.log(`ลบรายละเอียด feedback เก่า ${purged} รายการ`);
 }
 
 main()

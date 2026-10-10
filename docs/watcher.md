@@ -83,6 +83,9 @@ grant select, insert on "SourceSnapshot" to kerd_watcher;
 create policy watcher_read_promo on "Promotion" for select to kerd_watcher using (true);
 create policy watcher_read_brand on "Brand" for select to kerd_watcher using (true);
 create policy watcher_snap on "SourceSnapshot" for all to kerd_watcher using (true) with check (true);
+-- ล้างรายละเอียด 👎 เก่า (PDPA) ผ่าน function เท่านั้น ไม่ให้อ่านตาราง PromoFeedback
+-- migration 20261010000000 grant ให้อัตโนมัติถ้ามี role นี้อยู่แล้ว; ถ้าสร้าง role ทีหลังให้รันบรรทัดนี้
+grant execute on function purge_old_feedback_notes() to kerd_watcher;
 ```
 แล้วใช้ connection string ของ role นี้เป็น `WATCHER_DATABASE_URL` → ถึง secret หลุด ก็แก้/ลบโปรหรืออ่านข้อมูลผู้ใช้ไม่ได้
 
@@ -110,6 +113,7 @@ log จะแสดง `watcher failed: <ชื่อ> <Prisma code> pg=<Postgre
 |---|---|---|
 | `P1000 pg=28P01 password authentication failed` | user/รหัสผิด, ยังไม่ได้สร้าง role, หรือรหัสมีอักขระพิเศษ (`@ : / # ? %`) ที่ไม่ได้ encode | ตั้งรหัสใหม่เป็นตัวอักษร+ตัวเลขล้วน (`alter role kerd_watcher password '...'`), user ต้องเป็น `kerd_watcher.<project-ref>` |
 | `pg=42501 permission denied for table X` | ยังไม่ได้รัน grant/policy ครบ | รัน SQL ข้อ 4.3 ใหม่ |
+| `pg=42501 permission denied for function purge_old_feedback_notes` | สร้าง role หลัง migration | `grant execute on function purge_old_feedback_notes() to kerd_watcher;` |
 | `P1001` | host/port ผิด | ใช้ host ของ pooler เดียวกับ `DATABASE_URL` |
 
 ทดสอบสิทธิ์ใน SQL editor ได้ก่อน:
@@ -128,5 +132,14 @@ reset role;
 | ต่ำ | ลิขสิทธิ์เนื้อหาหน้าแบรนด์ | เก็บแค่ hash ไม่เก็บ/ไม่เผยแพร่ข้อความ | คงไว้แบบนี้; คำอธิบายบนเว็บเขียนเอง |
 | ต่ำ | robots.txt / ToS | เคารพ robots, UA ระบุตัว, โหลดต่ำ, ไม่มีโซเชียลใน allowlist | มี test แล้ว |
 | ต่ำ | ข้อมูลส่วนบุคคล | ไม่แตะข้อมูลผู้ใช้; email digest มีแค่อีเมลของ Prapat (Resend อยู่ต่างประเทศ) | ใส่ Resend ในรายชื่อ vendor + DPA |
+
+ไม่ใช่คำปรึกษาทางกฎหมาย ก่อนเปิดเชิงพาณิชย์ควรให้นักกฎหมายตรวจ
+
+### thai-pdpa-review: ล้าง feedback เก่าผ่าน function (2026-10-10)
+| ระดับ | ประเด็น | ทำไม | แก้ยังไง |
+|---|---|---|---|
+| กลาง → แก้แล้ว | รายละเอียด 👎 เก่าไม่ถูกลบ | watcher ล้มด้วย `permission denied for table PromoFeedback` ก่อนล้าง note/branch ทำให้เก็บเกิน 180 วันที่ประกาศไว้ | ล้างผ่าน `purge_old_feedback_notes()` (SECURITY DEFINER) watcher เรียกได้อย่างเดียว อ่านข้อมูลผู้ใช้ไม่ได้ |
+| ต่ำ | function ถูกเรียกจาก Data API | Supabase ให้ anon/authenticated execute function ใน public เป็นค่าเริ่มต้น | migration revoke จาก PUBLIC, anon, authenticated แล้ว grant ให้ kerd_watcher เท่านั้น |
+| ต่ำ | งานล้างข้อมูลผูกกับ watcher | ถ้า watcher หยุดรัน ข้อมูลเก่าจะค้าง | ดูผล job "Watch promo sources" ถ้าแดงนานให้แก้ก่อน |
 
 ไม่ใช่คำปรึกษาทางกฎหมาย ก่อนเปิดเชิงพาณิชย์ควรให้นักกฎหมายตรวจ
