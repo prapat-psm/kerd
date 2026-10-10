@@ -1,6 +1,6 @@
-// สร้าง app/favicon.ico และ app/apple-icon.png จาก app/icon.svg (รัน: npm run icons)
+// สร้าง app/favicon.ico, app/apple-icon.png และไอคอน PWA ใน public/icons จาก app/icon.svg (รัน: npm run icons)
 // ใช้สีโหมดสว่างของ icon.svg เพราะ PNG/ICO สลับธีมตามระบบไม่ได้
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import sharp from "sharp";
 
 const icon = readFileSync("app/icon.svg", "utf8");
@@ -31,13 +31,24 @@ const sizes = [16, 32, 48];
 const favicons = await Promise.all(sizes.map(async (size) => ({ size, data: await png(icon, size) })));
 writeFileSync("app/favicon.ico", ico(favicons));
 
-// iOS ไม่รองรับ SVG และเติมพื้นดำถ้าโปร่งใส จึงวางเทียนบนพื้น --bg เต็มแผ่น (iOS ตัดมุมให้เอง)
+// ไอคอนทึบบนพื้น --bg เต็มแผ่น: iOS เติมพื้นดำถ้าโปร่งใส ส่วน Android ตัดขอบไอคอน maskable เอง
+// scale = สัดส่วนเทียนต่อด้าน; maskable ต้องอยู่ในวงกลม safe zone 80% จึงเล็กกว่า
 const inner = icon.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
-const apple = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
-  <rect width="180" height="180" fill="${BG}"/>
-  <svg x="26" y="26" width="128" height="128" viewBox="0 0 32 32">${inner}</svg>
+const tile = (size, scale) => {
+  const art = Math.round(size * scale);
+  const at = Math.round((size - art) / 2);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}">
+  <rect width="${size}" height="${size}" fill="${BG}"/>
+  <svg x="${at}" y="${at}" width="${art}" height="${art}" viewBox="0 0 32 32">${inner}</svg>
 </svg>`;
-const appleIcon = await sharp(Buffer.from(apple), { density: 288 }).resize(180, 180).flatten({ background: BG }).removeAlpha().png().toBuffer();
-writeFileSync("app/apple-icon.png", appleIcon);
+  return sharp(Buffer.from(svg), { density: 288 }).resize(size, size).flatten({ background: BG }).removeAlpha().png().toBuffer();
+};
 
-console.log("icons: app/favicon.ico (16/32/48), app/apple-icon.png (180)");
+writeFileSync("app/apple-icon.png", await tile(180, 128 / 180));
+
+mkdirSync("public/icons", { recursive: true });
+writeFileSync("public/icons/icon-192.png", await tile(192, 128 / 180));
+writeFileSync("public/icons/icon-512.png", await tile(512, 128 / 180));
+writeFileSync("public/icons/icon-maskable-512.png", await tile(512, 0.56));
+
+console.log("icons: app/favicon.ico (16/32/48), app/apple-icon.png (180), public/icons (192, 512, maskable 512)");

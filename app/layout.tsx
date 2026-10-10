@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { IBM_Plex_Sans_Thai } from "next/font/google";
 import { Logo } from "@/components/logo";
@@ -20,6 +20,15 @@ export const metadata: Metadata = {
   description: "รวมโปรวันเกิดและเดือนเกิดจากแบรนด์ดัง พร้อมวิธีใช้สิทธิ์ แหล่งที่มา และวันที่ตรวจล่าสุด",
   openGraph: { type: "website", siteName: "Kerd · เกิด", locale: "th_TH" },
   twitter: { card: "summary_large_image" },
+  appleWebApp: { title: "Kerd", statusBarStyle: "default" },
+};
+
+// สีแถบสถานะ/แถบที่อยู่ = --bg ของแต่ละธีม (docs/branding.md)
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFF8F5" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E1320" },
+  ],
 };
 
 export default function RootLayout({ children, modal }: LayoutProps<"/">) {
