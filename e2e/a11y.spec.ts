@@ -80,6 +80,9 @@ test("👎 ต้องเลือกเหตุผล แล้วส่ง�
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const card = page.locator('[data-slot="card"]').first();
+  // วิธีใช้สิทธิ์และปุ่ม 👍/👎 พับอยู่ในการ์ด ต้องแตะเปิดก่อน
+  await card.locator("summary").click();
+  await expect(card.getByRole("list", { name: "วิธีใช้สิทธิ์" })).toBeVisible();
   await card.getByRole("button", { name: /ไม่ถูกต้อง/ }).click();
   const form = card.getByRole("form", { name: "แจ้งข้อมูลไม่ถูกต้อง" });
   await form.getByText("หน้าร้านไม่ให้ใช้สิทธิ์").click();
