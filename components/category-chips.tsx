@@ -35,7 +35,8 @@ export function CategoryChips({
             )}
           >
             {o.label}
-            <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "bg-background/30" : "bg-muted")}>{o.count}</span>
+            {/* active: ใช้เส้นขอบแทนพื้นทึบ ให้ตัวเลขอยู่บน --primary ตรงๆ (พื้น background/30 ทำ contrast ต่ำใน dark mode) */}
+            <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "ring-1 ring-primary-foreground/40" : "bg-muted")}>{o.count}</span>
           </button>
         );
       })}
