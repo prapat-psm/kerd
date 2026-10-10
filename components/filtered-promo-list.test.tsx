@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { PromoCardData } from "@/lib/promos/view";
-import { FilteredPromoList } from "./filtered-promo-list";
+import { FilteredPromoList, SEARCH_DEBOUNCE_MS } from "./filtered-promo-list";
 
 afterEach(cleanup);
 
@@ -92,34 +92,87 @@ describe("FilteredPromoList", () => {
   });
 
   describe("ช่องค้นหา", () => {
-    const search = () => screen.getByRole("searchbox", { name: "ค้นหาโปรหรือแบรนด์" });
+    beforeEach(() => vi.useFakeTimers());
+    afterEach(() => vi.useRealTimers());
 
-    it("พิมพ์ชื่อแบรนด์แล้วเหลือเฉพาะการ์ดที่ตรง", () => {
+    const search = () => screen.getByRole("combobox", { name: "ค้นหาโปรหรือแบรนด์" });
+    const type = (value: string) => {
+      fireEvent.change(search(), { target: { value } });
+      act(() => vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS));
+    };
+
+    it("รอให้หยุดพิมพ์ก่อน (debounce) แล้วจึงกรองการ์ด", () => {
       render(<FilteredPromoList promos={promos} />);
       fireEvent.change(search(), { target: { value: "sizz" } });
+      expect(cards()).toHaveLength(3);
+      act(() => vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS));
       expect(cards()).toEqual(["Sizzler"]);
       expect(screen.getByRole("status").textContent).toContain("1 โปร");
     });
 
     it("ใช้ร่วมกับตัวกรองหมวดได้", () => {
       render(<FilteredPromoList promos={promos} />);
-      fireEvent.change(search(), { target: { value: "โปร" } });
+      type("โปร");
       fireEvent.click(screen.getByRole("button", { name: /ธนาคาร/ }));
       expect(cards()).toEqual(["KBank"]);
     });
 
-    it("ไม่เจอ บอกคำที่ค้น และกดล้างคำค้นเพื่อกลับมาเห็นทุกการ์ด", () => {
+    it("แสดงรายชื่อแบรนด์ที่ตรงกับคำค้นให้เลือก", () => {
       render(<FilteredPromoList promos={promos} />);
-      fireEvent.change(search(), { target: { value: "starbucks" } });
+      type("k");
+      const list = screen.getByRole("listbox", { name: "แบรนด์ที่ตรงกับคำค้น" });
+      expect(within(list).getAllByRole("option").map((o) => o.textContent)).toEqual([expect.stringContaining("KBank"), expect.stringContaining("MK")]);
+      expect(search().getAttribute("aria-expanded")).toBe("true");
+    });
+
+    it("คลิกเลือกแบรนด์แล้วเหลือเฉพาะโปรของแบรนด์นั้น และปิดรายการ", () => {
+      render(<FilteredPromoList promos={promos} />);
+      type("k");
+      fireEvent.click(screen.getByRole("option", { name: /KBank/ }));
+      expect((search() as HTMLInputElement).value).toBe("KBank");
+      expect(cards()).toEqual(["KBank"]);
+      expect(screen.queryByRole("listbox")).toBeNull();
+    });
+
+    it("เลือกแบรนด์ด้วยคีย์บอร์ด: ลูกศรลงแล้ว Enter", () => {
+      render(<FilteredPromoList promos={promos} />);
+      type("k");
+      fireEvent.keyDown(search(), { key: "ArrowDown" });
+      fireEvent.keyDown(search(), { key: "ArrowDown" });
+      expect(search().getAttribute("aria-activedescendant")).toBe(screen.getByRole("option", { name: /MK/ }).id);
+      fireEvent.keyDown(search(), { key: "Enter" });
+      expect(cards()).toEqual(["MK"]);
+    });
+
+    it("กด Escape ปิดรายการแบรนด์ โดยยังคงคำค้นไว้", () => {
+      render(<FilteredPromoList promos={promos} />);
+      type("k");
+      fireEvent.keyDown(search(), { key: "Escape" });
+      expect(screen.queryByRole("listbox")).toBeNull();
+      expect((search() as HTMLInputElement).value).toBe("k");
+    });
+
+    it("พิมพ์ต่อหลังเลือกแบรนด์ กลับไปค้นแบบปกติ", () => {
+      render(<FilteredPromoList promos={promos} />);
+      type("k");
+      fireEvent.click(screen.getByRole("option", { name: /KBank/ }));
+      type("โปร");
+      expect(cards()).toHaveLength(3);
+    });
+
+    it("ไม่เจอ บอกคำที่ค้น และกดล้างคำค้นเพื่อกลับมาเห็นทุกการ์ดทันที", () => {
+      render(<FilteredPromoList promos={promos} />);
+      type("starbucks");
       expect(screen.getByText(/ไม่พบโปรที่ตรงกับ “starbucks”/)).toBeTruthy();
       fireEvent.click(screen.getByRole("button", { name: "ล้างคำค้น" }));
       expect((search() as HTMLInputElement).value).toBe("");
       expect(cards()).toHaveLength(3);
     });
 
-    it("ยังไม่ได้พิมพ์ ไม่ต้องมีปุ่มล้างคำค้น", () => {
+    it("ยังไม่ได้พิมพ์ ไม่ต้องมีปุ่มล้างคำค้นและรายการแบรนด์", () => {
       render(<FilteredPromoList promos={promos} />);
       expect(screen.queryByRole("button", { name: "ล้างคำค้น" })).toBeNull();
+      expect(screen.queryByRole("listbox")).toBeNull();
     });
   });
 });
