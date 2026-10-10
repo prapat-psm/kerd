@@ -28,15 +28,14 @@ export function CategoryChips({
             aria-pressed={active}
             onClick={() => onChange(o.value)}
             className={cn(
-              "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium outline-none",
+              "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium outline-none pointer-coarse:min-h-11",
               "transition-[background-color,border-color,color,scale] duration-200 ease-(--ease-out-quart)",
               "focus-visible:ring-[3px] focus-visible:ring-ring/50 motion-safe:active:scale-95",
-              active ? "border-primary bg-primary text-primary-foreground" : "bg-card text-foreground hover:border-primary",
+              active ? "border-foreground bg-foreground text-background forced-colors:outline-2" : "bg-card text-foreground hover:border-foreground/40",
             )}
           >
             {o.label}
-            {/* active: ใช้เส้นขอบแทนพื้นทึบ ให้ตัวเลขอยู่บน --primary ตรงๆ (พื้น background/30 ทำ contrast ต่ำใน dark mode) */}
-            <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "ring-1 ring-primary-foreground/40" : "bg-muted")}>{o.count}</span>
+            <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "text-background/70" : "bg-muted")}>{o.count}</span>
           </button>
         );
       })}

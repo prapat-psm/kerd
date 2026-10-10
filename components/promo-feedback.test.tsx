@@ -74,4 +74,14 @@ describe("PromoFeedback", () => {
     fireEvent.click(screen.getByRole("button", { name: /ใช้ได้/ }));
     await waitFor(() => expect(screen.getByRole("alert").textContent).toContain(text));
   });
+
+  it("ช่องกรอกเหตุผลใช้ตัวอักษร 16px ขึ้นไป เพื่อไม่ให้ iOS/LINE ซูมจอเองตอนแตะ", () => {
+    render(<PromoFeedback promoId={id} />);
+    fireEvent.click(screen.getByRole("button", { name: /ไม่ถูกต้อง/ }));
+    const form = screen.getByRole("form", { name: "แจ้งข้อมูลไม่ถูกต้อง" });
+    for (const field of [within(form).getByLabelText(/รายละเอียด/), within(form).getByLabelText(/สาขา/)]) {
+      expect(field.className).toContain("text-base");
+      expect(field.className).not.toMatch(/\btext-(xs|sm)\b/);
+    }
+  });
 });

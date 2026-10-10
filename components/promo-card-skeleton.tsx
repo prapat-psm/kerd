@@ -6,19 +6,26 @@ function PromoCardSkeleton() {
   return (
     <Card className="gap-4" aria-hidden>
       <CardHeader>
-        <Skeleton className="h-5 w-40" />
+        <div className="flex items-center gap-3">
+          <Skeleton className="size-10 rounded-full" />
+          <Skeleton className="h-5 w-40" />
+        </div>
         <Skeleton className="h-4 w-28" />
       </CardHeader>
-      <CardContent className="flex flex-col gap-3">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-4/5" />
-        <Skeleton className="h-16 w-full rounded-lg" />
-        <Skeleton className="h-4 w-3/5" />
+      <CardContent className="flex flex-col gap-2">
+        <Skeleton className="h-5 w-full" />
+        {/* สิทธิ์ที่ได้มักยาว 2 บรรทัดบนมือถือ */}
+        <Skeleton className="h-5 w-3/5 sm:hidden" />
       </CardContent>
-      <CardFooter className="justify-between border-t pt-4">
+      <CardFooter className="flex-wrap justify-between gap-2">
         <Skeleton className="h-4 w-32" />
-        <Skeleton className="h-8 w-40" />
+        <Skeleton className="h-8 w-48 max-sm:basis-full" />
       </CardFooter>
+      {/* แถว "วิธีใช้สิทธิ์ · N ขั้น" ที่พับไว้ */}
+      <div className="flex min-h-11 items-center justify-between border-t px-6 pt-3">
+        <Skeleton className="h-4 w-28" />
+        <Skeleton className="size-4" />
+      </div>
     </Card>
   );
 }

@@ -107,3 +107,38 @@ describe("PromoCard: ช่วงเวลาของโปร", () => {
     expect(screen.queryByText(/ใช้ได้ถึง/)).toBeNull();
   });
 });
+
+describe("PromoCard: การ์ดกะทัดรัด", () => {
+  const details = (container: HTMLElement) => container.querySelector("details")!;
+
+  it("พับวิธีใช้สิทธิ์ไว้เริ่มต้น และบอกจำนวนขั้นบนปุ่มเปิด", () => {
+    const { container } = render(<PromoCard promo={card} />);
+    expect(details(container).open).toBe(false);
+    expect(container.querySelector("summary")?.textContent).toContain("วิธีใช้สิทธิ์ · 2 ขั้น");
+  });
+
+  it("ขั้นตอน tier เงื่อนไข และปุ่มแจ้งข้อมูล อยู่ในส่วนที่พับ (ยังอยู่ใน DOM ให้ค้นหาเจอ)", () => {
+    const { container } = render(<PromoCard promo={card} />);
+    const folded = details(container);
+    expect(within(folded).getByRole("list", { name: "วิธีใช้สิทธิ์" })).toBeTruthy();
+    expect(within(folded).getByText("Silver")).toBeTruthy();
+    expect(within(folded).getByText("ทานที่ร้านเท่านั้น")).toBeTruthy();
+    expect(within(folded).getByRole("group", { name: "ข้อมูลนี้ยังใช้ได้ไหม" })).toBeTruthy();
+  });
+
+  it("สิ่งที่ได้ สมาชิก วันที่ตรวจล่าสุด และลิงก์ต้นทาง เห็นตลอดโดยไม่ต้องเปิด", () => {
+    const { container } = render(<PromoCard promo={card} />);
+    const folded = details(container);
+    const outside = (el: Element) => expect(folded.contains(el)).toBe(false);
+    outside(screen.getByText("เป็ดย่าง 1 จาน", { selector: "p" }));
+    outside(screen.getByText("ต้องเป็นสมาชิก MK Member ระดับ Gold ขึ้นไป"));
+    outside(screen.getByText("ตรวจล่าสุดเมื่อ 8 ต.ค. 2569"));
+    outside(screen.getByRole("link", { name: /ตรวจสิทธิ์ที่หน้าเว็บทางการ/ }));
+  });
+
+  it("เปิดไว้ตั้งแต่แรกได้ (หน้าแบรนด์ที่คนเข้ามาดูรายละเอียด)", () => {
+    const { container } = render(<PromoCard promo={card} expanded />);
+    expect(details(container).open).toBe(true);
+  });
+});
+

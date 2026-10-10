@@ -46,7 +46,7 @@ async function BrandPromos({ params }: Pick<PageProps<"/brand/[slug]">, "params"
         <div className="mt-6 flex flex-col gap-4">
           {brand.promos.map((p, i) => (
             <div key={p.id} className="animate-fade-up stagger" style={stagger(i)}>
-              <PromoCard promo={p} />
+              <PromoCard promo={p} expanded />
             </div>
           ))}
         </div>

@@ -14,7 +14,7 @@ const ERRORS: Record<Exclude<FeedbackResult["status"], "ok">, string> = {
 };
 
 const field =
-  "w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
+  "w-full rounded-md border bg-background px-3 py-2 text-base outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
 
 /** 👍/👎 ใต้การ์ดโปร; 👎 ต้องเลือกเหตุผล (docs/design.md ข้อ 3) ไม่เก็บชื่อ ติดต่อกลับ หรือ IP */
 export function PromoFeedback({ promoId }: { promoId: string }) {
