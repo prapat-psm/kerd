@@ -155,9 +155,13 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
   const debounced = useDebouncedValue(query, SEARCH_DEBOUNCE_MS);
   const term = query ? debounced : "";
   const options = categoryOptions(promos);
-  const windows = windowOptions(promos);
   const matched = brand ? promos.filter((p) => p.brand.slug === brand) : searchPromos(promos, term);
-  const shown = filterByWindow(filterByCategory(matched, category), window);
+  // แถวช่วงแสดงตามโปรทั้งหมด (ไม่กระโดดหายตอนเปลี่ยนหมวด) แต่ตัวเลือกและจำนวนนับเฉพาะหมวดที่เลือก
+  const showWindows = windowOptions(promos).length > 2;
+  const windows = windowOptions(filterByCategory(promos, category));
+  // ช่วงที่เลือกไว้ไม่มีในหมวดใหม่ กลับเป็น "ทั้งหมด" แทนหน้าว่าง
+  const activeWindow = windows.some((w) => w.value === window) ? window : ALL;
+  const shown = filterByWindow(filterByCategory(matched, category), activeWindow);
   const suggestions = brand ? [] : brandSuggestions(promos, term);
 
   return (
@@ -179,9 +183,9 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
           <CategoryChips className="ml-0 pl-0" options={options} value={category} onChange={setCategory} />
         </FilterRow>
       )}
-      {windows.length > 2 && (
+      {showWindows && (
         <FilterRow caption="ใช้ได้ช่วง">
-          <CategoryChips className="ml-0 pl-0" label="กรองตามช่วงที่ใช้ได้" options={windows} value={window} onChange={setWindow} />
+          <CategoryChips className="ml-0 pl-0" label="กรองตามช่วงที่ใช้ได้" options={windows} value={activeWindow} onChange={setWindow} />
         </FilterRow>
       )}
       <p role="status" className="sr-only">
@@ -191,7 +195,7 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
         <p className="text-muted-foreground">{term.trim() ? `ไม่พบโปรที่ตรงกับ “${term.trim()}” ลองชื่อแบรนด์หรือคำอื่น` : "ไม่มีโปรที่ตรงกับตัวกรองนี้"}</p>
       )}
       {/* เปลี่ยน key ตามตัวกรอง ให้การ์ดเล่น animation เข้ามาใหม่ทุกครั้งที่กรอง */}
-      <div key={`${category}-${window}`} className="flex flex-col gap-4">
+      <div key={`${category}-${activeWindow}`} className="flex flex-col gap-4">
         {shown.map((p, i) => (
           <div key={p.id} className="animate-fade-up stagger" style={stagger(i)}>
             <PromoCard promo={p} linkBrand />
