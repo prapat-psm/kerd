@@ -90,4 +90,36 @@ describe("FilteredPromoList", () => {
     expect(screen.getByText("หมวด")).toBeTruthy();
     expect(screen.getByText("ใช้ได้ช่วง")).toBeTruthy();
   });
+
+  describe("ช่องค้นหา", () => {
+    const search = () => screen.getByRole("searchbox", { name: "ค้นหาโปรหรือแบรนด์" });
+
+    it("พิมพ์ชื่อแบรนด์แล้วเหลือเฉพาะการ์ดที่ตรง", () => {
+      render(<FilteredPromoList promos={promos} />);
+      fireEvent.change(search(), { target: { value: "sizz" } });
+      expect(cards()).toEqual(["Sizzler"]);
+      expect(screen.getByRole("status").textContent).toContain("1 โปร");
+    });
+
+    it("ใช้ร่วมกับตัวกรองหมวดได้", () => {
+      render(<FilteredPromoList promos={promos} />);
+      fireEvent.change(search(), { target: { value: "โปร" } });
+      fireEvent.click(screen.getByRole("button", { name: /ธนาคาร/ }));
+      expect(cards()).toEqual(["KBank"]);
+    });
+
+    it("ไม่เจอ บอกคำที่ค้น และกดล้างคำค้นเพื่อกลับมาเห็นทุกการ์ด", () => {
+      render(<FilteredPromoList promos={promos} />);
+      fireEvent.change(search(), { target: { value: "starbucks" } });
+      expect(screen.getByText(/ไม่พบโปรที่ตรงกับ “starbucks”/)).toBeTruthy();
+      fireEvent.click(screen.getByRole("button", { name: "ล้างคำค้น" }));
+      expect((search() as HTMLInputElement).value).toBe("");
+      expect(cards()).toHaveLength(3);
+    });
+
+    it("ยังไม่ได้พิมพ์ ไม่ต้องมีปุ่มล้างคำค้น", () => {
+      render(<FilteredPromoList promos={promos} />);
+      expect(screen.queryByRole("button", { name: "ล้างคำค้น" })).toBeNull();
+    });
+  });
 });
