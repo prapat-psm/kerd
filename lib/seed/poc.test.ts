@@ -14,7 +14,7 @@ describe("parsePocBrands", () => {
 
   it("แปลง record ที่ใช้ได้เป็น PromotionInput", () => {
     const { valid } = parsePocBrands(raw);
-    expect(valid).toHaveLength(23);
+    expect(valid).toHaveLength(24);
     const mk = valid.find((p) => p.brandSlug === "mk-restaurants");
     expect(mk?.howToRedeem.length).toBeGreaterThan(0);
     expect(mk?.sourceUrl).toMatch(/^https:\/\//);
