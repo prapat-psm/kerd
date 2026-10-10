@@ -100,3 +100,12 @@ Todo (could not check): Mister Donut (503), Sukiya (403), KidZania (robots 500),
 Au Bon Pain: no official Thai site found (only social pages), so it is not in brand-candidates.csv.
 
 Leads to check by hand: Bangkok Airways FlyerBonus (yearly birth-month points with registration), Siam Takashimaya (Members Birthday banner), The Mall M Card (birth-month perk in the app).
+
+## Round 6 (2026-10-10): re-verify drafts + 12 new brands
+
+Re-checked all 16 drafts on their official pages. 9 now have a clear, current official page (high) and are published:
+S&P (20% once in birth month), Inthanin via Bangchak Green Miles 2026 (20 baht drink coupon, campaign ends 31 Dec 2026), Oriental Princess (2026 package: free gift + 35% off, read from official images), Cute Press (30–50% by tier), Dream World (free Visa ticket on your birthday), McDonald's (paid 299 baht Party@McD set with birthday freebies, not a free personal perk), King Power (25% cashback, 3-month window), ONESIAM (2026 store privileges by tier, from an official image), Charles & Keith (table confirms ฿200 member / ฿500 VIP).
+
+Still draft (medium): Café Amazon (no menu or tier stated), MK (coupon value not stated), Major Cineplex (only a 2018 announcement), Sizzler (undated FAQ, ฿399 value may be stale), 7-Eleven (no items or steps), The Pizza Company (perk only in homepage config), Hard Rock Bangkok (only a 2019 PDF: call the branch).
+
+New brands: The Coffee Club (birth-month privilege in the app, value not stated: draft). Skip: Somboon Seafood, Yayoi (MK ONE discounts only), Srichand, Cathy Doll, Sanrio Gift Gate (no official Thai site). Todo: Kyochon (no Thai site), Supersports (JS-only), Big Camera (robots blocks ClaudeBot), Mistine (Cloudflare), Jaspal and CPS (JPS Club benefits page is JS-only; worth a manual browser check).

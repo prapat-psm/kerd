@@ -21,4 +21,5 @@ export const ALLOWED_HOSTS: readonly string[] = [
   "faq-th.uniqlo.com",
   "th.laneige.com",
   "www.charleskeith.co.th",
+  "www.thecoffeeclub.co.th",
 ];

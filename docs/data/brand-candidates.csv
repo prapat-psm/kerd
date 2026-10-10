@@ -129,3 +129,13 @@ thai-airways-royal-orchid-plus,Thai Airways Royal Orchid Plus,entertainment,http
 bangkok-airways-flyerbonus,Bangkok Airways FlyerBonus,entertainment,https://flyerbonus.bangkokair.com,todo,round5: flyerbonus.bangkokair.com robots.txt returns 403 so not fetched; annual birth-month bonus with registration existed 2024 and 2025 per third-party sources but no 2026 version confirmed
 ptt-blue-card,PTT Blue Card,app,https://www.pttbluecard.com,todo,round5: pttbluecard.com robots.txt redirects to unrelated domain asoleap.org and bluecard.co.th does not resolve; official site unverifiable and perks likely app-only
 pt-max-card,PT Max Card,app,https://www.pt.co.th,todo,round5: robots.txt on pt.co.th returns 403 so site not fetched
+the-coffee-club-th,The Coffee Club Thailand,food,https://www.thecoffeeclub.co.th,poc,round6: medium confidence draft (perk stated but no details)
+somboon-seafood,Somboon Seafood,food,https://www.somboonseafood.com,skip,round6: robots allowed but official site shows no membership or birthday perk
+yayoi-th,Yayoi Thailand,food,https://yayoirestaurants.com,skip,round6: robots allowed; promotions page and MK ONE member page list tier discounts but no birthday perk
+supersports-th,Supersports Thailand,retail,https://www.supersports.co.th,todo,round6: robots allowed but Shopify pages render via JS; sitemap shows no customer birthday page (birthday tumbler page is store 29th anniversary); member perks run via The 1
+big-camera,Big Camera,retail,https://www.bigcamera.co.th,todo,round6: robots.txt disallows ClaudeBot for all paths so site not fetched
+mistine,Mistine,beauty,https://www.mistine.co.th,todo,round6: robots.txt returns 403 Cloudflare captcha wall so site not fetched
+srichand,Srichand,beauty,https://srichand.com,skip,round6: robots allowed; Srichand Rewards member-benefit and member terms pages checked and show points and spend gifts only with no birthday perk
+cathy-doll,Cathy Doll / Karmart,beauty,https://online.karmarts.com,skip,round6: robots allowed on karmarts.co.th and online.karmarts.com; corporate site plus shop home and promotions and cathydoll.com show no member birthday perk
+jaspal,Jaspal,retail,https://www.jaspal.com,todo,round6: robots allowed; privacy policy says JPS Club may give birthday or birth-month privileges but tier benefits live on jpsclub.com which is a JS-only app so no concrete perk verified
+cps-chaps,CPS Chaps,retail,https://www.cpslabel.com,todo,round6: cpschaps.com redirects to cpslabel.com with robots allowed; shares JPS Club whose benefits page on jpsclub.com is JS-only; cpslabel tier page lists only 5-10 percent tier discounts with no birthday perk
