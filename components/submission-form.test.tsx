@@ -56,4 +56,12 @@ describe("SubmissionForm", () => {
     fireEvent.click(screen.getByRole("button", { name: "ส่งให้ทีมตรวจ" }));
     expect((await screen.findByRole("alert")).textContent).toContain(text);
   });
+
+  it("ช่องกรอกใช้ตัวอักษร 16px ขึ้นไป เพื่อไม่ให้ iOS/LINE ซูมจอเองตอนแตะ", () => {
+    render(<SubmissionForm />);
+    for (const field of [screen.getByLabelText("ชื่อแบรนด์"), screen.getByLabelText(/ลิงก์หน้าเว็บทางการ/), screen.getByLabelText(/วิธีใช้สิทธิ์/)]) {
+      expect(field.className).toContain("text-base");
+      expect(field.className).not.toMatch(/\btext-(xs|sm)\b/);
+    }
+  });
 });

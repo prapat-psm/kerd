@@ -92,6 +92,12 @@
   --color-warn: var(--warn);
   --font-sans: var(--font-plex-thai);
 
+  /* ไทยมีสระ/วรรณยุกต์ซ้อนบนล่าง: ระยะบรรทัด ≥ 1.6 ทุกขนาดที่ใช้กับเนื้อความ */
+  --text-xs--line-height: 1.6;
+  --text-sm--line-height: 1.6;
+  --text-base--line-height: 1.65;
+  --text-lg--line-height: 1.5;
+
   /* motion: สั้นและนุ่ม ไม่แย่งความสนใจจากเนื้อหา */
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --animate-fade-up: fade-up 320ms var(--ease-out-quart) both;
