@@ -18,3 +18,13 @@ export function windowOptions(items: HasWindow[]): CategoryOption[] {
 export function filterByWindow<T extends HasWindow>(items: T[], window: string): T[] {
   return window === ALL ? items : items.filter((i) => i.window === window);
 }
+
+const SHORT_LABELS: Record<(typeof WINDOWS)[number]["value"], string> = { day: "วันเกิด", week: "สัปดาห์", month: "ทั้งเดือน" };
+
+/** ช่องของ segmented control: ครบทุกช่วงเสมอ (ตำแหน่งไม่กระโดด) ไม่มีตัวเลขจำนวน ช่วงที่ไม่มีโปรกดไม่ได้ */
+export function windowSegments(items: HasWindow[]) {
+  return [
+    { value: ALL, label: "ทั้งหมด", disabled: items.length === 0 },
+    ...WINDOWS.map((w) => ({ value: w.value as string, label: SHORT_LABELS[w.value], disabled: !items.some((i) => i.window === w.value) })),
+  ];
+}

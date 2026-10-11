@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ALL } from "./categories";
-import { filterByWindow, windowOptions } from "./windows";
+import { filterByWindow, windowOptions, windowSegments } from "./windows";
 
 const items = [{ window: "month" }, { window: "day" }, { window: "month" }, { window: "week" }, { window: "month" }] as const;
 
@@ -26,5 +26,16 @@ describe("filterByWindow", () => {
 
   it("กรองเฉพาะช่วงที่เลือก", () => {
     expect(filterByWindow([...items], "month")).toHaveLength(3);
+  });
+});
+
+describe("windowSegments", () => {
+  it("ครบ 4 ช่องเสมอ ป้ายสั้น ไม่มีจำนวน ช่วงที่ไม่มีโปรกดไม่ได้", () => {
+    expect(windowSegments([{ window: "month" }, { window: "day" }, { window: "month" }])).toEqual([
+      { value: ALL, label: "ทั้งหมด", disabled: false },
+      { value: "day", label: "วันเกิด", disabled: false },
+      { value: "week", label: "สัปดาห์", disabled: true },
+      { value: "month", label: "ทั้งเดือน", disabled: false },
+    ]);
   });
 });

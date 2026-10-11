@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
-import { CategoryChips } from "@/components/category-chips";
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import { FilterPanel } from "@/components/filter-panel";
 import { PromoCard } from "@/components/promo-card";
 import { Button } from "@/components/ui/button";
 import { ALL, categoryLabel, categoryOptions, filterByCategory } from "@/lib/categories";
@@ -10,23 +10,36 @@ import { stagger } from "@/lib/motion";
 import { brandSuggestions, searchPromos, type BrandSuggestion } from "@/lib/search";
 import { useDebouncedValue } from "@/lib/use-debounced-value";
 import { cn } from "@/lib/utils";
-import { filterByWindow, windowOptions } from "@/lib/windows";
+import { filterByWindow, windowOptions, windowSegments } from "@/lib/windows";
 import type { PromoCardData } from "@/lib/promos/view";
-
-// ป้ายสั้นหน้าแถวตัวกรอง (ชื่อเต็มอยู่ใน aria-label ของกลุ่มปุ่มแล้ว จึงซ่อนจาก screen reader)
-function FilterRow({ caption, children }: { caption: string; children: ReactNode }) {
-  return (
-    <div className="flex items-center gap-2">
-      <span aria-hidden className="w-16 shrink-0 text-xs text-muted-foreground">
-        {caption}
-      </span>
-      <div className="min-w-0 flex-1">{children}</div>
-    </div>
-  );
-}
 
 // รอให้หยุดพิมพ์ก่อนค่อยกรอง การ์ดจะได้ไม่กระพริบทุกตัวอักษร
 export const SEARCH_DEBOUNCE_MS = 250;
+
+// แสดงการ์ดทีละหน้า เลื่อนถึงท้ายรายการแล้วโหลดหน้าถัดไป
+export const PAGE_SIZE = 5;
+
+// จุดท้ายรายการ: เลื่อนมาใกล้แล้วโหลดเพิ่มเอง ปุ่ม "ดูเพิ่ม" สำรองไว้สำหรับคีย์บอร์ดและเบราว์เซอร์ที่ไม่มี IntersectionObserver
+function LoadMore({ onMore }: { onMore: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const more = useRef(onMore);
+  useEffect(() => {
+    more.current = onMore;
+  });
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined" || !ref.current) return;
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && more.current(), { rootMargin: "400px 0px" });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="flex justify-center">
+      <Button variant="outline" onClick={onMore} className="rounded-full">
+        ดูเพิ่ม
+      </Button>
+    </div>
+  );
+}
 
 // ช่องค้นหาแบบ combobox (ARIA APG): พิมพ์แล้วมีรายชื่อแบรนด์ให้เลือกด้วยคลิกหรือลูกศร + Enter
 function SearchBox({
@@ -158,11 +171,12 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
   const term = query ? debounced : "";
   const options = categoryOptions(promos);
   const matched = brand ? promos.filter((p) => p.brand.slug === brand) : searchPromos(promos, term);
-  // แถวช่วงแสดงตามโปรทั้งหมด (ไม่กระโดดหายตอนเปลี่ยนหมวด) แต่ตัวเลือกและจำนวนนับเฉพาะหมวดที่เลือก
+  // แถวช่วงแสดงตามโปรทั้งหมด (ไม่กระโดดหายตอนเปลี่ยนหมวด) แต่จำนวนนับเฉพาะหมวดที่เลือก ช่วงที่หมวดนี้ไม่มีกดไม่ได้
+  const showCategories = options.length > 2;
   const showWindows = windowOptions(promos).length > 2;
-  const windows = windowOptions(filterByCategory(promos, category));
+  const segments = windowSegments(filterByCategory(promos, category));
   // ช่วงที่เลือกไว้ไม่มีในหมวดใหม่ กลับเป็น "ทั้งหมด" แทนหน้าว่าง
-  const activeWindow = windows.some((w) => w.value === window) ? window : ALL;
+  const activeWindow = segments.some((w) => w.value === window && !w.disabled) ? window : ALL;
   const shown = filterByWindow(filterByCategory(matched, category), activeWindow);
   const suggestions = brand ? [] : brandSuggestions(promos, term);
   const filtered = category !== ALL || activeWindow !== ALL || Boolean(brand) || term.trim() !== "";
@@ -172,6 +186,12 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
     setQuery("");
     setBrand(null);
   };
+  // เปลี่ยนตัวกรองแล้วเริ่มนับหน้าใหม่ (ปรับ state ระหว่าง render แทน effect จะได้ไม่กระพริบ)
+  const filterKey = [category, activeWindow, brand, term].join("|");
+  const [page, setPage] = useState({ key: filterKey, size: PAGE_SIZE });
+  if (page.key !== filterKey) setPage({ key: filterKey, size: PAGE_SIZE });
+  const size = page.key === filterKey ? page.size : PAGE_SIZE;
+  const visible = shown.slice(0, size);
 
   return (
     <div className="flex flex-col gap-4">
@@ -187,25 +207,32 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
           setBrand(b.slug);
         }}
       />
-      {options.length > 2 && (
-        <FilterRow caption="หมวด">
-          <CategoryChips className="ml-0 pl-0" options={options} value={category} onChange={setCategory} />
-        </FilterRow>
-      )}
-      {showWindows && (
-        <FilterRow caption="ใช้ได้ช่วง">
-          <CategoryChips className="ml-0 pl-0" label="กรองตามช่วงที่ใช้ได้" options={windows} value={activeWindow} onChange={setWindow} />
-        </FilterRow>
-      )}
       <div className="flex min-h-8 items-center justify-between gap-3 text-sm text-muted-foreground">
         <p role="status" className="tabular-nums">
           {filtered ? `${shown.length} จาก ${promos.length} โปร` : `${promos.length} โปร`}
         </p>
-        {filtered && shown.length > 0 && (
-          <Button variant="ghost" size="sm" onClick={clearFilters} className="-mr-3 motion-safe:animate-fade-in">
-            ล้างตัวกรอง
-          </Button>
-        )}
+        <div className="flex items-center gap-1">
+          {filtered && shown.length > 0 && (
+            <Button variant="ghost" size="sm" onClick={clearFilters} className="motion-safe:animate-fade-in">
+              ล้างตัวกรอง
+            </Button>
+          )}
+          {(showCategories || showWindows) && (
+            <FilterPanel
+              categories={showCategories ? options : null}
+              category={category}
+              onCategory={setCategory}
+              windows={showWindows ? segments : null}
+              window={activeWindow}
+              onWindow={setWindow}
+              active={category !== ALL || activeWindow !== ALL}
+              onReset={() => {
+                setCategory(ALL);
+                setWindow(ALL);
+              }}
+            />
+          )}
+        </div>
       </div>
       {shown.length === 0 && (
         <div className="flex flex-col items-start gap-3 rounded-2xl border border-dashed px-5 py-6 motion-safe:animate-fade-up">
@@ -223,12 +250,15 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
       )}
       {/* ไม่เปลี่ยน key ตามตัวกรอง: การ์ดที่ยังอยู่ไม่ขยับ เล่น animation เฉพาะการ์ดที่เพิ่งโผล่ */}
       <div className="flex flex-col gap-4">
-        {shown.map((p, i) => (
-          <div key={p.id} className="animate-fade-up stagger" style={stagger(i)}>
+        {visible.map((p, i) => (
+          // หน้าใหม่เริ่มหน่วงจาก 0 ไม่ต้องรอการ์ดหน้าก่อน
+          <div key={p.id} className="animate-fade-up stagger" style={stagger(i % PAGE_SIZE)}>
             <PromoCard promo={p} linkBrand />
           </div>
         ))}
       </div>
+      {/* key ตามจำนวนที่แสดง: mount ใหม่ทุกหน้า ถ้าจุดท้ายยังอยู่ในจอ (จอสูง) จะโหลดหน้าถัดไปต่อเอง */}
+      {visible.length < shown.length && <LoadMore key={size} onMore={() => setPage({ key: filterKey, size: size + PAGE_SIZE })} />}
     </div>
   );
 }
