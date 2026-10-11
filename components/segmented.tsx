@@ -71,7 +71,7 @@ export function Segmented({
             )}
           >
             <span className="truncate">{o.label}</span>
-            <span className="text-xs tabular-nums opacity-70">{o.count}</span>
+            <span className="text-xs tabular-nums">{o.count}</span>
           </button>
         );
       })}
