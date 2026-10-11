@@ -4,19 +4,21 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { LegalDialog } from "./legal-dialog";
 
 const back = vi.fn();
-vi.mock("next/navigation", () => ({ useRouter: () => ({ back }) }));
+let pathname = "/terms";
+vi.mock("next/navigation", () => ({ useRouter: () => ({ back }), usePathname: () => pathname }));
 
 afterEach(() => {
   cleanup();
   back.mockClear();
+  pathname = "/terms";
 });
 
-const renderDialog = () =>
-  render(
-    <LegalDialog title="ข้อกำหนดการใช้งาน" updated="9 ต.ค. 2569" href="/terms">
-      <h2>Kerd คืออะไร</h2>
-    </LegalDialog>,
-  );
+const dialogEl = () => (
+  <LegalDialog title="ข้อกำหนดการใช้งาน" updated="9 ต.ค. 2569" href="/terms">
+    <h2>Kerd คืออะไร</h2>
+  </LegalDialog>
+);
+const renderDialog = () => render(dialogEl());
 
 describe("LegalDialog", () => {
   it("เปิดเป็น dialog ทันที ชื่อ dialog คือหัวข้อ และมีเนื้อหา", () => {
@@ -42,5 +44,25 @@ describe("LegalDialog", () => {
     renderDialog();
     fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
     expect(back).toHaveBeenCalledOnce();
+  });
+
+  it("กดปิดซ้ำๆ ย้อนกลับครั้งเดียว (ไม่ย้อนเลยหน้าเดิม)", () => {
+    renderDialog();
+    fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
+    fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
+    expect(back).toHaveBeenCalledOnce();
+  });
+
+  // cacheComponents เก็บ state ของ route ที่เคยเปิดไว้ (React Activity) dialog ตัวเดิมจึงถูกใช้ซ้ำ
+  it("ปิดแล้วกดลิงก์เดิมอีกครั้ง dialog ต้องเปิดขึ้นมาใหม่", () => {
+    const { rerender } = renderDialog();
+    fireEvent.click(screen.getByRole("button", { name: "ปิด" }));
+    pathname = "/";
+    rerender(dialogEl());
+    expect(screen.queryByRole("dialog")).toBeNull();
+
+    pathname = "/terms";
+    rerender(dialogEl());
+    expect(screen.getByRole("dialog", { name: "ข้อกำหนดการใช้งาน" })).toBeTruthy();
   });
 });

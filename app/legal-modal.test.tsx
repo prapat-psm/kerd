@@ -5,12 +5,14 @@ import ModalDefault from "./@modal/default";
 import PrivacyModal from "./@modal/(.)privacy/page";
 import TermsModal from "./@modal/(.)terms/page";
 
-vi.mock("next/navigation", () => ({ useRouter: () => ({ back: vi.fn() }) }));
+vi.mock("next/navigation", () => ({ useRouter: () => ({ back: vi.fn() }), usePathname: () => pathname }));
+let pathname = "/";
 
 afterEach(cleanup);
 
 describe("privacy และ T&C เปิดเป็น dialog เมื่อกดจากในเว็บ", () => {
   it("privacy: dialog มีเนื้อหาเดียวกับหน้าเต็ม", () => {
+    pathname = "/privacy";
     render(<PrivacyModal />);
     expect(screen.getByRole("dialog", { name: "นโยบายความเป็นส่วนตัวและคุกกี้" })).toBeTruthy();
     expect(screen.getByRole("heading", { level: 2, name: "สิทธิ์ของคุณ" })).toBeTruthy();
@@ -18,6 +20,7 @@ describe("privacy และ T&C เปิดเป็น dialog เมื่อ�
   });
 
   it("terms: dialog มีเนื้อหาเดียวกับหน้าเต็ม", () => {
+    pathname = "/terms";
     render(<TermsModal />);
     expect(screen.getByRole("dialog", { name: "ข้อกำหนดการใช้งาน" })).toBeTruthy();
     expect(screen.getByText(/เงื่อนไขของแบรนด์เป็นที่สุด/)).toBeTruthy();
