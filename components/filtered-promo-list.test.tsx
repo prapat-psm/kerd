@@ -43,7 +43,7 @@ describe("FilteredPromoList", () => {
     fireEvent.click(screen.getByRole("button", { name: /อาหาร/ }));
     expect(screen.getByRole("button", { name: /อาหาร/ }).getAttribute("aria-pressed")).toBe("true");
     expect(cards()).toEqual(["MK", "Sizzler"]);
-    expect(screen.getByRole("status").textContent).toContain("2 โปร");
+    expect(screen.getByRole("status").textContent).toContain("2 จาก 3 โปร");
   });
 
   it("กลับมา 'ทั้งหมด' ได้", () => {
@@ -96,7 +96,7 @@ describe("FilteredPromoList", () => {
     fireEvent.change(screen.getByRole("combobox"), { target: { value: "sizzler" } });
     act(() => vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS));
     vi.useRealTimers();
-    expect(screen.getByText(/ไม่พบโปรที่ตรงกับ/)).toBeTruthy();
+    expect(screen.getByText(/ยังไม่มีโปรที่ตรงกับ/)).toBeTruthy();
   });
 
   it("ทุกโปรใช้ได้ช่วงเดียวกัน ไม่ต้องแสดงตัวกรองช่วง", () => {
@@ -126,7 +126,7 @@ describe("FilteredPromoList", () => {
       expect(cards()).toHaveLength(3);
       act(() => vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS));
       expect(cards()).toEqual(["Sizzler"]);
-      expect(screen.getByRole("status").textContent).toContain("1 โปร");
+      expect(screen.getByRole("status").textContent).toContain("1 จาก 3 โปร");
     });
 
     it("ใช้ร่วมกับตัวกรองหมวดได้", () => {
@@ -182,7 +182,7 @@ describe("FilteredPromoList", () => {
     it("ไม่เจอ บอกคำที่ค้น และกดล้างคำค้นเพื่อกลับมาเห็นทุกการ์ดทันที", () => {
       render(<FilteredPromoList promos={promos} />);
       type("starbucks");
-      expect(screen.getByText(/ไม่พบโปรที่ตรงกับ “starbucks”/)).toBeTruthy();
+      expect(screen.getByText(/ยังไม่มีโปรที่ตรงกับ “starbucks”/)).toBeTruthy();
       fireEvent.click(screen.getByRole("button", { name: "ล้างคำค้น" }));
       expect((search() as HTMLInputElement).value).toBe("");
       expect(cards()).toHaveLength(3);
@@ -192,6 +192,53 @@ describe("FilteredPromoList", () => {
       render(<FilteredPromoList promos={promos} />);
       expect(screen.queryByRole("button", { name: "ล้างคำค้น" })).toBeNull();
       expect(screen.queryByRole("listbox")).toBeNull();
+    });
+  });
+
+  // P1-5 ตัวกรองบอกผล และผลว่างมีทางไปต่อ
+  describe("ผลการกรอง", () => {
+    const status = () => screen.getByRole("status").textContent;
+    const clearFilters = () => screen.queryByRole("button", { name: "ล้างตัวกรอง" });
+
+    it("ยังไม่กรอง แสดงจำนวนโปรทั้งหมด ไม่มีปุ่มล้างตัวกรอง", () => {
+      render(<FilteredPromoList promos={promos} />);
+      expect(status()).toBe("3 โปร");
+      expect(clearFilters()).toBeNull();
+    });
+
+    it("กรองอยู่ บอก 'X จาก N โปร' และกดล้างตัวกรองกลับไปที่ 'ทั้งหมด' ทุกแถว", () => {
+      render(<FilteredPromoList promos={promos} />);
+      fireEvent.click(screen.getByRole("button", { name: /อาหาร/ }));
+      fireEvent.click(within(screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("button", { name: /สัปดาห์วันเกิด/ }));
+      expect(status()).toBe("1 จาก 3 โปร");
+      fireEvent.click(clearFilters()!);
+      for (const name of ["กรองตามหมวด", "กรองตามช่วงที่ใช้ได้"]) {
+        expect(within(screen.getByRole("group", { name })).getByRole("button", { name: /ทั้งหมด/ }).getAttribute("aria-pressed")).toBe("true");
+      }
+      expect(cards()).toHaveLength(3);
+      expect(clearFilters()).toBeNull();
+    });
+
+    it("ล้างตัวกรองแล้วคำค้นหายไปด้วย", () => {
+      vi.useFakeTimers();
+      render(<FilteredPromoList promos={promos} />);
+      fireEvent.change(screen.getByRole("combobox"), { target: { value: "starbucks" } });
+      act(() => vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS));
+      vi.useRealTimers();
+      expect(status()).toBe("0 จาก 3 โปร");
+      fireEvent.click(screen.getAllByRole("button", { name: "ล้างตัวกรอง" })[0]);
+      expect((screen.getByRole("combobox") as HTMLInputElement).value).toBe("");
+      expect(cards()).toHaveLength(3);
+    });
+
+    it("ค้นไม่เจอ มีลิงก์ 'แจ้งเราได้' ไปหน้า /submit", () => {
+      vi.useFakeTimers();
+      render(<FilteredPromoList promos={promos} />);
+      fireEvent.change(screen.getByRole("combobox"), { target: { value: "starbucks" } });
+      act(() => vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS));
+      vi.useRealTimers();
+      expect(screen.getByRole("link", { name: /แจ้งเราได้/ }).getAttribute("href")).toBe("/submit");
+      expect(screen.getAllByRole("button", { name: "ล้างตัวกรอง" }).length).toBeGreaterThan(0);
     });
   });
 });

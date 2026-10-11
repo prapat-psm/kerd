@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
 import { CategoryChips } from "@/components/category-chips";
 import { PromoCard } from "@/components/promo-card";
+import { Button } from "@/components/ui/button";
 import { ALL, categoryLabel, categoryOptions, filterByCategory } from "@/lib/categories";
 import { stagger } from "@/lib/motion";
 import { brandSuggestions, searchPromos, type BrandSuggestion } from "@/lib/search";
@@ -163,6 +165,13 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
   const activeWindow = windows.some((w) => w.value === window) ? window : ALL;
   const shown = filterByWindow(filterByCategory(matched, category), activeWindow);
   const suggestions = brand ? [] : brandSuggestions(promos, term);
+  const filtered = category !== ALL || activeWindow !== ALL || Boolean(brand) || term.trim() !== "";
+  const clearFilters = () => {
+    setCategory(ALL);
+    setWindow(ALL);
+    setQuery("");
+    setBrand(null);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -188,14 +197,32 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
           <CategoryChips className="ml-0 pl-0" label="กรองตามช่วงที่ใช้ได้" options={windows} value={activeWindow} onChange={setWindow} />
         </FilterRow>
       )}
-      <p role="status" className="sr-only">
-        แสดง {shown.length} โปร
-      </p>
+      <div className="flex min-h-8 items-center justify-between gap-3 text-sm text-muted-foreground">
+        <p role="status" className="tabular-nums">
+          {filtered ? `${shown.length} จาก ${promos.length} โปร` : `${promos.length} โปร`}
+        </p>
+        {filtered && shown.length > 0 && (
+          <Button variant="ghost" size="sm" onClick={clearFilters} className="-mr-3 motion-safe:animate-fade-in">
+            ล้างตัวกรอง
+          </Button>
+        )}
+      </div>
       {shown.length === 0 && (
-        <p className="text-muted-foreground">{term.trim() ? `ไม่พบโปรที่ตรงกับ “${term.trim()}” ลองชื่อแบรนด์หรือคำอื่น` : "ไม่มีโปรที่ตรงกับตัวกรองนี้"}</p>
+        <div className="flex flex-col items-start gap-3 rounded-2xl border border-dashed px-5 py-6 motion-safe:animate-fade-up">
+          <p className="text-foreground">{term.trim() ? `ยังไม่มีโปรที่ตรงกับ “${term.trim()}”` : "ยังไม่มีโปรที่ตรงกับตัวกรองนี้"}</p>
+          <Button variant="outline" size="sm" onClick={clearFilters}>
+            ล้างตัวกรอง
+          </Button>
+          <p className="text-sm text-muted-foreground">
+            รู้จักโปรนี้?{" "}
+            <Link href="/submit" className="font-medium text-foreground underline underline-offset-4">
+              แจ้งเราได้
+            </Link>
+          </p>
+        </div>
       )}
-      {/* เปลี่ยน key ตามตัวกรอง ให้การ์ดเล่น animation เข้ามาใหม่ทุกครั้งที่กรอง */}
-      <div key={`${category}-${activeWindow}`} className="flex flex-col gap-4">
+      {/* ไม่เปลี่ยน key ตามตัวกรอง: การ์ดที่ยังอยู่ไม่ขยับ เล่น animation เฉพาะการ์ดที่เพิ่งโผล่ */}
+      <div className="flex flex-col gap-4">
         {shown.map((p, i) => (
           <div key={p.id} className="animate-fade-up stagger" style={stagger(i)}>
             <PromoCard promo={p} linkBrand />
