@@ -73,11 +73,30 @@ describe("FilteredPromoList", () => {
     expect(cards()).toEqual(["Sizzler"]);
   });
 
-  it("ถ้ากรองแล้วไม่เหลือโปร บอกให้ลองเปลี่ยนตัวกรอง", () => {
+  it("เลือกหมวดแล้ว ตัวกรองช่วงเหลือเฉพาะช่วงที่หมวดนั้นมี พร้อมจำนวนของหมวดนั้น", () => {
     render(<FilteredPromoList promos={promos} />);
-    fireEvent.click(screen.getByRole("button", { name: /ธนาคาร/ }));
+    fireEvent.click(screen.getByRole("button", { name: /อาหาร/ }));
+    const group = screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" });
+    expect(within(group).getAllByRole("button").map((b) => b.textContent)).toEqual(["ทั้งหมด2", "สัปดาห์วันเกิด1", "ทั้งเดือนเกิด1"]);
+  });
+
+  it("เปลี่ยนไปหมวดที่ไม่มีช่วงที่เลือกไว้ กลับเป็น 'ทั้งหมด' ไม่ค้างหน้าว่าง", () => {
+    render(<FilteredPromoList promos={promos} />);
     fireEvent.click(within(screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("button", { name: /สัปดาห์วันเกิด/ }));
-    expect(screen.getByText("ไม่มีโปรที่ตรงกับตัวกรองนี้")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: /ธนาคาร/ }));
+    const group = screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" });
+    expect(within(group).getByRole("button", { name: /ทั้งหมด/ }).getAttribute("aria-pressed")).toBe("true");
+    expect(cards()).toEqual(["KBank"]);
+  });
+
+  it("ถ้ากรองแล้วไม่เหลือโปร บอกให้ลองเปลี่ยนตัวกรอง", () => {
+    vi.useFakeTimers();
+    render(<FilteredPromoList promos={promos} />);
+    fireEvent.click(within(screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("button", { name: /^วันเกิด/ }));
+    fireEvent.change(screen.getByRole("combobox"), { target: { value: "sizzler" } });
+    act(() => vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS));
+    vi.useRealTimers();
+    expect(screen.getByText(/ไม่พบโปรที่ตรงกับ/)).toBeTruthy();
   });
 
   it("ทุกโปรใช้ได้ช่วงเดียวกัน ไม่ต้องแสดงตัวกรองช่วง", () => {
