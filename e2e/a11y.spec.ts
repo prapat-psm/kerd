@@ -30,11 +30,14 @@ test("ลิงก์หน้าเดือนเดิม (/october, /birthda
 
 // ตัวกรองอยู่ใน panel ไม่มีตัวเลขจำนวน: ตรวจจากข้อความ "X จาก N โปร" แทน
 async function filterInPanel(page: Page, pick: (panel: Locator) => Locator) {
+  // ปิด animation ไม่ให้ axe ตรวจตอน panel ยัง fade อยู่ (สีจางกว่าจริง)
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const status = page.getByRole("status").first();
   const total = Number((await status.textContent())?.match(/\d+/)?.[0]);
   await page.getByRole("button", { name: "ตัวกรอง" }).click();
   const panel = page.getByRole("dialog", { name: "ตัวกรอง" });
+  await expect(panel).toBeVisible();
   const { violations } = await new AxeBuilder({ page }).include("[role=dialog]").withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
   expect(violations.map((v) => v.id)).toEqual([]);
   const option = pick(panel);
