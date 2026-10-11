@@ -102,6 +102,7 @@
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --animate-fade-up: fade-up 320ms var(--ease-out-quart) both;
   --animate-fade-in: fade-in 200ms var(--ease-out-quart) both;
+  --animate-pop-in: pop-in 180ms var(--ease-out-quart) both;
   --animate-flicker: flicker 600ms ease-in-out 2;
 
   @keyframes fade-up {
@@ -112,6 +113,14 @@
     to {
       opacity: 1;
       transform: none;
+    }
+  }
+
+  /* แท็บที่เลือกในแถบล่าง */
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
     }
   }
 
@@ -130,6 +139,20 @@
     from {
       opacity: 0;
     }
+  }
+}
+
+/* เลื่อนหาช่อง/ปุ่มแล้วไม่ให้ไปจมใต้แถบล่าง (แถบกลับมาทันทีที่ช่องกรอกเสียโฟกัส) */
+@media (width < 48rem) {
+  html {
+    scroll-padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* คีย์บอร์ดบนจอสัมผัสเปิดอยู่ ซ่อนแถบล่างไม่ให้บังช่องกรอก */
+@media (pointer: coarse) {
+  body:has(:is(input:not([type="radio"], [type="checkbox"]), textarea):focus) [data-bottom-nav] {
+    display: none;
   }
 }
 
