@@ -61,38 +61,41 @@ describe("FilteredPromoList", () => {
 
   it("กรองตามช่วงที่ใช้ได้ (วันเกิด / สัปดาห์ / ทั้งเดือน)", () => {
     render(<FilteredPromoList promos={promos} />);
-    const group = screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" });
-    fireEvent.click(within(group).getByRole("button", { name: /^วันเกิด/ }));
+    fireEvent.click(within(screen.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("radio", { name: /^วันเกิด/ }));
     expect(cards()).toEqual(["KBank"]);
   });
 
   it("ใช้ตัวกรองหมวดและช่วงร่วมกันได้", () => {
     render(<FilteredPromoList promos={promos} />);
     fireEvent.click(screen.getByRole("button", { name: /อาหาร/ }));
-    fireEvent.click(within(screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("button", { name: /สัปดาห์วันเกิด/ }));
+    fireEvent.click(within(screen.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("radio", { name: /^สัปดาห์/ }));
     expect(cards()).toEqual(["Sizzler"]);
   });
 
   it("เลือกหมวดแล้ว ตัวกรองช่วงเหลือเฉพาะช่วงที่หมวดนั้นมี พร้อมจำนวนของหมวดนั้น", () => {
     render(<FilteredPromoList promos={promos} />);
     fireEvent.click(screen.getByRole("button", { name: /อาหาร/ }));
-    const group = screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" });
-    expect(within(group).getAllByRole("button").map((b) => b.textContent)).toEqual(["ทั้งหมด2", "สัปดาห์วันเกิด1", "ทั้งเดือนเกิด1"]);
+    const radios = within(screen.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" })).getAllByRole("radio");
+    expect(radios.map((r) => [r.textContent, r.hasAttribute("disabled")])).toEqual([
+      ["ทั้งหมด2", false],
+      ["วันเกิด0", true],
+      ["สัปดาห์1", false],
+      ["ทั้งเดือน1", false],
+    ]);
   });
 
   it("เปลี่ยนไปหมวดที่ไม่มีช่วงที่เลือกไว้ กลับเป็น 'ทั้งหมด' ไม่ค้างหน้าว่าง", () => {
     render(<FilteredPromoList promos={promos} />);
-    fireEvent.click(within(screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("button", { name: /สัปดาห์วันเกิด/ }));
+    fireEvent.click(within(screen.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("radio", { name: /^สัปดาห์/ }));
     fireEvent.click(screen.getByRole("button", { name: /ธนาคาร/ }));
-    const group = screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" });
-    expect(within(group).getByRole("button", { name: /ทั้งหมด/ }).getAttribute("aria-pressed")).toBe("true");
+    expect(within(screen.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("radio", { name: /ทั้งหมด/ }).getAttribute("aria-checked")).toBe("true");
     expect(cards()).toEqual(["KBank"]);
   });
 
   it("ถ้ากรองแล้วไม่เหลือโปร บอกให้ลองเปลี่ยนตัวกรอง", () => {
     vi.useFakeTimers();
     render(<FilteredPromoList promos={promos} />);
-    fireEvent.click(within(screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("button", { name: /^วันเกิด/ }));
+    fireEvent.click(within(screen.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("radio", { name: /^วันเกิด/ }));
     fireEvent.change(screen.getByRole("combobox"), { target: { value: "sizzler" } });
     act(() => vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS));
     vi.useRealTimers();
@@ -101,13 +104,14 @@ describe("FilteredPromoList", () => {
 
   it("ทุกโปรใช้ได้ช่วงเดียวกัน ไม่ต้องแสดงตัวกรองช่วง", () => {
     render(<FilteredPromoList promos={[promos[0]]} />);
-    expect(screen.queryByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).toBeNull();
+    expect(screen.queryByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" })).toBeNull();
   });
 
-  it("แต่ละแถวตัวกรองมีป้ายบอกว่ากรองอะไร", () => {
+  it("ไม่มีป้ายหน้าแถวตัวกรอง (ชื่อกลุ่มอยู่ใน aria-label) หมวดเป็นแถวเดียวชิดขอบจอ", () => {
     render(<FilteredPromoList promos={promos} />);
-    expect(screen.getByText("หมวด")).toBeTruthy();
-    expect(screen.getByText("ใช้ได้ช่วง")).toBeTruthy();
+    expect(screen.queryByText("หมวด")).toBeNull();
+    expect(screen.queryByText("ใช้ได้ช่วง")).toBeNull();
+    expect(screen.getByRole("group", { name: "กรองตามหมวด" }).className).toContain("-mx-4");
   });
 
   describe("ช่องค้นหา", () => {
@@ -209,12 +213,11 @@ describe("FilteredPromoList", () => {
     it("กรองอยู่ บอก 'X จาก N โปร' และกดล้างตัวกรองกลับไปที่ 'ทั้งหมด' ทุกแถว", () => {
       render(<FilteredPromoList promos={promos} />);
       fireEvent.click(screen.getByRole("button", { name: /อาหาร/ }));
-      fireEvent.click(within(screen.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("button", { name: /สัปดาห์วันเกิด/ }));
+      fireEvent.click(within(screen.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("radio", { name: /^สัปดาห์/ }));
       expect(status()).toBe("1 จาก 3 โปร");
       fireEvent.click(clearFilters()!);
-      for (const name of ["กรองตามหมวด", "กรองตามช่วงที่ใช้ได้"]) {
-        expect(within(screen.getByRole("group", { name })).getByRole("button", { name: /ทั้งหมด/ }).getAttribute("aria-pressed")).toBe("true");
-      }
+      expect(within(screen.getByRole("group", { name: "กรองตามหมวด" })).getByRole("button", { name: /ทั้งหมด/ }).getAttribute("aria-pressed")).toBe("true");
+      expect(within(screen.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" })).getByRole("radio", { name: /ทั้งหมด/ }).getAttribute("aria-checked")).toBe("true");
       expect(cards()).toHaveLength(3);
       expect(clearFilters()).toBeNull();
     });

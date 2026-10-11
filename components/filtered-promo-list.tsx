@@ -1,29 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useId, useState, type KeyboardEvent } from "react";
 import { CategoryChips } from "@/components/category-chips";
 import { PromoCard } from "@/components/promo-card";
+import { Segmented } from "@/components/segmented";
 import { Button } from "@/components/ui/button";
 import { ALL, categoryLabel, categoryOptions, filterByCategory } from "@/lib/categories";
 import { stagger } from "@/lib/motion";
 import { brandSuggestions, searchPromos, type BrandSuggestion } from "@/lib/search";
 import { useDebouncedValue } from "@/lib/use-debounced-value";
 import { cn } from "@/lib/utils";
-import { filterByWindow, windowOptions } from "@/lib/windows";
+import { filterByWindow, windowOptions, windowSegments } from "@/lib/windows";
 import type { PromoCardData } from "@/lib/promos/view";
-
-// ป้ายสั้นหน้าแถวตัวกรอง (ชื่อเต็มอยู่ใน aria-label ของกลุ่มปุ่มแล้ว จึงซ่อนจาก screen reader)
-function FilterRow({ caption, children }: { caption: string; children: ReactNode }) {
-  return (
-    <div className="flex items-center gap-2">
-      <span aria-hidden className="w-16 shrink-0 text-xs text-muted-foreground">
-        {caption}
-      </span>
-      <div className="min-w-0 flex-1">{children}</div>
-    </div>
-  );
-}
 
 // รอให้หยุดพิมพ์ก่อนค่อยกรอง การ์ดจะได้ไม่กระพริบทุกตัวอักษร
 export const SEARCH_DEBOUNCE_MS = 250;
@@ -158,11 +147,11 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
   const term = query ? debounced : "";
   const options = categoryOptions(promos);
   const matched = brand ? promos.filter((p) => p.brand.slug === brand) : searchPromos(promos, term);
-  // แถวช่วงแสดงตามโปรทั้งหมด (ไม่กระโดดหายตอนเปลี่ยนหมวด) แต่ตัวเลือกและจำนวนนับเฉพาะหมวดที่เลือก
+  // แถวช่วงแสดงตามโปรทั้งหมด (ไม่กระโดดหายตอนเปลี่ยนหมวด) แต่จำนวนนับเฉพาะหมวดที่เลือก ช่วงที่หมวดนี้ไม่มีกดไม่ได้
   const showWindows = windowOptions(promos).length > 2;
-  const windows = windowOptions(filterByCategory(promos, category));
+  const segments = windowSegments(filterByCategory(promos, category));
   // ช่วงที่เลือกไว้ไม่มีในหมวดใหม่ กลับเป็น "ทั้งหมด" แทนหน้าว่าง
-  const activeWindow = windows.some((w) => w.value === window) ? window : ALL;
+  const activeWindow = segments.some((w) => w.value === window && !w.disabled) ? window : ALL;
   const shown = filterByWindow(filterByCategory(matched, category), activeWindow);
   const suggestions = brand ? [] : brandSuggestions(promos, term);
   const filtered = category !== ALL || activeWindow !== ALL || Boolean(brand) || term.trim() !== "";
@@ -187,16 +176,8 @@ export function FilteredPromoList({ promos }: { promos: PromoCardData[] }) {
           setBrand(b.slug);
         }}
       />
-      {options.length > 2 && (
-        <FilterRow caption="หมวด">
-          <CategoryChips className="ml-0 pl-0" options={options} value={category} onChange={setCategory} />
-        </FilterRow>
-      )}
-      {showWindows && (
-        <FilterRow caption="ใช้ได้ช่วง">
-          <CategoryChips className="ml-0 pl-0" label="กรองตามช่วงที่ใช้ได้" options={windows} value={activeWindow} onChange={setWindow} />
-        </FilterRow>
-      )}
+      {options.length > 2 && <CategoryChips options={options} value={category} onChange={setCategory} />}
+      {showWindows && <Segmented label="กรองตามช่วงที่ใช้ได้" options={segments} value={activeWindow} onChange={setWindow} />}
       <div className="flex min-h-8 items-center justify-between gap-3 text-sm text-muted-foreground">
         <p role="status" className="tabular-nums">
           {filtered ? `${shown.length} จาก ${promos.length} โปร` : `${promos.length} โปร`}

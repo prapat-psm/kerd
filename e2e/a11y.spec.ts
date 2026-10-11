@@ -30,12 +30,12 @@ test("ลิงก์หน้าเดือนเดิม (/october, /birthda
 
 test("กรองตามช่วงที่ใช้ได้แล้วเหลือเฉพาะโปรช่วงนั้น", async ({ page }) => {
   await page.goto("/");
-  const group = page.getByRole("group", { name: "กรองตามช่วงที่ใช้ได้" });
+  const group = page.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" });
   const all = await page.locator('[data-slot="card"]').count();
-  const chip = group.getByRole("button").nth(1);
-  const expected = Number(await chip.locator("span").last().textContent());
-  await chip.click();
-  await expect(chip).toHaveAttribute("aria-pressed", "true");
+  const segment = group.locator('[role="radio"]:not([disabled])').nth(1);
+  const expected = Number(await segment.locator("span").last().textContent());
+  await segment.click();
+  await expect(segment).toHaveAttribute("aria-checked", "true");
   await expect(page.locator('[data-slot="card"]')).toHaveCount(expected);
   expect(expected).toBeLessThan(all);
 });
