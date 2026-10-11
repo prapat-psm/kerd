@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 // ทุกหน้าหลักต้องผ่าน WCAG 2.1 AA ทั้งธีมสว่างและมืด (ต้องมีโปร published อย่างน้อย 1 ใบ ดู scripts/e2e-fixture.sql)
 const PAGES = ["/", "/brand", "/brand/mk-restaurants", "/privacy", "/terms", "/submit"];
@@ -28,28 +28,40 @@ test("ลิงก์หน้าเดือนเดิม (/october, /birthda
   }
 });
 
-test("กรองตามช่วงที่ใช้ได้แล้วเหลือเฉพาะโปรช่วงนั้น", async ({ page }) => {
+// ตัวกรองอยู่ใน panel ไม่มีตัวเลขจำนวน: ตรวจจากข้อความ "X จาก N โปร" แทน
+async function filterInPanel(page: Page, pick: (panel: Locator) => Locator) {
   await page.goto("/");
-  const group = page.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" });
-  const all = await page.locator('[data-slot="card"]').count();
-  const segment = group.locator('[role="radio"]:not([disabled])').nth(1);
-  const expected = Number(await segment.locator("span").last().textContent());
-  await segment.click();
-  await expect(segment).toHaveAttribute("aria-checked", "true");
-  await expect(page.locator('[data-slot="card"]')).toHaveCount(expected);
-  expect(expected).toBeLessThan(all);
+  const status = page.getByRole("status").first();
+  const total = Number((await status.textContent())?.match(/\d+/)?.[0]);
+  await page.getByRole("button", { name: "ตัวกรอง" }).click();
+  const panel = page.getByRole("dialog", { name: "ตัวกรอง" });
+  const { violations } = await new AxeBuilder({ page }).include("[role=dialog]").withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+  expect(violations.map((v) => v.id)).toEqual([]);
+  const option = pick(panel);
+  await expect(option).not.toContainText(/\d/);
+  await option.click();
+  await panel.getByRole("button", { name: "ดูโปร" }).click();
+  await expect(panel).toHaveCount(0);
+  const [shown, of] = ((await status.textContent())?.match(/\d+/g) ?? []).map(Number);
+  expect(of).toBe(total);
+  expect(shown).toBeLessThan(total);
+  await expect(page.locator('[data-slot="card"]')).toHaveCount(Math.min(shown, 5));
+}
+
+test("กรองตามช่วงที่ใช้ได้ใน panel แล้วเหลือเฉพาะโปรช่วงนั้น", async ({ page }) => {
+  await filterInPanel(page, (panel) => panel.getByRole("radiogroup", { name: "กรองตามช่วงที่ใช้ได้" }).locator('[role="radio"]:not([disabled])').nth(1));
 });
 
-test("กรองหมวดบนหน้าแรกแล้วเหลือเฉพาะหมวดนั้น", async ({ page }) => {
+test("กรองหมวดใน panel แล้วเหลือเฉพาะหมวดนั้น", async ({ page }) => {
+  await filterInPanel(page, (panel) => panel.getByRole("group", { name: "กรองตามหมวด" }).getByRole("button").nth(1));
+});
+
+test("หน้าแรกโหลดทีละ 5 ใบ เลื่อนถึงท้ายแล้วโหลดเพิ่ม", async ({ page }) => {
   await page.goto("/");
-  const group = page.getByRole("group", { name: "กรองตามหมวด" });
-  const all = await page.locator('[data-slot="card"]').count();
-  const chip = group.getByRole("button").nth(1);
-  const expected = Number(await chip.locator("span").last().textContent());
-  await chip.click();
-  await expect(chip).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator('[data-slot="card"]')).toHaveCount(expected);
-  expect(expected).toBeLessThan(all);
+  const cards = page.locator('[data-slot="card"]');
+  await expect(cards).toHaveCount(5);
+  await page.getByRole("button", { name: "ดูเพิ่ม" }).scrollIntoViewIfNeeded();
+  await expect.poll(() => cards.count()).toBeGreaterThan(5);
 });
 
 test("skip link พาไปเนื้อหาหลักด้วยคีย์บอร์ด", async ({ page }) => {

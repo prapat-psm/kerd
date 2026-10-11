@@ -3,7 +3,7 @@
 import { useRef, type CSSProperties, type KeyboardEvent } from "react";
 import { cn } from "@/lib/utils";
 
-export type SegmentOption = { value: string; label: string; count: number; disabled: boolean };
+export type SegmentOption = { value: string; label: string; disabled: boolean };
 
 // ตัวเลือกเดียวแบบ radiogroup (ARIA APG): ลูกศรซ้ายขวาย้ายและเลือกทันที พื้นช่องที่เลือกเลื่อนตาม (CSS ล้วน)
 export function Segmented({
@@ -65,13 +65,12 @@ export function Segmented({
             onClick={() => onChange(o.value)}
             onKeyDown={onKeyDown}
             className={cn(
-              "relative flex min-h-9 items-center justify-center gap-1 rounded-full px-1 text-sm font-medium outline-none pointer-coarse:min-h-11",
+              "relative flex min-h-9 items-center justify-center rounded-full px-1 text-sm font-medium outline-none pointer-coarse:min-h-11",
               "transition-colors duration-200 focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:opacity-40",
               checked ? "text-foreground" : "text-muted-foreground hover:text-foreground",
             )}
           >
             <span className="truncate">{o.label}</span>
-            <span className="text-xs tabular-nums">{o.count}</span>
           </button>
         );
       })}

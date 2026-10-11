@@ -9,9 +9,11 @@ export function CategoryChips({
   value,
   onChange,
   label = "กรองตามหมวด",
+  counts = true,
   className,
 }: {
   className?: string;
+  counts?: boolean;
   label?: string;
   options: CategoryOption[];
   value: string;
@@ -35,7 +37,7 @@ export function CategoryChips({
             )}
           >
             {o.label}
-            <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "text-background/70" : "bg-muted")}>{o.count}</span>
+            {counts && <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "text-background/70" : "bg-muted")}>{o.count}</span>}
           </button>
         );
       })}

@@ -30,12 +30,12 @@ describe("filterByWindow", () => {
 });
 
 describe("windowSegments", () => {
-  it("ครบ 4 ช่องเสมอ ป้ายสั้น พร้อมจำนวน ช่วงที่ไม่มีโปรกดไม่ได้", () => {
+  it("ครบ 4 ช่องเสมอ ป้ายสั้น ไม่มีจำนวน ช่วงที่ไม่มีโปรกดไม่ได้", () => {
     expect(windowSegments([{ window: "month" }, { window: "day" }, { window: "month" }])).toEqual([
-      { value: ALL, label: "ทั้งหมด", count: 3, disabled: false },
-      { value: "day", label: "วันเกิด", count: 1, disabled: false },
-      { value: "week", label: "สัปดาห์", count: 0, disabled: true },
-      { value: "month", label: "ทั้งเดือน", count: 2, disabled: false },
+      { value: ALL, label: "ทั้งหมด", disabled: false },
+      { value: "day", label: "วันเกิด", disabled: false },
+      { value: "week", label: "สัปดาห์", disabled: true },
+      { value: "month", label: "ทั้งเดือน", disabled: false },
     ]);
   });
 });
